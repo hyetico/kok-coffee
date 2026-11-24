@@ -10,7 +10,8 @@ export const PRICE_BANDS: Record<PriceBandId, { min: number; max: number }> = {
   "15": { min: 15000, max: 20000 },
   o20: { min: 20000, max: Infinity },
 };
-export const PRICE_BAND_IDS = Object.keys(PRICE_BANDS) as PriceBandId[];
+/** 화면 순서. 「10」「15」처럼 숫자 모양 키는 객체에서 앞으로 정렬되므로 Object.keys를 쓰지 않는다 */
+export const PRICE_BAND_IDS: PriceBandId[] = ["u10", "10", "15", "o20"];
 
 /** 맛과 향 필터에 보이는 낱말 (화면 순서). 여러 개 고르면 모두 맞아야 보인다 */
 export const TASTE_WORDS = [
