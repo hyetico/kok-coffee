@@ -1,4 +1,7 @@
 import type { Metadata, Viewport } from "next";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import { ui } from "@/content/ui";
 import { pretendardRest, pretendardUsed } from "./fonts";
 import "./globals.css";
 
@@ -24,7 +27,18 @@ export default function RootLayout({
       lang="ko"
       className={`${pretendardUsed.variable} ${pretendardRest.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        {/* 모든 페이지 첫 초점 (CLAUDE.md 7장). 각 페이지의 <main id="main">으로 건너뛴다 */}
+        <a
+          href="#main"
+          className="sr-only z-50 rounded-lg bg-primary px-4 py-3 text-base font-semibold text-white focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+        >
+          {ui.skipToContent}
+        </a>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

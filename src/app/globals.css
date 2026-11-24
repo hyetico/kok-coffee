@@ -20,6 +20,26 @@
   --color-primary-press: #12301f;
   --color-option-on: #f3f8f5;
   --color-map-dot: #9db5a6;
+  /* 05 색 표에는 없고 프로토타입에서 쓰는 값 — 디자인 쪽 확인 전까지 측정값 그대로 둔다 */
+  --color-ghost-hover: #e3ece6;
+  --color-ghost-press: #d5e2d9;
+  --color-disabled-ink: #9aa59e;
+  --color-separator: #c9d2cc;
+
+  /* 글자 크기 클래스가 줄 높이까지 바꾸지 않게 한다. 프로토타입은 크기만 정하고 줄 높이는 부모 값을 물려받는다
+     (값 inherit는 변수를 무효로 만들어 line-height가 부모 값을 그대로 쓰게 된다). 줄 높이가 필요하면 leading-*를 따로 쓴다 */
+  --text-xs--line-height: inherit;
+  --text-sm--line-height: inherit;
+  --text-base--line-height: inherit;
+  --text-lg--line-height: inherit;
+  --text-xl--line-height: inherit;
+  --text-2xl--line-height: inherit;
+  --text-3xl--line-height: inherit;
+  --text-4xl--line-height: inherit;
+  --text-5xl--line-height: inherit;
+
+  /* 모바일 ≤640 · 태블릿 641–1023 · 웹 ≥1024 (02 PRD 7장). sm을 641로 둬서 640이 모바일에 들어가게 한다 */
+  --breakpoint-sm: 641px;
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
@@ -32,6 +52,28 @@
   --font-sans:
     var(--font-pretendard-used), var(--font-pretendard-rest), system-ui,
     sans-serif;
+}
+
+/* 본문 폭 컨테이너 (.k2-wrap) — 헤더 · 본문 · 푸터가 같은 왼쪽 선을 쓴다 */
+@utility page-wrap {
+  /* 프로토타입처럼 좌우 여백을 폭 밖에 더한다 — 내용 폭이 1280이 된다 */
+  box-sizing: content-box;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 16px;
+  @media (width >= 641px) {
+    padding-inline: 24px;
+  }
+  @media (width >= 1024px) {
+    padding-inline: 40px;
+  }
+}
+
+/* 메뉴 드로어가 오른쪽에서 밀려 나온다 (03 「메뉴 드로어」) */
+@keyframes drawer-in {
+  from {
+    transform: translateX(100%);
+  }
 }
 
 @layer base {
@@ -52,6 +94,8 @@
     color: var(--color-ink);
     font-family: var(--font-sans);
     letter-spacing: -0.02em;
+    /* 프로토타입은 줄 높이를 정하지 않아 브라우저 기본값(normal)이다. Tailwind 기본 1.5 대신 보이는 값에 맞춘다 */
+    line-height: normal;
   }
 
   /* 브라우저 기본 UI 정리 — design/snippets/browser-default-ui.css · CLAUDE.md 6장 표 */

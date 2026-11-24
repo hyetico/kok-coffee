@@ -35,18 +35,23 @@ export const site = {
     { label: "배송 · 교환 안내" },
   ] satisfies MenuItem[],
 
-  business: [
-    { label: "상호", value: "(주)코케커피" },
-    { label: "대표", value: "한서윤" },
-    { label: "사업자등록번호", value: "123-45-67890" },
-    { label: "통신판매업신고", value: "제2026-서울성동-0000호" },
-    {
-      label: "주소",
-      value: "서울특별시 성동구 성수이로 00, 3층 (코케 성수 쇼룸)",
-    },
-    { label: "개인정보보호책임자", value: "정다온" },
-    { label: "호스팅 제공", value: "Vercel Inc." },
-  ] satisfies LabeledValue[],
+  /** 푸터에서 두 줄로 나눠 보인다 (모바일은 항목마다 한 줄) */
+  businessLines: [
+    [
+      { label: "상호", value: "(주)코케커피" },
+      { label: "대표", value: "한서윤" },
+      { label: "사업자등록번호", value: "123-45-67890" },
+      { label: "통신판매업신고", value: "제2026-서울성동-0000호" },
+    ],
+    [
+      {
+        label: "주소",
+        value: "서울특별시 성동구 성수이로 00, 3층 (코케 성수 쇼룸)",
+      },
+      { label: "개인정보보호책임자", value: "정다온" },
+      { label: "호스팅 제공", value: "Vercel Inc." },
+    ],
+  ] satisfies LabeledValue[][],
 
   notice:
     "© 2026 koke. 이 사이트는 웹 퍼블리싱 포트폴리오용 리뉴얼 작업물이에요. 실제 판매와 결제는 되지 않고, 사업자 정보와 연락처는 예시입니다.",
