@@ -234,6 +234,7 @@ CONTENT_TODO.md  아직 비어 있는 칸 목록 (사용자가 채울 것) · �
   - 외부 CDN을 써도 되면: Pretendard `pretendardvariable-dynamic-subset.css`
   - 직접 넣을 때: ① 사이트에 실제로 쓰인 글자 파일(작게 · preload) ② 나머지 한글 2,350자 + 영문 · 숫자 · 기호 파일로 나누고 unicode-range로 필요한 것만 받게 한다. 가변 폰트 유지 · display: swap. (Next.js 기준) next/font/local + adjustFontFallback.
   - 글자 목록 파일(scripts/font-subset-chars.txt)과 만드는 스크립트를 함께 둬서, 새 글자가 생기면 다시 만든다.
+  - 도구: subset-font (npm run font:subset)
 - 이미지: webp · 한 장 500KB 이하 · 크기(width/height) 지정. (Next.js 기준) next/image. `public/images/`의 상품 · 로스터리 이미지는 이미 webp.
 - 파비콘 · 아이콘은 16px 실제 픽셀에서 먼저 확인한다(밝은 탭 · 어두운 탭 · 홈 화면 180 · 공유 이미지 1200×630). `public/`에 세트가 있다.
 - 같은 이름으로 파일을 덮어쓰면 브라우저 캐시에 예전 파일이 남을 수 있다. 확인 화면에서 바뀌지 않으면 캐시부터 의심한다.
