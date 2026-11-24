@@ -55,7 +55,8 @@
     sans-serif;
 }
 
-/* 본문 폭 컨테이너 (.k2-wrap) — 헤더 · 본문 · 푸터가 같은 왼쪽 선을 쓴다 */
+/* 본문 폭 컨테이너 (.k2-wrap) — 헤더 · 본문 · 푸터가 같은 왼쪽 선을 쓴다.
+   flex · grid 자식에 바로 붙이지 않는다: 좌우 margin auto 때문에 내용만큼만 폭을 잡는다 (body는 세로 flex) */
 @utility page-wrap {
   /* 프로토타입처럼 좌우 여백을 폭 밖에 더한다 — 내용 폭이 1280이 된다 */
   box-sizing: content-box;
@@ -103,6 +104,68 @@ html[data-header-hidden] .site-header {
   }
   html[data-header-hidden] .site-header {
     transform: none;
+  }
+}
+
+/* 스켈레톤 빛 흐름 */
+@keyframes skeleton {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* 목록 도구 줄 · 왼쪽 필터는 헤더 바로 아래 고정, 헤더가 숨으면 맨 위로 따라 올라간다 (03 「목록 도구 줄」 · 「스크롤 시 헤더」) */
+.list-bar {
+  position: sticky;
+  top: 56px;
+  z-index: 6;
+  transition: top 0.25s ease;
+}
+.list-side {
+  position: sticky;
+  top: 60px;
+  height: calc(100dvh - 60px);
+  transition: top 0.25s ease;
+}
+html[data-header-hidden] .list-bar,
+html[data-header-hidden] .list-side {
+  top: 0;
+}
+html[data-header-hidden] .list-side {
+  height: 100dvh;
+}
+/* 초점이 고정된 헤더 + 도구 줄 아래로 가려지지 않게 (헤더 + 도구 줄 + 여유 24) */
+html:has(.list-bar) {
+  scroll-padding-top: 154px;
+}
+@media (width >= 1024px) {
+  .list-bar {
+    top: 60px;
+  }
+  html:has(.list-bar) {
+    scroll-padding-top: 165px;
+  }
+  html[data-header-hidden]:has(.list-bar) {
+    scroll-padding-top: 105px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .list-bar,
+  .list-side {
+    transition: none;
+  }
+}
+@media (max-height: 560px) {
+  .list-bar,
+  .list-side {
+    position: static;
+    height: auto;
+  }
+  html:has(.list-bar) {
+    scroll-padding-top: 0;
   }
 }
 

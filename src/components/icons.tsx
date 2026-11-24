@@ -64,3 +64,19 @@ export function ChevronDownIcon(props: IconProps) {
     </Svg>
   );
 }
+
+export function FilterIcon(props: IconProps) {
+  return (
+    <Svg size={16} strokeWidth={2} {...props}>
+      <path d="M4 6h16M7 12h10M10 18h4" />
+    </Svg>
+  );
+}
+
+export function CheckIcon(props: IconProps) {
+  return (
+    <Svg size={16} strokeWidth={2.4} {...props}>
+      <path d="M5 12l5 5 9-10" />
+    </Svg>
+  );
+}

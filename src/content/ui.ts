@@ -133,6 +133,9 @@ export const ui = {
     searchLabel: "원두 검색",
     searchPlaceholder: "이 목록에서 원두 검색",
     total: (count: number) => `총 ${count}개`,
+    /** 「총 n개」에서 숫자만 진하게 보이도록 앞뒤 글을 나눠 둔다 */
+    totalPrefix: "총",
+    totalSuffix: "개",
     /** 타이틀을 지나 스크롤하면 도구 줄에 페이지 이름과 함께 보인다 (02 PRD 3장) */
     pastTitle: (page: string, count: number) => `${page} · ${count}개`,
     countOnly: (count: number) => `${count}개`,

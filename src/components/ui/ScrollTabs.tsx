@@ -8,6 +8,8 @@ type ScrollTabsProps = {
   value: number;
   onChange: (index: number) => void;
   label: string;
+  /** section: 메인 섹션 안 탭(간격 24 · 높이 44) · page: 페이지 제목 아래 종류 탭(간격 28 · 높이 48) */
+  size?: "section" | "page";
   className?: string;
 };
 
@@ -21,6 +23,7 @@ export function ScrollTabs({
   value,
   onChange,
   label,
+  size = "section",
   className = "",
 }: ScrollTabsProps) {
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -49,7 +52,7 @@ export function ScrollTabs({
       aria-label={label}
       onKeyDown={onKeyDown}
       // 아래 1px 선은 탭 밑줄과 겹치도록 그림자로 그린다
-      className={`flex gap-6 overflow-x-auto overflow-y-hidden shadow-[inset_0_-1px_0_var(--color-line)] [scroll-padding-inline:48px] [scrollbar-width:none] max-xl:pr-12 max-xl:[mask-image:linear-gradient(to_right,#000_calc(100%-48px),transparent)] [&::-webkit-scrollbar]:hidden ${className}`}
+      className={`flex ${size === "page" ? "gap-7" : "gap-6"} overflow-x-auto overflow-y-hidden shadow-[inset_0_-1px_0_var(--color-line)] [scroll-padding-inline:48px] [scrollbar-width:none] max-xl:pr-12 max-xl:[mask-image:linear-gradient(to_right,#000_calc(100%-48px),transparent)] [&::-webkit-scrollbar]:hidden ${className}`}
     >
       {items.map((item, i) => (
         <button
@@ -57,7 +60,7 @@ export function ScrollTabs({
           type="button"
           aria-pressed={i === value}
           onClick={() => onChange(i)}
-          className="min-h-11 shrink-0 cursor-pointer border-b-2 border-transparent text-base font-medium text-muted hover:text-ink aria-pressed:border-primary aria-pressed:font-bold aria-pressed:text-ink"
+          className={`${size === "page" ? "h-12" : "min-h-11"} shrink-0 cursor-pointer border-b-2 border-transparent text-base font-medium text-muted hover:text-ink aria-pressed:border-primary aria-pressed:font-bold aria-pressed:text-ink`}
         >
           {item}
         </button>
