@@ -1,0 +1,7 @@
+# handoff 원본은 그대로 둔다 (디자인 쪽 원본과 비교하기 위해)
+docs/
+src/data/
+CLAUDE.md
+CONTENT_TODO.md
+AGENTS.md
+package-lock.json

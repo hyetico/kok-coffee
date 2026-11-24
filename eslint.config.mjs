@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // handoff 자료 (CLAUDE.md 3장)
+    ".tmp/**",
+    "design/**",
   ]),
 ]);
 
