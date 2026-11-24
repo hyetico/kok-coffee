@@ -11,13 +11,8 @@ export const site = {
   support: {
     title: "고객센터",
     phone: "1588-0000",
-    hours: "평일 10:00 – 18:00 (점심 12:30 – 13:30) · 주말 · 공휴일 휴무",
-    channels: "카카오톡 채널 「코케커피」 1:1 상담 · help@koke.example",
-  },
-
-  showroom: {
-    title: "코케 성수 쇼룸",
-    hours: "화 – 일 11:00 – 19:00 (월 휴무) · 매주 토요일 오후 2시 무료 시음회",
+    hours: "평일 10:00 – 18:00 · 주말 · 공휴일 휴무",
+    channels: "카카오톡 「코케커피」 · help@koke.example",
   },
 
   /** 만들 페이지가 없어 링크 없는 글자로 둔다 (02 PRD 4장). 페이지가 생기면 href를 채운다 */

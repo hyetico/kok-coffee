@@ -20,11 +20,10 @@
   --color-primary-press: #12301f;
   --color-option-on: #f3f8f5;
   --color-map-dot: #9db5a6;
-  /* 05 색 표에는 없고 프로토타입에서 쓰는 값 — 디자인 쪽 확인 전까지 측정값 그대로 둔다 */
   --color-ghost-hover: #e3ece6;
   --color-ghost-press: #d5e2d9;
   --color-disabled-ink: #9aa59e;
-  --color-separator: #c9d2cc;
+  --color-footer-line: #c9d2cc;
 
   /* 글자 크기 클래스가 줄 높이까지 바꾸지 않게 한다. 프로토타입은 크기만 정하고 줄 높이는 부모 값을 물려받는다
      (값 inherit는 변수를 무효로 만들어 line-height가 부모 값을 그대로 쓰게 된다). 줄 높이가 필요하면 leading-*를 따로 쓴다 */
@@ -94,7 +93,7 @@
     color: var(--color-ink);
     font-family: var(--font-sans);
     letter-spacing: -0.02em;
-    /* 프로토타입은 줄 높이를 정하지 않아 브라우저 기본값(normal)이다. Tailwind 기본 1.5 대신 보이는 값에 맞춘다 */
+    /* 본문 줄 높이는 기본값(normal), 여러 줄로 읽는 긴 글만 1.7 (05 「글자」 body) */
     line-height: normal;
   }
 

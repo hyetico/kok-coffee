@@ -30,7 +30,7 @@ function BusinessLine({
           {i > 0 && (
             <span
               aria-hidden="true"
-              className="mx-2.5 hidden h-2.5 w-px bg-separator align-[-1px] sm:inline-block"
+              className="mx-2.5 hidden h-2.5 w-px bg-footer-line align-[-1px] sm:inline-block"
             />
           )}
           <span className="block sm:inline">
@@ -60,10 +60,6 @@ export function Footer() {
             </p>
             <p className="mt-1.5 mb-0">{site.support.hours}</p>
             <p className="m-0">{site.support.channels}</p>
-            <p className="mt-3 mb-0 text-base font-bold text-ink">
-              {site.showroom.title}
-            </p>
-            <p className="mt-1.5 mb-0">{site.showroom.hours}</p>
           </div>
           <MenuList items={site.supportMenu} label={ui.footer.supportLabel} />
         </div>
