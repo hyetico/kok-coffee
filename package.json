@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "postinstall": "xattr -w 'com.apple.fileprovider.ignore#P' 1 node_modules 2>/dev/null || true",
+    "predev": "mkdir -p .next && xattr -w 'com.apple.fileprovider.ignore#P' 1 .next 2>/dev/null || true",
+    "prebuild": "mkdir -p .next && xattr -w 'com.apple.fileprovider.ignore#P' 1 .next 2>/dev/null || true"
   },
   "dependencies": {
     "next": "16.4.6",
