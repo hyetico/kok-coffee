@@ -24,6 +24,8 @@
   --color-ghost-press: #d5e2d9;
   --color-disabled-ink: #9aa59e;
   --color-footer-line: #c9d2cc;
+  /* 05 「색 — 상태」 토스트 링크 */
+  --color-toast-link: #bfd8c9;
 
   /* 글자 크기 클래스가 줄 높이까지 바꾸지 않게 한다. 프로토타입은 크기만 정하고 줄 높이는 부모 값을 물려받는다
      (값 inherit는 변수를 무효로 만들어 line-height가 부모 값을 그대로 쓰게 된다). 줄 높이가 필요하면 leading-*를 따로 쓴다 */

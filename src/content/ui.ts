@@ -16,6 +16,9 @@ export const navItems = [
 export type NavKey = (typeof navItems)[number]["key"];
 
 export const ui = {
+  /** 섹션 오른쪽 「전체 보기 >」 */
+  more: "전체 보기",
+
   /** 모든 페이지 첫 초점 (CLAUDE.md 7장) */
   skipToContent: "본문으로 건너뛰기",
 
