@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { CloseIcon, SearchIcon } from "@/components/icons";
+import { ProductThumb } from "@/components/product/ProductThumb";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
 import { ClearButton } from "@/components/ui/ClearButton";
@@ -41,13 +41,7 @@ function ProductRow({
         onClick={onPick}
         className="flex items-center gap-3 rounded-lg p-2 text-ink no-underline hover:bg-surface"
       >
-        <Image
-          src={product.image}
-          alt=""
-          width={52}
-          height={52}
-          className="size-13 shrink-0 rounded-md bg-surface object-contain mix-blend-multiply"
-        />
+        <ProductThumb src={product.image} size={52} />
         <span className="min-w-0">
           <span className="block text-xs text-muted">{product.roastery}</span>
           <span className="block text-base font-semibold">{product.title}</span>

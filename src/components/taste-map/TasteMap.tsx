@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { AddToCartButton } from "@/components/product/AddToCartButton";
+import { ProductThumb } from "@/components/product/ProductThumb";
 import { Segmented } from "@/components/ui/Segmented";
 import { home } from "@/content/home";
 import { ui } from "@/content/ui";
@@ -129,15 +129,7 @@ export function TasteMap({ products }: { products: MappedProduct[] }) {
           aria-live="polite"
           className="mt-3 flex items-center gap-4 rounded-xl bg-bg p-3.5"
         >
-          <div className="shrink-0 overflow-hidden rounded-md bg-photo-bg">
-            <Image
-              src={selected.image}
-              alt=""
-              width={72}
-              height={72}
-              className="block size-18 object-contain mix-blend-multiply"
-            />
-          </div>
+          <ProductThumb src={selected.image} size={72} />
           <div className="min-w-0 flex-1">
             <p className="m-0 text-sm text-muted">{selected.roastery}</p>
             <p className="mt-0.5 mb-0 text-base font-bold">
