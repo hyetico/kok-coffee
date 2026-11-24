@@ -12,6 +12,7 @@ import { navItems } from "@/content/ui";
 import { coffeeNote, relatedProducts } from "@/lib/coffeeNote";
 import { getAllProducts, getProduct } from "@/lib/catalog";
 import { formatWon } from "@/lib/format";
+import { roasteryOf } from "@/lib/roastery";
 
 export function generateStaticParams() {
   return getAllProducts().map((p) => ({ id: p.id }));
@@ -28,6 +29,7 @@ export default async function CoffeeDetailPage({
 
   const note = coffeeNote(product);
   const related = relatedProducts(product);
+  const roastery = roasteryOf(product);
   const listLabel = navItems.find((n) => n.key === "coffee")?.label;
   const crumb =
     "-mx-1.5 -my-0.75 inline-block px-1.5 py-0.75 text-muted no-underline hover:text-ink";
@@ -165,10 +167,10 @@ export default async function CoffeeDetailPage({
                 height={28}
                 className="size-7 shrink-0 rounded-full bg-bg object-contain p-px shadow-[0_0_0_1px_var(--color-line)]"
               />
-              {/* 「함께하는 로스터리」에 있는 곳만 소개 페이지가 있다 (CONTENT_TODO) */}
-              {product.roasteryId ? (
+              {/* 「함께하는 로스터리」에 있는 곳만 소개 페이지가 있다 — 이름으로도 찾는다 (lib/roastery.ts) */}
+              {roastery ? (
                 <Link
-                  href={`/roasteries/${product.roasteryId}`}
+                  href={`/roasteries/${roastery.id}`}
                   className="-my-0.5 inline-block py-0.5 text-muted"
                 >
                   {product.roastery}
