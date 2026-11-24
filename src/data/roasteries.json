@@ -1,0 +1,98 @@
+[
+  {
+    "id": "r01",
+    "name": "커넥츠커피",
+    "logo": "/images/roasteries/r01.webp",
+    "source": "react:roa_01.png"
+  },
+  {
+    "id": "r02",
+    "name": "180로스터리",
+    "logo": "/images/roasteries/r02.webp",
+    "source": "react:roa_02.png"
+  },
+  {
+    "id": "r03",
+    "name": "리플로우 커피 로스터리",
+    "logo": "/images/roasteries/r03.webp",
+    "source": "react:roa_03.png"
+  },
+  {
+    "id": "r04",
+    "name": "슬러펀 커피",
+    "logo": "/images/roasteries/r04.webp",
+    "source": "react:roa_04.png"
+  },
+  {
+    "id": "r05",
+    "name": "링크 커피",
+    "logo": "/images/roasteries/r05.webp",
+    "source": "react:roa_05.png"
+  },
+  {
+    "id": "r06",
+    "name": "컬러드 빈",
+    "logo": "/images/roasteries/r06.webp",
+    "source": "react:roa_06.png"
+  },
+  {
+    "id": "r07",
+    "name": "프로토콜 로스터스",
+    "logo": "/images/roasteries/r07.webp",
+    "source": "react:roa_07.png"
+  },
+  {
+    "id": "r08",
+    "name": "오드이븐",
+    "logo": "/images/roasteries/r08.webp",
+    "source": "react:roa_08.png"
+  },
+  {
+    "id": "r09",
+    "name": "카페플롬",
+    "logo": "/images/roasteries/r09.webp",
+    "source": "react:roa_09.png"
+  },
+  {
+    "id": "r10",
+    "name": "하늘에커피",
+    "logo": "/images/roasteries/r10.webp",
+    "source": "react:roa_10.png"
+  },
+  {
+    "id": "r11",
+    "name": "하우트 커피컴퍼니",
+    "logo": "/images/roasteries/r11.webp",
+    "source": "react:roa_11.png"
+  },
+  {
+    "id": "r12",
+    "name": "디벨로핑룸",
+    "logo": "/images/roasteries/r12.webp",
+    "source": "react:roa2_04.png"
+  },
+  {
+    "id": "r13",
+    "name": "디카프워크룸",
+    "logo": "/images/roasteries/r13.webp",
+    "source": "react:roa2_05.png"
+  },
+  {
+    "id": "r14",
+    "name": "선빌리지 커피",
+    "logo": "/images/roasteries/r14.webp",
+    "source": "react:roa2_06.png"
+  },
+  {
+    "id": "r15",
+    "name": "리플렉트 커피 로스터스",
+    "logo": "/images/roasteries/r15.webp",
+    "source": "react:roa2_07.png"
+  },
+  {
+    "id": "r16",
+    "name": "토치커피",
+    "logo": "/images/roasteries/r16.webp",
+    "source": "react:roa2_08.png"
+  }
+]
