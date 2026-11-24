@@ -101,13 +101,13 @@ export function ListMap({ products }: { products: MappedProduct[] }) {
             {formatWon(selected.price)}
           </p>
           <div className="mt-4 grid grid-cols-2 gap-2">
-            <Button href={`/coffee/${selected.id}`} kind="secondary">
+            <Button href={`/coffee/${selected.id}`} kind="ghost" size="panel">
               {ui.product.detail}
             </Button>
             <AddToCartButton
               productId={selected.id}
               title={selected.title}
-              variant="primary"
+              variant="panel"
             />
           </div>
         </div>

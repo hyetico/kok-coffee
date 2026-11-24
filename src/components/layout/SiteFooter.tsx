@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Footer } from "./Footer";
 
-/** 푸터 위 여백(120)을 빼는 주소. 본문이 스스로 아래 여백을 갖는 페이지만 넣는다 */
+/** 푸터 위 여백(80)을 빼는 주소. 본문이 스스로 아래 여백을 갖는 페이지만 넣는다 */
 const NO_FOOTER_SPACE = ["/coffee"];
 
 /**

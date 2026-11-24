@@ -147,7 +147,7 @@ export function TasteMap({ products }: { products: MappedProduct[] }) {
           <AddToCartButton
             productId={selected.id}
             title={selected.title}
-            variant="primary"
+            variant="panel"
           />
         </div>
       )}

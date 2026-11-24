@@ -9,8 +9,8 @@ import { useToast } from "@/store/toast";
 type AddToCartButtonProps = {
   productId: string;
   title: string;
-  /** card: 카드 아래 작은 보조 버튼(꽉 채움) · primary: 맛 지도 고른 원두 카드 */
-  variant?: "card" | "primary";
+  /** card: 카드 아래 작은 버튼(꽉 채움, 36) · panel: 맛 지도 고른 원두 · 목록 지도 카드(40) */
+  variant?: "card" | "panel";
 };
 
 /**
@@ -30,13 +30,16 @@ export function AddToCartButton({
       link: { href: "/cart", label: ui.toast.viewCart },
     });
   };
-  if (variant === "primary")
+  // 「담기」는 어디서나 보조 버튼 + 아이콘 (05 「담기」 버튼). 지도 패널은 높이 40
+  if (variant === "panel")
     return (
       <Button
-        kind="primary"
+        kind="secondary"
         onClick={add}
         aria-label={ui.product.addLabel(title)}
+        size="panel"
       >
+        <CartIcon size={16} />
         {ui.product.add}
       </Button>
     );

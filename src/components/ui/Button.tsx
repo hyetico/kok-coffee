@@ -2,12 +2,12 @@ import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
 type Kind = "primary" | "secondary" | "ghost" | "text";
-type Size = "lg" | "md" | "sm";
+type Size = "lg" | "md" | "panel" | "sm";
 
 type CommonProps = {
   /** 화면에서 가장 중요한 동작 하나에만 primary를 쓴다 */
   kind?: Kind;
-  /** lg 52 · md 44 · sm 36 */
+  /** lg 52 · md 44 · panel 40(맛 지도 · 목록 지도 카드) · sm 36 */
   size?: Size;
   /** 부모 폭을 꽉 채운다 (드로어 · 시트 아래 버튼) */
   block?: boolean;
@@ -32,7 +32,7 @@ const kinds: Record<Kind, string> = {
   primary:
     "border-transparent bg-primary text-white hover:bg-primary-hover active:bg-primary-press",
   secondary:
-    "border-line-control bg-bg text-ink hover:border-ink active:bg-surface",
+    "border-line-control bg-bg text-ink hover:border-primary hover:bg-secondary-hover hover:text-primary active:bg-secondary-press",
   ghost:
     "border-transparent bg-surface text-ink hover:bg-ghost-hover active:bg-ghost-press",
   text: "min-h-8 border-transparent px-2 text-sm font-medium text-muted hover:bg-surface hover:text-ink disabled:bg-transparent",
@@ -42,6 +42,7 @@ const kinds: Record<Kind, string> = {
 const sizes: Record<Size, string> = {
   lg: "h-13 px-6 text-base",
   md: "h-11 px-5 text-base",
+  panel: "h-10 px-5 text-base",
   sm: "h-9 px-3.5 text-sm",
 };
 

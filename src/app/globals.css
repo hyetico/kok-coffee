@@ -16,12 +16,14 @@
   --color-photo-bg: #eff3f0;
   --color-error: #b8321d;
   --color-primary: #1f4d3a;
-  --color-primary-hover: #173b2c;
-  --color-primary-press: #12301f;
+  --color-primary-hover: #143326;
+  --color-primary-press: #0e261c;
   --color-option-on: #f3f8f5;
   --color-map-dot: #9db5a6;
-  --color-ghost-hover: #e3ece6;
-  --color-ghost-press: #d5e2d9;
+  --color-ghost-hover: #dce7e0;
+  --color-ghost-press: #cfded4;
+  --color-secondary-hover: #e6efe9;
+  --color-secondary-press: #d9e6dd;
   --color-disabled-ink: #9aa59e;
   --color-footer-line: #c9d2cc;
   /* 05 「색 — 상태」 토스트 링크 */

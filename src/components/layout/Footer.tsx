@@ -30,7 +30,7 @@ function BusinessLine({
           {i > 0 && (
             <span
               aria-hidden="true"
-              className="mx-2.5 hidden h-2.5 w-px bg-footer-line align-[-1px] sm:inline-block"
+              className="mx-3 hidden h-2.5 w-px bg-footer-line align-[-1px] sm:inline-block"
             />
           )}
           <span className="block sm:inline">
@@ -43,7 +43,7 @@ function BusinessLine({
 }
 
 type FooterProps = {
-  /** 본문과 푸터 사이 위 여백(120). 본문이 스스로 아래 여백을 갖는 페이지(목록)는 false */
+  /** 본문과 푸터 사이 위 여백(80). 본문이 스스로 아래 여백을 갖는 페이지(목록)는 false */
   spaced?: boolean;
 };
 
@@ -54,30 +54,30 @@ type FooterProps = {
 export function Footer({ spaced = true }: FooterProps) {
   return (
     <footer
-      className={`${spaced ? "mt-30" : ""} border-t border-line bg-footer-bg text-sm leading-[1.7] text-muted`}
+      className={`${spaced ? "mt-20" : ""} border-t border-line bg-footer-bg text-sm leading-[1.7] text-muted`}
     >
       <div className="page-wrap">
-        <div className="flex flex-wrap justify-between gap-8 border-b border-line-soft pt-12 pb-8">
+        <div className="flex flex-wrap justify-between gap-8 border-b border-line-soft pt-8 pb-6">
           <div>
             <p className="m-0 text-base font-bold text-ink">
               {site.support.title}
             </p>
-            <p className="mt-1.5 mb-0 text-[26px] font-bold tracking-[-0.01em] text-ink">
+            <p className="mt-1 mb-0 text-2xl font-bold tracking-[-0.01em] text-ink">
               {site.support.phone}
             </p>
-            <p className="mt-1.5 mb-0">{site.support.hours}</p>
+            <p className="mt-2 mb-0">{site.support.hours}</p>
             <p className="m-0">{site.support.channels}</p>
           </div>
           <MenuList items={site.supportMenu} label={ui.footer.supportLabel} />
         </div>
-        <div className="pt-7 pb-14">
+        <div className="pt-6 pb-8">
           <MenuList items={site.policyMenu} />
-          <div className="mt-4">
+          <div className="mt-3">
             {site.businessLines.map((line, i) => (
               <BusinessLine key={i} items={line} />
             ))}
           </div>
-          <p className="mt-4 mb-0">{site.notice}</p>
+          <p className="mt-3 mb-0">{site.notice}</p>
         </div>
       </div>
     </footer>
