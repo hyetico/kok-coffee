@@ -17,6 +17,8 @@ type CartState = {
   /** 지운 줄을 되돌리기 위해 지우기 전 목록을 돌려준다 */
   remove: (indexes: number[]) => CartItem[];
   restore: (items: CartItem[]) => void;
+  /** 바로 구매: 다른 줄은 선택을 풀고, 이 상품 · 옵션 한 줄만 고른 수량으로 선택해 둔다 (주문서가 선택된 줄만 쓴다) */
+  buyNow: (item: NewItem) => void;
 };
 
 const sameLine = (a: NewItem, b: NewItem) =>
@@ -67,6 +69,14 @@ export const useCart = create<CartState>()(
         return before;
       },
       restore: (items) => set({ items }),
+      buyNow: (item) =>
+        set(({ items }) => {
+          const others = items.map((x) => ({ ...x, checked: false }));
+          const i = others.findIndex((x) => sameLine(x, item));
+          const line = { ...item, qty: clampQty(item.qty), checked: true };
+          if (i === -1) return { items: [...others, line] };
+          return { items: others.map((x, j) => (j === i ? line : x)) };
+        }),
     }),
     { name: "koke-cart" },
   ),
