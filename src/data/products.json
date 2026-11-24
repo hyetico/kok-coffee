@@ -12,8 +12,7 @@
     "source": "./img/detail/thumbnail_01.JPG",
     "mapPosition": {
       "x": 40,
-      "y": 60,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 60
     },
     "roasteryLogo": "/images/roasteries/brand-01.webp"
   },
@@ -30,8 +29,7 @@
     "source": "./img/main/best_img_02.png",
     "mapPosition": {
       "x": 68,
-      "y": 74,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 74
     },
     "roasteryLogo": "/images/roasteries/brand-02.webp"
   },
@@ -48,8 +46,7 @@
     "source": "./img/main/best_img_03.jpg",
     "mapPosition": {
       "x": 58,
-      "y": 46,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 46
     },
     "roasteryLogo": "/images/roasteries/brand-03.webp"
   },
@@ -66,8 +63,7 @@
     "source": "./img/main/best_img_04.jpg",
     "mapPosition": {
       "x": 46,
-      "y": 40,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 40
     },
     "roasteryLogo": "/images/roasteries/brand-04.webp"
   },
@@ -84,8 +80,7 @@
     "source": "./img/main/tab_02/70f288881c294426af466876ba263216.jpg",
     "mapPosition": {
       "x": 34,
-      "y": 30,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 30
     },
     "roasteryLogo": "/images/roasteries/brand-05.webp"
   },
@@ -102,8 +97,7 @@
     "source": "./img/main/tab_04/3993e6f53a0346589d5c52156a5c200d.jpg",
     "mapPosition": {
       "x": 90,
-      "y": 84,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 84
     },
     "roasteryLogo": "/images/roasteries/brand-06.webp"
   },
@@ -120,8 +114,7 @@
     "source": "./img/main/tab_04/a53a0eeaed0e405c97bb0f58c35653c5.jpg",
     "mapPosition": {
       "x": 80,
-      "y": 54,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 54
     },
     "roasteryLogo": "/images/roasteries/brand-07.webp"
   },
@@ -138,8 +131,7 @@
     "source": "./img/main/tab_04/e1f99f02be824ee294a988bd3761dfb1.jpg",
     "mapPosition": {
       "x": 86,
-      "y": 68,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 68
     },
     "roasteryLogo": "/images/roasteries/brand-08.webp"
   },
@@ -156,8 +148,7 @@
     "source": "./img/main/tab_06/a76f0b22321f4c409af6446fd17e4ba9.jpg",
     "mapPosition": {
       "x": 66,
-      "y": 60,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 60
     },
     "roasteryLogo": "/images/roasteries/brand-09.webp"
   },
@@ -174,8 +165,7 @@
     "source": "./img/main/tab_02/472dea3776a249e5a6f681254e8e551e.jpg",
     "mapPosition": {
       "x": 26,
-      "y": 38,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 38
     },
     "roasteryLogo": "/images/roasteries/brand-06.webp"
   },
@@ -192,8 +182,7 @@
     "source": "./img/main/tab_06/830b86bf5e624b8d83129a12471e9f16.jpg",
     "mapPosition": {
       "x": 74,
-      "y": 84,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 84
     },
     "roasteryLogo": "/images/roasteries/brand-10.webp"
   },
@@ -210,8 +199,7 @@
     "source": "./img/main/tab_02/e1c3aabb3722407fb3e3fa703fbce898.jpg",
     "mapPosition": {
       "x": 12,
-      "y": 12,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 12
     },
     "roasteryLogo": "/images/roasteries/brand-11.webp"
   },
@@ -228,8 +216,7 @@
     "source": "./img/main/tab_02/cc00cef1ef34480aaad6a61b546d70ab.jpg",
     "mapPosition": {
       "x": 10,
-      "y": 44,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 44
     },
     "roasteryLogo": "/images/roasteries/brand-12.webp"
   },
@@ -246,8 +233,7 @@
     "source": "./img/main/tab_03/3336b81dedfb4b618d6aba2ab12d6d31.png",
     "mapPosition": {
       "x": 22,
-      "y": 20,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 20
     },
     "roasteryLogo": "/images/roasteries/brand-13.webp"
   },
@@ -264,8 +250,7 @@
     "source": "./img/main/tab_03/ee4fe5d6f74444f981792b22fbeaa350.png",
     "mapPosition": {
       "x": 42,
-      "y": 20,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 20
     },
     "roasteryLogo": "/images/roasteries/brand-14.webp"
   },
@@ -282,8 +267,7 @@
     "source": "./img/main/tab_03/8264a22664284a0c8e52753f59e3bab1.png",
     "mapPosition": {
       "x": 8,
-      "y": 28,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 28
     },
     "roasteryLogo": "/images/roasteries/brand-15.webp"
   },
@@ -300,13 +284,13 @@
     "source": "./img/main/tab_03/c0bfe3d4f0bd440c8409ad18f6da7f8c.png",
     "mapPosition": {
       "x": 28,
-      "y": 10,
-      "_note": "(추측) 맛 노트로 정한 자리 — CONTENT_TODO 참고"
+      "y": 10
     },
     "roasteryLogo": "/images/roasteries/brand-16.webp"
   },
   {
     "id": "c2",
+    "brandOnly": true,
     "title": "발렌타인",
     "roasteryId": "r01",
     "roastery": "커넥츠커피",
@@ -316,10 +300,13 @@
     "decaf": false,
     "image": "/images/products/c2.webp",
     "source": "react:connectsproduct_02.png",
-    "roasteryLogo": "/images/roasteries/brand-17.webp"
+    "roasteryLogo": "/images/roasteries/brand-17.webp",
+    "mapPosition": null,
+    "_mapNote": "맛 지도에 표시하지 않음(커넥츠커피 브랜드 페이지 전용 상품)"
   },
   {
     "id": "c3",
+    "brandOnly": true,
     "title": "커넥츠 블렌드",
     "roasteryId": "r01",
     "roastery": "커넥츠커피",
@@ -329,10 +316,13 @@
     "decaf": false,
     "image": "/images/products/c3.webp",
     "source": "react:connectsproduct_03.png",
-    "roasteryLogo": "/images/roasteries/brand-17.webp"
+    "roasteryLogo": "/images/roasteries/brand-17.webp",
+    "mapPosition": null,
+    "_mapNote": "맛 지도에 표시하지 않음(커넥츠커피 브랜드 페이지 전용 상품)"
   },
   {
     "id": "c4",
+    "brandOnly": true,
     "title": "브라이트",
     "roasteryId": "r01",
     "roastery": "커넥츠커피",
@@ -342,6 +332,76 @@
     "decaf": false,
     "image": "/images/products/c4.webp",
     "source": "react:connectsproduct_04.png",
-    "roasteryLogo": "/images/roasteries/brand-17.webp"
+    "roasteryLogo": "/images/roasteries/brand-17.webp",
+    "mapPosition": null,
+    "_mapNote": "맛 지도에 표시하지 않음(커넥츠커피 브랜드 페이지 전용 상품)"
+  },
+  {
+    "id": "p18",
+    "title": "아이리스",
+    "roasteryId": null,
+    "roastery": "앰비언스",
+    "price": 14000,
+    "notes": "화사한 & 과일",
+    "type": "blend",
+    "decaf": false,
+    "image": "/images/products/p18.webp",
+    "source": "(메인 화면 원두)",
+    "mapPosition": {
+      "x": 18,
+      "y": 24
+    },
+    "roasteryLogo": "/images/roasteries/brand-06.webp"
+  },
+  {
+    "id": "p19",
+    "title": "클래식 에스프레소",
+    "roasteryId": null,
+    "roastery": "리플렉트",
+    "price": 13000,
+    "notes": "밸런스 & 부드러운",
+    "type": "blend",
+    "decaf": false,
+    "image": "/images/products/p19.webp",
+    "source": "(메인 화면 원두)",
+    "mapPosition": {
+      "x": 60,
+      "y": 66
+    },
+    "roasteryLogo": "/images/roasteries/brand-05.webp"
+  },
+  {
+    "id": "p20",
+    "title": "콜롬비아 디카페인",
+    "roasteryId": null,
+    "roastery": "하늘에커피",
+    "price": 11000,
+    "notes": "밸런스 & 견과류",
+    "type": "single",
+    "decaf": true,
+    "image": "/images/products/p20.webp",
+    "source": "(메인 화면 원두)",
+    "mapPosition": {
+      "x": 52,
+      "y": 54
+    },
+    "roasteryLogo": "/images/roasteries/brand-02.webp"
+  },
+  {
+    "id": "p21",
+    "title": "엘리 크릭",
+    "roasteryId": null,
+    "roastery": "프레이저커피",
+    "price": 15000,
+    "notes": "밸런스 & 부드러운",
+    "type": "blend",
+    "decaf": false,
+    "image": "/images/products/p21.webp",
+    "source": "(메인 화면 원두)",
+    "mapPosition": {
+      "x": 46,
+      "y": 50
+    },
+    "roasteryLogo": "/images/roasteries/brand-11.webp"
   }
 ]
