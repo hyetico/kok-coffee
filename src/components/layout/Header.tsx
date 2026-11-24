@@ -7,8 +7,11 @@ import { Suspense, useState } from "react";
 import { CartIcon, MenuIcon, SearchIcon } from "@/components/icons";
 import { navItems, ui, type NavKey } from "@/content/ui";
 import { useCartCount } from "@/hooks/useCartCount";
+import { useHomeHeaderCompact } from "@/hooks/useHomeHeaderCompact";
 import { activeNavKey } from "./nav";
 import { MobileMenu } from "./MobileMenu";
+import { RoasteryDropdown } from "./RoasteryDropdown";
+import { SearchLayer } from "./SearchLayer";
 
 const iconButton =
   "inline-grid size-11 shrink-0 place-items-center rounded-lg text-ink hover:bg-surface aria-expanded:bg-surface";
@@ -34,39 +37,47 @@ function Logo() {
 }
 
 /** 현재 메뉴는 ink 굵게 + primary 밑줄이 헤더 아래 선 위에 겹친다 (margin-bottom -1) */
+type NavProps = {
+  className: string;
+  itemHeight: string;
+  /** 홈(웹)에서만 「로스터리」를 펼침 메뉴로 */
+  roasteryMenu?: boolean;
+};
+
 function NavLinks({
   active,
   className,
   itemHeight,
-}: {
-  active: NavKey | null;
-  className: string;
-  itemHeight: string;
-}) {
+  roasteryMenu,
+}: NavProps & { active: NavKey | null }) {
   return (
     <nav aria-label={ui.header.navLabel} className={className}>
-      {navItems.map((item) => (
-        <Link
-          key={item.key}
-          href={item.href}
-          aria-current={item.key === active ? "page" : undefined}
-          className={`relative flex ${itemHeight} items-center border-b-2 border-transparent text-base font-medium text-muted no-underline before:absolute before:inset-y-0 before:-inset-x-2 hover:text-ink aria-[current=page]:border-primary aria-[current=page]:font-bold aria-[current=page]:text-ink`}
-        >
-          {item.label}
-        </Link>
-      ))}
+      {navItems.map((item) =>
+        roasteryMenu && item.key === "roasteries" ? (
+          <RoasteryDropdown key={item.key} itemHeight={itemHeight} />
+        ) : (
+          <Link
+            key={item.key}
+            href={item.href}
+            aria-current={item.key === active ? "page" : undefined}
+            className={`relative flex ${itemHeight} items-center border-b-2 border-transparent text-base font-medium text-muted no-underline before:absolute before:inset-y-0 before:-inset-x-2 hover:text-ink aria-[current=page]:border-primary aria-[current=page]:font-bold aria-[current=page]:text-ink`}
+          >
+            {item.label}
+          </Link>
+        ),
+      )}
     </nav>
   );
 }
 
 /** 싱글오리진 · 블렌드 구분에 쿼리가 필요해 Suspense 안에서만 읽는다 */
-function ActiveNav(props: { className: string; itemHeight: string }) {
+function ActiveNav(props: NavProps) {
   const pathname = usePathname();
   const type = useSearchParams().get("type");
   return <NavLinks active={activeNavKey(pathname, type)} {...props} />;
 }
 
-function Nav(props: { className: string; itemHeight: string }) {
+function Nav(props: NavProps) {
   const pathname = usePathname();
   return (
     <Suspense
@@ -86,44 +97,61 @@ export function Header() {
   const isHome = usePathname() === "/";
   const cartCount = useCartCount();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  // 홈 2줄 헤더는 아래로 스크롤하면 다른 페이지와 같은 1줄로 접힌다 (웹에서만 모양이 바뀜)
+  const compact = useHomeHeaderCompact(isHome);
+  const homeWide = isHome && !compact;
 
-  // TODO: 검색 레이어 · 로스터리 드롭다운 · 스크롤 시 숨김 · 홈 1줄 전환은 다음 작업에서 잇는다
+  const openSearch = () => setSearchOpen(true);
   const searchButton = (
     <button
       type="button"
       aria-haspopup="dialog"
+      aria-expanded={searchOpen}
       aria-label={ui.header.openSearch}
-      className={`${iconButton} ${isHome ? "lg:hidden" : ""}`}
+      onClick={openSearch}
+      className={`${iconButton} ${homeWide ? "lg:hidden" : ""}`}
     >
       <SearchIcon />
     </button>
   );
 
   return (
-    <header className="sticky top-0 z-30 border-b border-line bg-bg">
+    <header
+      id="site-header"
+      // 접힌 높이(61)와 원래 높이(108)의 차이를 아래 여백으로 채워 본문이 튀지 않게 한다
+      className={`site-header sticky top-0 z-30 border-b border-line bg-bg ${compact ? "lg:mb-[47px]" : ""}`}
+    >
       <div
         className={`page-wrap flex min-h-14 items-center gap-1 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-x-6 ${
-          isHome
+          homeWide
             ? "lg:min-h-16 lg:grid-cols-[1fr_minmax(0,480px)_1fr]"
             : "lg:min-h-15"
-        }`}
+        } ${compact ? "lg:animate-[header-fade_.2s_ease] motion-reduce:animate-none" : ""}`}
       >
         <Logo />
 
-        {isHome ? (
+        {homeWide ? (
           <button
             type="button"
             aria-haspopup="dialog"
+            aria-expanded={searchOpen}
             aria-label={ui.header.openSearch}
+            onClick={openSearch}
             className="hidden h-11 w-full min-w-0 items-center justify-between gap-3 rounded-lg border border-line-control bg-bg pr-3 pl-4 text-left text-base text-muted hover:border-ink lg:flex"
           >
             <span className="truncate">{ui.search.placeholder}</span>
-            <SearchIcon className="shrink-0 text-ink" />
+            <SearchIcon
+              size={20}
+              strokeWidth={2}
+              className="shrink-0 text-ink"
+            />
           </button>
         ) : (
           <Nav
             className="-mb-px hidden gap-8 self-stretch whitespace-nowrap lg:flex"
             itemHeight="h-15"
+            roasteryMenu={isHome}
           />
         )}
 
@@ -155,15 +183,17 @@ export function Header() {
         </div>
       </div>
 
-      {isHome && (
+      {homeWide && (
         <div className="page-wrap hidden lg:flex">
           <Nav
             className="-mb-px flex h-11 gap-8 whitespace-nowrap"
             itemHeight="h-11"
+            roasteryMenu
           />
         </div>
       )}
 
+      <SearchLayer open={searchOpen} onClose={() => setSearchOpen(false)} />
       <MobileMenu
         open={menuOpen}
         onClose={() => setMenuOpen(false)}

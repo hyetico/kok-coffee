@@ -29,7 +29,9 @@ export const ui = {
   },
 
   roasteryMenu: {
+    label: "로스터리",
     title: "함께하는 로스터리",
+    count: (n: number) => `${n}곳`,
     viewAll: "로스터리 전체 보기",
   },
 

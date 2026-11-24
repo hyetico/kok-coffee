@@ -75,6 +75,35 @@
   }
 }
 
+/* 홈 헤더가 1줄로 접힐 때 옅게 나타난다 (03 「헤더 — 홈 스크롤」) */
+@keyframes header-fade {
+  from {
+    opacity: 0.4;
+  }
+}
+
+/* 목록에서 아래로 스크롤하면 헤더가 위로 숨는다. useHideOnScroll이 html에 data-header-hidden을 붙인다 */
+.site-header {
+  transition: transform 0.25s ease;
+}
+html[data-header-hidden] .site-header {
+  transform: translateY(-100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    transition: none;
+  }
+}
+/* 화면 높이가 낮으면(확대 등) 고정을 풀어 본문 자리를 확보한다 */
+@media (max-height: 560px) {
+  .site-header {
+    position: static;
+  }
+  html[data-header-hidden] .site-header {
+    transform: none;
+  }
+}
+
 @layer base {
   /* 기기가 다크 모드여도 폼 · 스크롤바를 밝게 유지 (meta color-scheme과 같은 뜻) */
   html {
