@@ -28,7 +28,7 @@ export const pretendardRest = localFont({
     {
       prop: "unicode-range",
       value:
-        "U+0021-007E, U+00A1-00FF, U+2010-2027, U+2030-203A, U+20A9, U+2190-2199, U+3001-3011, U+3131-318E, U+AC00-D7A3",
+        "U+0020-007E, U+00A0-00FF, U+2010-2027, U+2030-203A, U+20A9, U+2190-2199, U+3001-3011, U+3131-318E, U+AC00-D7A3",
     },
   ],
 });

@@ -33,7 +33,7 @@ async function collectFiles(dir) {
   return files;
 }
 
-/** 코드 글자를 Set으로. 공백 · 제어 문자는 글꼴과 무관해 뺀다 */
+/** 코드 글자를 Set으로. 줄바꿈 · 탭 같은 제어 문자만 뺀다 (보이는 공백은 아래에서 따로 넣는다) */
 function toChars(text) {
   return [...text].filter((c) => !/[\s\p{Cc}]/u.test(c));
 }
@@ -58,8 +58,8 @@ function range(from, to) {
 
 // 영문 · 숫자 · 기호: 기본 라틴 · 라틴-1 보충 · 일반 문장부호 · ₩ · 화살표 · CJK 기호 · 한글 자모
 const SYMBOLS = [
-  ...range(0x21, 0x7e),
-  ...range(0xa1, 0xff),
+  ...range(0x20, 0x7e),
+  ...range(0xa0, 0xff),
   ...range(0x2010, 0x2027),
   ...range(0x2030, 0x203a),
   "₩",
@@ -73,7 +73,9 @@ for (const dir of SCAN_DIRS)
   for (const file of await collectFiles(join(ROOT, dir)))
     toChars(await readFile(file, "utf8")).forEach((c) => used.add(c));
 // 코드에 아직 안 쓰였어도 화면에 늘 나오는 영문 · 숫자는 ①에 넣어 ②를 받지 않게 한다
-range(0x21, 0x7e).forEach((c) => used.add(c));
+// 공백(U+0020 · U+00A0)이 빠지면 띄어쓰기만 시스템 글꼴로 그려져 글줄이 넓어진다 — 반드시 넣는다
+range(0x20, 0x7e).forEach((c) => used.add(c));
+used.add("\u00a0");
 
 const usedChars = [...used].sort();
 await writeFile(CHARS_FILE, usedChars.join("") + "\n");
