@@ -364,7 +364,8 @@ export function ListView() {
               )}
             </div>
 
-            <div ref={resultsRef}>
+            {/* 아래 여백은 왼쪽 필터 영역의 아래 여백(24)과 같게 */}
+            <div ref={resultsRef} className="pb-6">
               {loading ? (
                 <ul aria-label={ui.list.loadingLabel} className={gridClass}>
                   {Array.from({ length: 6 }, (_, i) => (

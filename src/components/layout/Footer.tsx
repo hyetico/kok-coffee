@@ -42,13 +42,20 @@ function BusinessLine({
   );
 }
 
+type FooterProps = {
+  /** 본문과 푸터 사이 위 여백(120). 본문이 스스로 아래 여백을 갖는 페이지(목록)는 false */
+  spaced?: boolean;
+};
+
 /**
- * 모든 페이지 아래 푸터. 글은 모두 content/site.ts에서 온다.
- * @example <Footer />
+ * 모든 페이지 아래 푸터. 글은 모두 content/site.ts에서 온다. 페이지별 여백은 SiteFooter가 정한다.
+ * @example <Footer spaced={false} />
  */
-export function Footer() {
+export function Footer({ spaced = true }: FooterProps) {
   return (
-    <footer className="mt-30 border-t border-line bg-footer-bg text-sm leading-[1.7] text-muted">
+    <footer
+      className={`${spaced ? "mt-30" : ""} border-t border-line bg-footer-bg text-sm leading-[1.7] text-muted`}
+    >
       <div className="page-wrap">
         <div className="flex flex-wrap justify-between gap-8 border-b border-line-soft pt-12 pb-8">
           <div>

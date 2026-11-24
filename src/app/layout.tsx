@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Footer } from "@/components/layout/Footer";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { Header } from "@/components/layout/Header";
 import { Toaster } from "@/components/ui/Toaster";
 import { ui } from "@/content/ui";
@@ -38,7 +38,7 @@ export default function RootLayout({
         </a>
         <Header />
         {children}
-        <Footer />
+        <SiteFooter />
         <Toaster />
       </body>
     </html>
