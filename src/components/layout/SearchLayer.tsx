@@ -88,6 +88,8 @@ export function SearchLayer({
   initialQuery = "",
 }: SearchLayerProps) {
   const ref = useRef<HTMLDialogElement>(null);
+  // 닫으면 연 버튼으로 초점을 직접 돌려보낸다 (브라우저마다 dialog의 초점 되돌림이 다르다)
+  const openerRef = useRef<HTMLElement | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [q, setQ] = useState(initialQuery);
@@ -102,6 +104,7 @@ export function SearchLayer({
     const dialog = ref.current;
     if (!dialog) return;
     if (open && !dialog.open) {
+      openerRef.current = document.activeElement as HTMLElement | null;
       dialog.showModal();
       document.documentElement.style.overflow = "hidden";
     } else if (!open && dialog.open) {
@@ -133,6 +136,7 @@ export function SearchLayer({
       aria-label={ui.search.label}
       onClose={() => {
         document.documentElement.style.overflow = "";
+        openerRef.current?.focus();
         setQ(initialQuery);
         onClose();
       }}

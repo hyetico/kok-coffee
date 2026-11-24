@@ -102,7 +102,11 @@ export function Header() {
   const compact = useHomeHeaderCompact(isHome);
   const homeWide = isHome && !compact;
 
-  const openSearch = () => setSearchOpen(true);
+  const openSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // 사파리는 버튼을 눌러도 초점을 주지 않아 닫은 뒤 돌아올 곳이 없어진다
+    e.currentTarget.focus();
+    setSearchOpen(true);
+  };
   const searchButton = (
     <button
       type="button"
@@ -175,7 +179,10 @@ export function Header() {
             aria-haspopup="dialog"
             aria-expanded={menuOpen}
             aria-label={ui.header.openMenu}
-            onClick={() => setMenuOpen(true)}
+            onClick={(e) => {
+              e.currentTarget.focus();
+              setMenuOpen(true);
+            }}
             className={`${iconButton} -mr-2.5 lg:hidden`}
           >
             <MenuIcon />

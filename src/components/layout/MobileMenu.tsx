@@ -21,6 +21,8 @@ type MobileMenuProps = {
  */
 export function MobileMenu({ open, onClose, cartCount }: MobileMenuProps) {
   const ref = useRef<HTMLDialogElement>(null);
+  // 닫으면 연 버튼으로 초점을 직접 돌려보낸다 (브라우저마다 dialog의 초점 되돌림이 다르다)
+  const openerRef = useRef<HTMLElement | null>(null);
   const pathname = usePathname();
   // 드로어 안에서는 싱글오리진 · 블렌드 구분 없이 주소로만 현재 메뉴를 정한다 (쿼리를 읽으면 Suspense가 필요)
   const active = activeNavKey(pathname, null);
@@ -29,6 +31,7 @@ export function MobileMenu({ open, onClose, cartCount }: MobileMenuProps) {
     const dialog = ref.current;
     if (!dialog) return;
     if (open && !dialog.open) {
+      openerRef.current = document.activeElement as HTMLElement | null;
       dialog.showModal();
       // 열려 있는 동안 뒤 페이지 스크롤 잠금 (CLAUDE.md 6장)
       document.documentElement.style.overflow = "hidden";
@@ -49,6 +52,7 @@ export function MobileMenu({ open, onClose, cartCount }: MobileMenuProps) {
       aria-label={ui.mobileMenu.label}
       onClose={() => {
         document.documentElement.style.overflow = "";
+        openerRef.current?.focus();
         onClose();
       }}
       // 뒤 어두운 영역(= dialog 자신)을 누르면 닫힌다
