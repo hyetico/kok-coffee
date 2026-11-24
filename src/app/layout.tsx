@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { pretendardRest, pretendardUsed } from "./fonts";
 import "./globals.css";
 
 // 파비콘은 src/app/의 favicon.ico · icon.svg · apple-icon.png 파일로 Next가 자동 연결한다
@@ -19,7 +20,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ko" className="h-full antialiased">
+    <html
+      lang="ko"
+      className={`${pretendardUsed.variable} ${pretendardRest.variable} h-full antialiased`}
+    >
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

@@ -11,7 +11,8 @@
     "format:check": "prettier --check .",
     "postinstall": "xattr -w 'com.apple.fileprovider.ignore#P' 1 node_modules 2>/dev/null || true",
     "predev": "mkdir -p .next && xattr -w 'com.apple.fileprovider.ignore#P' 1 .next 2>/dev/null || true",
-    "prebuild": "mkdir -p .next && xattr -w 'com.apple.fileprovider.ignore#P' 1 .next 2>/dev/null || true"
+    "prebuild": "mkdir -p .next && xattr -w 'com.apple.fileprovider.ignore#P' 1 .next 2>/dev/null || true",
+    "font:subset": "node scripts/font-subset.mjs"
   },
   "dependencies": {
     "next": "16.4.6",
@@ -26,6 +27,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "prettier": "3.10.1",
+    "subset-font": "2.9.0",
     "tailwindcss": "4.3.3",
     "typescript": "^5"
   }
