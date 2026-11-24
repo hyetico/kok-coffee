@@ -25,17 +25,17 @@ type ButtonProps = CommonProps & { href?: undefined } & Omit<
   >;
 
 const base =
-  "inline-flex items-center justify-center gap-1.5 box-border whitespace-nowrap rounded-lg border font-semibold leading-none no-underline transition-colors duration-150 cursor-pointer disabled:cursor-not-allowed disabled:border-transparent disabled:bg-line-soft disabled:text-disabled-ink aria-disabled:cursor-not-allowed aria-disabled:border-transparent aria-disabled:bg-line-soft aria-disabled:text-disabled-ink";
+  "inline-flex items-center justify-center gap-1.5 box-border whitespace-nowrap rounded-lg border leading-none no-underline transition-colors duration-150 cursor-pointer disabled:cursor-not-allowed disabled:border-transparent disabled:bg-line-soft disabled:text-disabled-ink aria-disabled:cursor-not-allowed aria-disabled:border-transparent aria-disabled:bg-line-soft aria-disabled:text-disabled-ink";
 
 const kinds: Record<Kind, string> = {
-  // 테두리 색은 종류마다 하나만 둔다 (두 클래스가 겹치면 어느 쪽이 이길지 순서에 달려 버린다)
+  // 테두리 색 · 굵기는 종류마다 하나만 둔다 (두 클래스가 겹치면 어느 쪽이 이길지 순서에 달려 버린다)
   primary:
-    "border-transparent bg-primary text-white hover:bg-primary-hover active:bg-primary-press",
+    "border-transparent bg-primary font-semibold text-white hover:bg-primary-hover active:bg-primary-press",
   secondary:
-    "border-line-control bg-bg text-ink hover:border-primary hover:bg-secondary-hover hover:text-primary active:bg-secondary-press",
+    "border-line-control bg-bg font-semibold text-ink hover:border-primary hover:bg-secondary-hover hover:text-primary active:bg-secondary-press",
   ghost:
-    "border-transparent bg-surface text-ink hover:bg-ghost-hover active:bg-ghost-press",
-  text: "min-h-8 border-transparent px-2 text-sm font-medium text-muted hover:bg-surface hover:text-ink disabled:bg-transparent",
+    "border-transparent bg-surface font-semibold text-ink hover:bg-ghost-hover active:bg-ghost-press",
+  text: "min-h-8 border-0 px-2 text-sm font-medium text-muted hover:bg-surface hover:text-ink disabled:bg-transparent",
 };
 
 // text 버튼은 높이 · 안쪽 여백을 kinds에서 따로 정한다
