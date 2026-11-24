@@ -168,6 +168,14 @@ export const ui = {
     list: "모든커피 보기",
   },
 
+  mapGroup: {
+    title: (n: number) => `같은 자리 원두 ${n}개`,
+    desc: "맛 위치가 같은 원두예요. 이름을 누르면 자세히 볼 수 있어요.",
+    back: (n: number) => `← 같은 자리 원두 ${n}개`,
+    aria: (n: number, titles: string[]) =>
+      `같은 자리 원두 ${n}개: ${titles.join(", ")}`,
+  },
+
   tasteMap: {
     axes: {
       heavy: "묵직한",

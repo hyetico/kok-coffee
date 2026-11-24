@@ -4,6 +4,8 @@ type ProductThumbProps = {
   src: string;
   /** 보이는 칸 크기(px). 72 · 52 · 96 등 */
   size: number;
+  /** 보드가 정한 여백이 20%와 다를 때만 (목록 지도 「같은 자리 원두」 64 → 12) */
+  padding?: number;
   className?: string;
 };
 
@@ -13,12 +15,21 @@ type ProductThumbProps = {
  * 꾸밈 사진이라 alt는 비운다 — 상품명은 옆 글이 읽는다.
  * @example <ProductThumb src={p.image} size={72} />
  */
-export function ProductThumb({ src, size, className = "" }: ProductThumbProps) {
+export function ProductThumb({
+  src,
+  size,
+  padding,
+  className = "",
+}: ProductThumbProps) {
   return (
     <span
       className={`box-border block shrink-0 overflow-hidden rounded-md bg-photo-bg ${className}`}
       // 칸 크기에 비례한 여백 (72 → 14 · 52 → 10)
-      style={{ width: size, height: size, padding: Math.round(size * 0.2) }}
+      style={{
+        width: size,
+        height: size,
+        padding: padding ?? Math.round(size * 0.2),
+      }}
     >
       {/* 사진 바탕색과 섞어 흰 여백이 보이지 않게 multiply */}
       <Image

@@ -9,8 +9,10 @@ import { useToast } from "@/store/toast";
 type AddToCartButtonProps = {
   productId: string;
   title: string;
-  /** card: 카드 아래 작은 버튼(꽉 채움, 36) · panel: 맛 지도 고른 원두 · 목록 지도 카드(40) */
-  variant?: "card" | "panel";
+  /** card: 카드 아래 작은 버튼(꽉 채움, 36) · panel: 맛 지도 고른 원두 · 목록 지도 카드(40) · compact: 글 아래 작은 버튼(36, 내용 폭) */
+  variant?: "card" | "panel" | "compact";
+  /** panel 높이 — 메인 맛 지도 40(기본), 목록 지도 카드 44 (보드 측정값) */
+  panelSize?: "panel" | "md";
 };
 
 /**
@@ -22,6 +24,7 @@ export function AddToCartButton({
   productId,
   title,
   variant = "card",
+  panelSize = "panel",
 }: AddToCartButtonProps) {
   const add = () => {
     useCart.getState().add({ productId, size: "200g", grind: "whole", qty: 1 });
@@ -37,7 +40,7 @@ export function AddToCartButton({
         kind="secondary"
         onClick={add}
         aria-label={ui.product.addLabel(title)}
-        size="panel"
+        size={panelSize}
       >
         <CartIcon size={16} />
         {ui.product.add}
@@ -47,10 +50,10 @@ export function AddToCartButton({
     <Button
       kind="secondary"
       size="sm"
-      block
+      block={variant === "card"}
       onClick={add}
       aria-label={ui.product.addLabel(title)}
-      className="mt-3"
+      className={variant === "card" ? "mt-3" : undefined}
     >
       <CartIcon size={16} />
       {ui.product.add}
