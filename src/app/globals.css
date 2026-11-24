@@ -24,6 +24,8 @@
   --color-ghost-press: #cfded4;
   --color-secondary-hover: #e6efe9;
   --color-secondary-press: #d9e6dd;
+  /* 취향 테스트에서 고른 답 바탕 — 보드 측정값. 05 표에는 「오류 바탕」으로만 있어 디자인 쪽 확인이 필요하다 */
+  --color-answer-on: #fff3ef;
   --color-disabled-ink: #9aa59e;
   --color-footer-line: #c9d2cc;
   /* 05 「색 — 상태」 토스트 링크 */
