@@ -160,6 +160,14 @@ export const ui = {
     sheetDone: (count: number) => `상품 ${count}개 보기`,
   },
 
+  notFound: {
+    code: "404",
+    title: "페이지를 찾을 수 없어요",
+    desc: "주소가 바뀌었거나 사라진 페이지예요. 아래에서 원하는 곳으로 이동해 주세요. 공지사항, 약관 같은 페이지는 포트폴리오 범위에서 빠져 있어요.",
+    home: "홈으로",
+    list: "모든커피 보기",
+  },
+
   tasteMap: {
     axes: {
       heavy: "묵직한",
