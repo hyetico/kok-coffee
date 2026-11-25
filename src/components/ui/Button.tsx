@@ -43,7 +43,7 @@ const sizes: Record<Size, string> = {
   lg: "h-13 px-6 text-base",
   md: "h-11 px-5 text-base",
   panel: "h-10 px-5 text-base",
-  sm: "h-9 px-3.5 text-sm",
+  sm: "h-9 px-4 text-sm",
 };
 
 function classes({

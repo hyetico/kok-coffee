@@ -88,7 +88,7 @@ export function SortSelect<K extends string>({
         className={`group inline-flex cursor-pointer items-center gap-2 rounded-lg border text-sm leading-none font-medium text-ink ${
           plain
             ? "h-10 border-transparent bg-transparent pr-0 pl-3"
-            : "h-10 border-line-control bg-bg pr-2.5 pl-3 hover:border-ink aria-expanded:border-ink"
+            : "h-10 border-line-control bg-bg pr-3 pl-3 hover:border-ink aria-expanded:border-ink"
         }`}
       >
         {shown}
@@ -111,7 +111,7 @@ export function SortSelect<K extends string>({
           role="menu"
           aria-label={menuLabel}
           onKeyDown={onMenuKey}
-          className="absolute top-[calc(100%+6px)] right-0 z-26 min-w-42 rounded-xl border border-line bg-bg p-1.5 shadow-[0_12px_32px_rgba(23,32,27,.12)]"
+          className="absolute top-[calc(100%+6px)] right-0 z-26 min-w-42 rounded-xl border border-line bg-bg p-2 shadow-[0_12px_32px_rgba(23,32,27,.12)]"
         >
           {options.map((o) => (
             <button
@@ -123,7 +123,7 @@ export function SortSelect<K extends string>({
                 onChange(o.key);
                 close();
               }}
-              className="group/item flex h-10 w-full cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 text-left text-sm text-ink hover:bg-surface aria-checked:font-bold aria-checked:text-primary"
+              className="group/item flex h-10 w-full cursor-pointer items-center justify-between gap-3 rounded-md px-3 text-left text-sm text-ink hover:bg-surface aria-checked:font-bold aria-checked:text-primary"
             >
               {o.label}
               <CheckIcon className="invisible group-aria-checked/item:visible" />

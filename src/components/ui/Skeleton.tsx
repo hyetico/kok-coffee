@@ -19,8 +19,8 @@ export function ProductCardSkeleton() {
   return (
     <div aria-hidden="true">
       <Skeleton className="aspect-square" />
-      <Skeleton className="mt-2.5 h-10" />
-      <Skeleton className="mt-3.5 h-3.5 w-1/2" />
+      <Skeleton className="mt-3 h-10" />
+      <Skeleton className="mt-4 h-3.5 w-1/2" />
       <Skeleton className="mt-2 h-4 w-4/5" />
       <Skeleton className="mt-2 h-4.5 w-[35%]" />
     </div>

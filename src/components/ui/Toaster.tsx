@@ -48,7 +48,7 @@ export function Toaster() {
       {toast && (
         <div
           key={toast.id}
-          className="flex items-center gap-4 rounded-xl bg-ink px-4.5 py-3.5 text-sm text-white shadow-[0_6px_24px_rgba(0,0,0,.18)]"
+          className="flex items-center gap-4 rounded-xl bg-ink px-5 py-4 text-sm text-white shadow-[0_6px_24px_rgba(0,0,0,.18)]"
         >
           <span>{toast.text}</span>
           {toast.link && (

@@ -34,7 +34,7 @@ export default async function BrandPage({
         <nav aria-label={t.breadcrumbLabel} className="mt-6 text-sm text-muted">
           <Link
             href="/roasteries"
-            className="-mx-1.5 -my-0.75 inline-block px-1.5 py-0.75 text-muted no-underline hover:text-ink"
+            className="-mx-1.5 -my-0.75 inline-block px-2 py-1 text-muted no-underline hover:text-ink"
           >
             {listLabel}
           </Link>{" "}
@@ -57,7 +57,7 @@ export default async function BrandPage({
               />
             ) : (
               // 매장 사진이 없는 로스터리는 로고를 크게 보여 준다
-              <div className="grid aspect-[4/3] w-full place-items-center content-center gap-3.5 rounded-xl bg-ghost-hover">
+              <div className="grid aspect-[4/3] w-full place-items-center content-center gap-4 rounded-xl bg-ghost-hover">
                 <Image
                   src={roastery.logo}
                   alt=""
@@ -98,12 +98,12 @@ export default async function BrandPage({
             <h2 className="mt-7 mb-0 text-base font-bold">
               {store ? t.awardsTitle : t.summaryTitle}
             </h2>
-            <ul className="mt-2.5 mb-0 list-disc pl-5 text-base leading-[1.9]">
+            <ul className="mt-3 mb-0 list-disc pl-5 text-base leading-[1.9]">
               {(store ? store.awards : summary.facts).map((a) => (
                 <li key={a}>{a}</li>
               ))}
             </ul>
-            <dl className="m-0 mt-6 grid grid-cols-[80px_1fr] gap-x-3 gap-y-2 rounded-xl bg-surface px-5 py-4.5 text-sm">
+            <dl className="m-0 mt-6 grid grid-cols-[80px_1fr] gap-x-3 gap-y-2 rounded-xl bg-surface px-5 py-5 text-sm">
               <dt className="text-muted">{t.place}</dt>
               <dd className="m-0">{store?.place ?? t.placeFallback}</dd>
               <dt className="text-muted">{t.instagram}</dt>

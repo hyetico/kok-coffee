@@ -205,7 +205,7 @@ export function SearchLayer({
                 <div className="mb-3 flex min-h-7 items-center">
                   <SectionTitle>{ui.search.popular}</SectionTitle>
                 </div>
-                <ul className="-mx-2 my-0 grid list-none gap-0.5 p-0">
+                <ul className="-mx-2 my-0 grid list-none gap-1 p-0">
                   {popular.map((p) => (
                     <ProductRow key={p.id} product={p} onPick={close} />
                   ))}
@@ -222,7 +222,7 @@ export function SearchLayer({
                     </span>
                   </SectionTitle>
                 </div>
-                <ul className="-mx-2 my-0 grid list-none gap-0.5 p-0">
+                <ul className="-mx-2 my-0 grid list-none gap-1 p-0">
                   {hits.slice(0, MAX_PREVIEW).map((p) => (
                     <ProductRow key={p.id} product={p} onPick={close} />
                   ))}
@@ -242,7 +242,7 @@ export function SearchLayer({
                 <p className="m-0 text-base font-bold">
                   {ui.search.noHitsTitle}
                 </p>
-                <p className="mt-1.5 mb-0 text-sm text-muted">
+                <p className="mt-2 mb-0 text-sm text-muted">
                   {ui.search.noHitsDesc}
                 </p>
               </div>

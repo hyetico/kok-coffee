@@ -21,7 +21,7 @@ export function RemovableChip({
 }: RemovableChipProps) {
   const text = "h-8.5 text-sm font-medium text-ink-2";
   return (
-    <span className="flex h-9 items-center rounded-[18px] border border-line-control bg-bg pr-1 pl-3.5 hover:border-ink">
+    <span className="flex h-9 items-center rounded-[18px] border border-line-control bg-bg pr-1 pl-4 hover:border-ink">
       {onPick ? (
         <button
           type="button"

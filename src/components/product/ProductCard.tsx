@@ -45,7 +45,7 @@ export function ProductCard({ product, badge, hideAdd }: ProductCardProps) {
         </div>
       </Link>
       <Link href={href} className="mt-3 block flex-auto text-ink no-underline">
-        <p className="m-0 flex items-center gap-1.5 text-sm text-muted">
+        <p className="m-0 flex items-center gap-2 text-sm text-muted">
           <Image
             src={product.roasteryLogo}
             alt=""
