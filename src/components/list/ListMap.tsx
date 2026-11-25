@@ -286,18 +286,19 @@ export function ListMap({
               }}
               style={at(toPos(p.taste))}
               // 보이는 점 16(묶음 28), 누르는 칸은 바깥으로 8씩 넓힌다
-              className={`group absolute box-border grid cursor-pointer place-items-center rounded-full p-0 text-xs font-bold text-white transition-transform duration-150 after:absolute after:-inset-2 after:rounded-full after:content-[''] motion-reduce:transition-none ${
+              className={`group absolute box-border grid cursor-pointer place-items-center rounded-full p-0 text-xs font-bold text-white transition-transform duration-150 after:absolute after:-inset-2 after:rounded-full after:content-[''] hover:z-6 focus-visible:z-6 motion-reduce:transition-none ${
                 multi
                   ? "-mt-3.5 -ml-3.5 size-7 border-0 bg-ink-2"
                   : "-mt-2 -ml-2 size-4 border-2 border-white bg-map-dot hover:scale-125"
               } ${live ? "" : "opacity-28"} ${
                 on
-                  ? `z-2 border-primary bg-primary shadow-[0_0_0_3px_#fff,0_0_0_5px_var(--color-primary)] ${multi ? "" : "scale-115 hover:scale-115"}`
+                  ? `z-5 border-primary bg-primary shadow-[0_0_0_3px_#fff,0_0_0_5px_var(--color-primary)] ${multi ? "" : "scale-115 hover:scale-115"}`
                   : ""
               }`}
             >
               {multi ? items.length : null}
-              {/* 점 이름 말풍선 — 올리거나 초점이 오거나 고르면 보인다 */}
+              {/* 점 이름 말풍선 — 올리거나 초점이 오거나 고르면 보인다. 말풍선은 점 버튼 안에 있어 버튼 쌓임 순서를 따른다:
+                  올림 · 초점 6 > 고른 점 5 > 나머지 — 이웃 점 아래로 깔리지 않게 (05 「맛 지도 점」) */}
               <span
                 aria-hidden="true"
                 className={`pointer-events-none absolute bottom-[calc(100%+8px)] left-1/2 z-5 -translate-x-1/2 rounded-md bg-ink px-2 py-1 text-xs leading-[1.4] font-semibold whitespace-nowrap text-white group-hover:block group-focus-visible:block ${
