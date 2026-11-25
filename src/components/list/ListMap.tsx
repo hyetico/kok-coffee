@@ -347,7 +347,7 @@ export function ListMap({
           </button>
         ) : (
           showHint && (
-            <div className="absolute right-4 bottom-4 z-6 hidden items-center gap-3 rounded-full bg-white py-2 pr-2 pl-4 text-sm text-ink-2 shadow-[0_2px_8px_rgba(23,32,27,.12)] md:flex">
+            <div className="absolute right-4 bottom-4 z-6 hidden items-center gap-3 rounded-full bg-white py-2 pr-2 pl-4 text-sm text-ink-2 shadow-[0_2px_8px_rgba(23,32,27,.12)] sm:flex">
               {hint}
             </div>
           )
@@ -381,7 +381,7 @@ export function ListMap({
       </div>
 
       {!anchor && showHint && (
-        <div className="mt-2 flex items-center gap-3 rounded-lg bg-map-bg py-2 pr-2 pl-3 text-sm text-ink-2 md:hidden">
+        <div className="mt-2 flex items-center gap-3 rounded-lg bg-map-bg py-2 pr-2 pl-3 text-sm text-ink-2 sm:hidden">
           {hint}
         </div>
       )}
