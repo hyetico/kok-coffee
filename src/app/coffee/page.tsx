@@ -15,8 +15,9 @@ export async function generateMetadata({
 
 export default function CoffeeListPage() {
   return (
-    // 목록은 URL 쿼리(조건)를 읽어 그리므로 쿼리를 읽는 동안의 자리를 둔다
-    <Suspense fallback={<main id="main" className="flex-1" />}>
+    // 목록은 URL 쿼리(조건)를 읽어 그리므로 쿼리를 읽는 동안의 자리를 둔다.
+    // 자리를 화면 높이만큼 잡아 푸터가 먼저 보였다가 밀려 내려가지 않게 한다 (CLS)
+    <Suspense fallback={<main id="main" className="min-h-dvh flex-1" />}>
       <ListView />
     </Suspense>
   );

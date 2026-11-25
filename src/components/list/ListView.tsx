@@ -411,7 +411,7 @@ export function ListView() {
             <div className="pb-6">
               {loading ? (
                 <ul aria-label={t.loadingLabel} className={gridClass}>
-                  {Array.from({ length: 4 }, (_, i) => (
+                  {Array.from({ length: items.length || 4 }, (_, i) => (
                     <li key={i}>
                       <ProductCardSkeleton />
                     </li>

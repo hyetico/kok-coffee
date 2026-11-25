@@ -158,18 +158,13 @@ export function Header() {
 
         <div className="ml-auto flex items-center gap-1 lg:ml-0 lg:justify-self-end">
           {searchButton}
-          <Link
-            href="/cart"
-            aria-label={ui.header.cartLabel(cartCount)}
-            className={`${iconButton} relative lg:-mr-2.5`}
-          >
+          <Link href="/cart" className={`${iconButton} relative lg:-mr-2.5`}>
             <CartIcon />
-            <span
-              aria-hidden="true"
-              className="absolute top-0.5 left-7 grid h-4.5 min-w-4.5 place-items-center rounded-full bg-ink px-1 text-xs leading-none font-bold text-white shadow-[0_0_0_2px_#fff]"
-            >
+            <span className="sr-only">{ui.header.cartLabelBefore}</span>
+            <span className="absolute top-0.5 left-7 grid h-4.5 min-w-4.5 place-items-center rounded-full bg-ink px-1 text-xs leading-none font-bold text-white shadow-[0_0_0_2px_#fff]">
               {cartCount}
             </span>
+            <span className="sr-only">{ui.header.cartLabelAfter}</span>
           </Link>
           <button
             type="button"

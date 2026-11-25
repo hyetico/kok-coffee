@@ -28,7 +28,9 @@ export const ui = {
     openSearch: "원두 검색 열기",
     openMenu: "메뉴 열기",
     /** 담긴 상품 줄 수를 넣어 읽는다 */
-    cartLabel: (count: number) => `장바구니, 담긴 상품 ${count}개`,
+    /** 읽는 이름을 보이는 숫자 앞뒤로 나눈다 — 숫자가 이름 안에 그대로 들어가게 (WCAG 2.5.3) */
+    cartLabelBefore: "장바구니, 담긴 상품 ",
+    cartLabelAfter: "개",
   },
 
   roasteryMenu: {

@@ -9,15 +9,20 @@ import type { ReactNode } from "react";
 export function MoreLink({
   href,
   children,
+  label,
 }: {
   href: string;
   children: ReactNode;
+  /** 화면에는 숨기고 읽어 주는 앞말 — 같은 「전체 보기」가 여러 개라 어느 섹션인지 붙인다 (「지금 많이 담는 원두 전체 보기」) */
+  label?: string;
 }) {
   return (
     <Link
       href={href}
       className="group inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-ink no-underline transition-colors duration-150 hover:text-ink motion-reduce:transition-none"
     >
+      {/* aria-label이 아니라 숨긴 글로 둔다 — 링크 글 검사(Lighthouse link-text)는 보이는 글만 읽는다 */}
+      {label && <span className="sr-only">{label} </span>}
       {children}
       <svg
         aria-hidden="true"

@@ -18,11 +18,14 @@ export function Skeleton({ className = "" }: { className?: string }) {
 export function ProductCardSkeleton() {
   return (
     <div aria-hidden="true">
+      {/* 줄마다 실제 카드와 같은 높이 — 카드로 바뀔 때 아래가 밀리지 않게 (CLS) */}
       <Skeleton className="aspect-square" />
-      <Skeleton className="mt-3 h-10" />
-      <Skeleton className="mt-4 h-3.5 w-1/2" />
-      <Skeleton className="mt-2 h-4 w-4/5" />
-      <Skeleton className="mt-2 h-4.5 w-[35%]" />
+      <Skeleton className="mt-3 h-5.5 w-1/2" />
+      <Skeleton className="mt-1 h-5.5 w-4/5" />
+      <Skeleton className="mt-1 h-5 w-3/5" />
+      <Skeleton className="mt-2 h-6 w-1/2" />
+      <Skeleton className="mt-2 h-5 w-[35%]" />
+      <Skeleton className="mt-3 h-9" />
     </div>
   );
 }

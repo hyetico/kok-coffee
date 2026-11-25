@@ -19,9 +19,13 @@ const matches = (p: MappedProduct, f: FilterKey) =>
 
 /** 점이 지도 끝 가까이 있으면 이름 말풍선을 안쪽 · 아래로 돌린다 (프로토타입 기준값) */
 function tipPlacement({ x, y }: MapPosition) {
-  const below = y < 24 ? "top-[calc(100%+10px)]" : "bottom-[calc(100%+10px)]";
+  const below = y < 24 ? "top-[calc(100%+5px)]" : "bottom-[calc(100%+5px)]";
   const side =
-    x < 16 ? "-left-1.5" : x > 84 ? "-right-1.5" : "left-1/2 -translate-x-1/2";
+    x < 16
+      ? "left-[-1px]"
+      : x > 84
+        ? "right-[-1px]"
+        : "left-1/2 -translate-x-1/2";
   return `${below} ${side}`;
 }
 
@@ -109,13 +113,17 @@ export function TasteMap({ products }: { products: MappedProduct[] }) {
                 left: `${pos.x}%`,
                 top: `${pos.y}%`,
               }}
-              // 보이는 점은 14(고른 점 22), 누르는 칸은 바깥으로 5씩 넓혀 24 이상
-              className={`group/dot absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full p-0 text-primary transition-[box-shadow,filter,background-color] duration-150 before:absolute before:-inset-1.25 before:rounded-full before:content-[''] hover:z-2 focus-visible:z-2 motion-reduce:transition-none ${
-                on
-                  ? "size-5.5 border-3 border-white bg-primary shadow-[0_0_0_2px_var(--color-primary)] hover:shadow-[0_0_0_2px_currentColor,0_0_0_7px_color-mix(in_srgb,currentColor_22%,transparent)] focus-visible:shadow-[0_0_0_2px_currentColor,0_0_0_7px_color-mix(in_srgb,currentColor_22%,transparent)]"
-                  : "size-3.5 border-0 bg-map-dot-home hover:bg-[color-mix(in_srgb,currentColor_55%,var(--color-map-dot-home))] hover:shadow-[0_0_0_4px_color-mix(in_srgb,currentColor_28%,transparent)] focus-visible:bg-[color-mix(in_srgb,currentColor_55%,var(--color-map-dot-home))] focus-visible:shadow-[0_0_0_4px_color-mix(in_srgb,currentColor_28%,transparent)]"
-              } ${visible ? "opacity-100" : "opacity-15"} group-has-[button:hover]/map:not-hover:[filter:opacity(.45)]`}
+              // 누르는 칸은 24(Lighthouse target-size가 버튼 상자 크기로 잰다), 보이는 점은 안쪽 14(고른 점 22)
+              className={`group/dot absolute grid size-6 -translate-x-1/2 -translate-y-1/2 cursor-pointer place-items-center rounded-full p-0 text-primary hover:z-2 focus-visible:z-2 ${visible ? "opacity-100" : "opacity-15"} group-has-[button:hover]/map:not-hover:[filter:opacity(.45)]`}
             >
+              <span
+                aria-hidden="true"
+                className={`block rounded-full transition-[box-shadow,background-color] duration-150 motion-reduce:transition-none ${
+                  on
+                    ? "size-5.5 border-3 border-white bg-primary shadow-[0_0_0_2px_var(--color-primary)] group-hover/dot:shadow-[0_0_0_2px_currentColor,0_0_0_7px_color-mix(in_srgb,currentColor_22%,transparent)] group-focus-visible/dot:shadow-[0_0_0_2px_currentColor,0_0_0_7px_color-mix(in_srgb,currentColor_22%,transparent)]"
+                    : "size-3.5 bg-map-dot-home group-hover/dot:bg-[color-mix(in_srgb,currentColor_55%,var(--color-map-dot-home))] group-hover/dot:shadow-[0_0_0_4px_color-mix(in_srgb,currentColor_28%,transparent)] group-focus-visible/dot:bg-[color-mix(in_srgb,currentColor_55%,var(--color-map-dot-home))] group-focus-visible/dot:shadow-[0_0_0_4px_color-mix(in_srgb,currentColor_28%,transparent)]"
+                }`}
+              />
               <span
                 aria-hidden="true"
                 className={`pointer-events-none absolute rounded-md bg-ink px-2 py-1 text-xs leading-[1.2] font-semibold whitespace-nowrap text-white opacity-0 transition-opacity duration-150 group-hover/dot:opacity-100 group-focus-visible/dot:opacity-100 ${tipPlacement(pos)}`}

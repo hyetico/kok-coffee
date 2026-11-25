@@ -35,7 +35,9 @@ function SectionHead({
       >
         {title}
       </h2>
-      <MoreLink href={href}>{ui.more}</MoreLink>
+      <MoreLink href={href} label={title}>
+        {ui.more}
+      </MoreLink>
     </div>
   );
 }
