@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { TasteTest } from "@/components/taste-test/TasteTest";
+import { tasteTest } from "@/content/tasteTest";
+
+export const metadata: Metadata = {
+  title: tasteTest.intro.eyebrow,
+  description: tasteTest.intro.desc,
+};
 
 export default function TasteTestPage() {
   return (

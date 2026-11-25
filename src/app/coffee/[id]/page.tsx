@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -16,6 +17,20 @@ import { roasteryOf } from "@/lib/roastery";
 
 export function generateStaticParams() {
   return getAllProducts().map((p) => ({ id: p.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const product = getProduct((await params).id);
+  if (!product) return {};
+  return {
+    title: product.title,
+    description: `${product.roastery} · ${product.notes}`,
+    openGraph: { images: [{ url: product.image }] },
+  };
 }
 
 export default async function CoffeeDetailPage({

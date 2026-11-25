@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -11,6 +12,15 @@ import { roasteryProducts, roasterySummary } from "@/lib/roastery";
 
 export function generateStaticParams() {
   return getRoasteries().map((r) => ({ id: r.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const roastery = getRoastery((await params).id);
+  return roastery ? { title: roastery.name } : {};
 }
 
 export default async function BrandPage({
