@@ -223,7 +223,7 @@ export function FilterPanel({
             type="button"
             aria-expanded={open}
             onClick={() => setOpen((o) => !o)}
-            className="group mt-1 -ml-2 inline-flex h-8 cursor-pointer items-center gap-1 rounded-md px-2 text-sm text-ink-2 hover:bg-map-bg hover:text-ink"
+            className="group mx-auto mt-2 flex h-8 cursor-pointer items-center gap-1 rounded-md px-3 text-sm text-ink-2 hover:bg-map-bg hover:text-ink"
           >
             {open ? t.less : t.more(TASTE_WORDS.length - TASTE_WORDS_SHOWN)}
             <ChevronDownIcon

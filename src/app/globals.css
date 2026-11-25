@@ -173,7 +173,7 @@ html:has(.list-side) {
   }
 }
 
-/* 맛 슬라이더 손잡이 — 두 range 입력을 겹치고 손잡이만 누를 수 있게 한다 (05 「필터」 RangeSlider) */
+/* 맛 슬라이더 손잡이 — 두 range 입력을 겹쳐 키보드 · 읽기용으로 둔다. 마우스 · 터치는 줄 전체가 받는다 (05 「맛 슬라이더」) */
 .range-pair input {
   position: absolute;
   top: 0;
@@ -194,7 +194,6 @@ html:has(.list-side) {
 }
 .range-pair input::-webkit-slider-thumb {
   appearance: none;
-  pointer-events: auto;
   box-sizing: border-box;
   width: 16px;
   height: 16px;
@@ -205,7 +204,6 @@ html:has(.list-side) {
   cursor: pointer;
 }
 .range-pair input::-moz-range-thumb {
-  pointer-events: auto;
   box-sizing: border-box;
   width: 16px;
   height: 16px;
