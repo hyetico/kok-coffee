@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "setup": "mkdir -p node_modules && (xattr -w 'com.apple.fileprovider.ignore#P' 1 node_modules 2>/dev/null || true) && npm install",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
