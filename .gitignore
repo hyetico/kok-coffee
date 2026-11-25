@@ -47,3 +47,8 @@ design/
 
 # 디자인 대화에서 보낸 파일이 저장되는 폴더
 Claude outputs/
+
+# 내부 작업 문서 — 내 컴퓨터에만 둔다 (저장소에서 제외)
+CLAUDE.md
+AGENTS.md
+CONTENT_TODO.md
