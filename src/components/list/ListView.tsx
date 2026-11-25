@@ -290,7 +290,7 @@ export function ListView() {
                 value={filter.q}
                 onChange={(q) => update({ q })}
                 onEnter={(q) => useSearchStore.getState().addRecent(q)}
-                height="h-10"
+                size="sm"
                 className="min-w-40 flex-auto"
               />
             </div>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { CartIcon, MenuIcon, SearchIcon } from "@/components/icons";
+import { searchFieldLook } from "@/components/ui/SearchInput";
 import { navItems, ui, type NavKey } from "@/content/ui";
 import { useCartCount } from "@/hooks/useCartCount";
 import { useHomeHeaderCompact } from "@/hooks/useHomeHeaderCompact";
@@ -142,14 +143,10 @@ export function Header() {
             aria-expanded={searchOpen}
             aria-label={ui.header.openSearch}
             onClick={openSearch}
-            className="hidden h-11 w-full min-w-0 items-center justify-between gap-3 rounded-lg border border-line-control bg-bg pr-3 pl-4 text-left text-base text-muted hover:border-ink lg:flex"
+            className={`hidden h-11 w-full min-w-0 cursor-text items-center gap-2 px-4 text-left text-base text-muted! lg:flex ${searchFieldLook}`}
           >
+            <SearchIcon size={18} strokeWidth={2} className="shrink-0" />
             <span className="truncate">{ui.search.placeholder}</span>
-            <SearchIcon
-              size={20}
-              strokeWidth={2}
-              className="shrink-0 text-ink"
-            />
           </button>
         ) : (
           <Nav

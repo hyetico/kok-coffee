@@ -4,6 +4,8 @@
 @theme {
   --color-bg: #ffffff;
   --color-surface: #eff3f0;
+  /* 검색창 올림 (05 「입력 › 검색창」) */
+  --color-search-hover: #e6ece8;
   --color-hero: #e6ede8;
   --color-footer-bg: #f7f9f8;
   --color-ink: #17201b;

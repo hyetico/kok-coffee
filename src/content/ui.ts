@@ -40,7 +40,7 @@ export const ui = {
 
   search: {
     label: "원두 검색",
-    placeholder: "원두, 로스터리, 맛 노트를 검색해 보세요",
+    placeholder: "원두, 로스터리, 맛 노트 검색",
     close: "검색 닫기",
     clear: "검색어 지우기",
     goToResults: "검색 결과로 이동",

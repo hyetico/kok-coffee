@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { CloseIcon, SearchIcon } from "@/components/icons";
+import { CloseIcon } from "@/components/icons";
 import { ProductThumb } from "@/components/product/ProductThumb";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
-import { ClearButton } from "@/components/ui/ClearButton";
 import { RemovableChip } from "@/components/ui/RemovableChip";
+import { SearchInput } from "@/components/ui/SearchInput";
 import { ui } from "@/content/ui";
 import { getProduct, listedProducts } from "@/lib/catalog";
 import { DEFAULT_FILTER, filterProducts, toListQuery } from "@/lib/filter";
@@ -141,31 +141,18 @@ export function SearchLayer({
     >
       <div className="page-wrap">
         <div className="flex items-center gap-2">
-          <div className="relative min-w-0 flex-1">
-            <label htmlFor="header-search" className="sr-only">
-              {ui.search.label}
-            </label>
-            <SearchIcon
-              size={20}
-              strokeWidth={2}
-              className="pointer-events-none absolute top-4 left-4 text-muted"
-            />
-            <input
-              ref={inputRef}
-              id="header-search"
-              type="search"
-              autoFocus
-              autoComplete="off"
-              value={q}
-              placeholder={ui.search.placeholder}
-              onChange={(e) => setQ(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") go(q);
-              }}
-              className="h-13 w-full rounded-lg border border-line-control bg-bg px-12 text-lg text-ink placeholder:text-muted hover:border-ink focus:border-primary focus:shadow-[0_0_0_3px_rgba(31,77,58,.16)] focus:outline-none"
-            />
-            {q && <ClearButton onClear={() => setQ("")} inputRef={inputRef} />}
-          </div>
+          <SearchInput
+            id="header-search"
+            label={ui.search.label}
+            placeholder={ui.search.placeholder}
+            value={q}
+            onChange={setQ}
+            onEnter={go}
+            size="lg"
+            autoFocus
+            inputRef={inputRef}
+            className="flex-1"
+          />
           <button
             type="button"
             aria-label={ui.search.close}
