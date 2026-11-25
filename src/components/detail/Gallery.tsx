@@ -24,7 +24,9 @@ export function Gallery({
           alt={detail.imageAlt(title)}
           width={720}
           height={720}
-          priority
+          // 첫 화면 LCP 사진 — 미리 받기 + 높은 우선순위로 글꼴 · JS보다 먼저 받는다 (Next 16: priority 대신 preload)
+          preload
+          fetchPriority="high"
           sizes="(min-width: 1024px) 600px, 100vw"
           className="block aspect-square w-full object-contain mix-blend-multiply"
         />
