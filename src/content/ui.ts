@@ -194,6 +194,13 @@ export const ui = {
     sheetDone: (count: number) => `원두 ${count}개 보기`,
   },
 
+  /** 목록을 불러오지 못했을 때 (보드 States 「잘못됐을 때」) */
+  listError: {
+    title: "원두 목록을 불러오지 못했어요",
+    desc: "인터넷 연결을 확인하고 다시 시도해 주세요.",
+    retry: "다시 시도",
+  },
+
   notFound: {
     code: "404",
     title: "페이지를 찾을 수 없어요",
