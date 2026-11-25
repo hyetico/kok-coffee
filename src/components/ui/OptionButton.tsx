@@ -14,6 +14,8 @@ type OptionGroupProps<K extends string> = {
   options: readonly Option<K>[];
   value: K;
   onChange: (key: K) => void;
+  /** fill: 칸을 나눠 꽉 채운다 (주문서 결제 수단 — 웹 3칸, 모바일 1칸) */
+  fill?: boolean;
   className?: string;
 };
 
@@ -27,13 +29,14 @@ export function OptionGroup<K extends string>({
   options,
   value,
   onChange,
+  fill,
   className = "",
 }: OptionGroupProps<K>) {
   return (
     <div
       role="group"
       aria-labelledby={labelledBy}
-      className={`flex flex-wrap gap-2 ${className}`}
+      className={`${fill ? "grid grid-cols-1 sm:grid-cols-3" : "flex flex-wrap"} gap-2 ${className}`}
     >
       {options.map((o) => (
         <button
@@ -42,7 +45,7 @@ export function OptionGroup<K extends string>({
           aria-pressed={o.key === value}
           disabled={o.disabled}
           onClick={() => onChange(o.key)}
-          className="inline-flex h-11 cursor-pointer items-center gap-1 rounded-lg border border-line-control bg-bg px-4 text-sm leading-none font-medium text-ink hover:border-ink disabled:cursor-not-allowed disabled:bg-surface disabled:text-disabled-ink disabled:line-through aria-pressed:border-ink aria-pressed:bg-option-on aria-pressed:font-bold aria-pressed:text-ink aria-pressed:shadow-[inset_0_0_0_1px_var(--color-ink)]"
+          className={`${fill ? "w-full justify-center" : ""} inline-flex h-11 cursor-pointer items-center gap-1 rounded-lg border border-line-control bg-bg px-4 text-sm leading-none font-medium text-ink hover:border-ink disabled:cursor-not-allowed disabled:bg-surface disabled:text-disabled-ink disabled:line-through aria-pressed:border-ink aria-pressed:bg-option-on aria-pressed:font-bold aria-pressed:text-ink aria-pressed:shadow-[inset_0_0_0_1px_var(--color-ink)]`}
         >
           {o.label}
           {o.extra && (

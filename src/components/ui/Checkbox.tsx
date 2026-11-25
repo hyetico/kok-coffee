@@ -9,6 +9,10 @@ type CheckboxProps = {
   /** 보이는 글. 없으면 ariaLabel로 읽는 이름만 준다 (장바구니 줄 선택) */
   children?: ReactNode;
   ariaLabel?: string;
+  /** 첫 오류 칸으로 초점을 옮길 때 찾는 id (주문서 약관 동의) */
+  id?: string;
+  /** 오류 글과 잇는다 */
+  describedBy?: string;
   className?: string;
 };
 
@@ -23,6 +27,8 @@ export function Checkbox({
   onChange,
   children,
   ariaLabel,
+  id,
+  describedBy,
   className = "",
 }: CheckboxProps) {
   return (
@@ -32,7 +38,9 @@ export function Checkbox({
           type="checkbox"
           checked={checked}
           onChange={onChange}
+          id={id}
           aria-label={ariaLabel}
+          aria-describedby={describedBy}
           className="peer m-0 box-border size-5 cursor-pointer appearance-none rounded-sm border-2 border-line-control bg-bg checked:border-ink checked:bg-ink hover:border-ink"
         />
         <CheckIcon
