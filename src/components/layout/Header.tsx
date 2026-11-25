@@ -28,7 +28,7 @@ function Logo() {
         src="/brand/logo.svg"
         alt=""
         aria-hidden="true"
-        width={50}
+        width={52}
         height={26}
         priority
         className="block"

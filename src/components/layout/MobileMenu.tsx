@@ -71,7 +71,7 @@ export function MobileMenu({ open, onClose, cartCount }: MobileMenuProps) {
             src="/brand/logo.svg"
             alt=""
             aria-hidden="true"
-            width={50}
+            width={52}
             height={26}
             className="block"
           />
