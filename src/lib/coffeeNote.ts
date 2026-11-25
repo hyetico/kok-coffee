@@ -3,7 +3,7 @@ import { ui } from "@/content/ui";
 import type { Product } from "@/types";
 import { listedProducts, splitNotes } from "./catalog";
 
-// 상세 「코케 노트」 조립 규칙 (04 문서 8장 temp-content). 값은 프로토타입과 같다
+// 상세 「콕 노트」 조립 규칙 (04 문서 8장 temp-content). 값은 프로토타입과 같다
 // 실제 자료가 있는 상품(detail.overrides)은 그 값을 먼저 쓴다
 
 type RoastKey = keyof typeof detail.note.roast;

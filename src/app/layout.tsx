@@ -2,17 +2,23 @@ import type { Metadata, Viewport } from "next";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { Header } from "@/components/layout/Header";
 import { Toaster } from "@/components/ui/Toaster";
+import { site } from "@/content/site";
 import { ui } from "@/content/ui";
 import { pretendardRest, pretendardUsed } from "./fonts";
 import "./globals.css";
 
 // 파비콘은 src/app/의 favicon.ico · icon.svg · apple-icon.png 파일로 Next가 자동 연결한다
-// TODO: title · description은 2단계 src/content/site.ts가 생기면 거기서 가져온다
+// TODO: description은 내용이 정해지면 site.ts에 두고 가져온다 (CONTENT_TODO)
 export const metadata: Metadata = {
   // 사이트 주소는 이 환경변수 한 곳에서만 정한다 (CLAUDE.md 11장). 도메인이 정해지기 전에는 개발 주소로 둔다
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   ),
+  title: { default: site.name, template: `${site.name} %s` },
+  openGraph: {
+    siteName: site.name,
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+  },
 };
 
 export const viewport: Viewport = {

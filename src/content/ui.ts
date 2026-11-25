@@ -23,7 +23,7 @@ export const ui = {
   skipToContent: "본문으로 건너뛰기",
 
   header: {
-    homeLabel: "코케 홈",
+    homeLabel: "콕커피 홈",
     navLabel: "카테고리",
     openSearch: "원두 검색 열기",
     openMenu: "메뉴 열기",

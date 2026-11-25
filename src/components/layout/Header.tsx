@@ -21,16 +21,16 @@ function Logo() {
     <Link
       href="/"
       aria-label={ui.header.homeLabel}
-      className="block w-18 shrink-0 lg:w-24 lg:justify-self-start"
+      className="block shrink-0 lg:justify-self-start"
     >
-      {/* 로고 원본은 240×85 래스터뿐 (CONTENT_TODO) — 글자 이미지라 이름은 링크가 읽는다 */}
       <Image
-        src="/images/logo.webp"
+        src="/brand/logo.svg"
         alt=""
-        width={240}
-        height={85}
+        aria-hidden="true"
+        width={54}
+        height={28}
         priority
-        className="block h-auto w-full"
+        className="block"
       />
     </Link>
   );

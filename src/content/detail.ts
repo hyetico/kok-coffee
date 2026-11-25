@@ -18,7 +18,7 @@ export const detail = {
 
   profile: {
     title: "맛 프로필",
-    note: "(코케 큐레이터 테이스팅, 5점 만점)",
+    note: "(콕커피 큐레이터 테이스팅, 5점 만점)",
     roast: "로스팅",
   },
 
@@ -44,7 +44,7 @@ export const detail = {
   tabs: ["상품 정보", "배송 · 교환"],
 
   note: {
-    badge: "코케 노트",
+    badge: "콕 노트",
     /** 소개 문장: 「{로스터리}의 {종류}예요. {노트1}하고 {노트2} 맛이 중심이라 {종류별 문장}」 */
     introLead: (roastery: string, typeLabel: string) =>
       `${roastery}의 ${typeLabel}예요. `,
@@ -109,7 +109,7 @@ export const detail = {
       shipValue: "오후 3시까지 결제하면 당일 로스팅 후 출고",
     },
     disclaimer:
-      "코케 큐레이터가 직접 내려 마셔 보고 정리한 노트예요. 같은 원두도 로스팅 날짜와 추출법에 따라 맛이 조금씩 달라질 수 있어요.",
+      "콕커피 큐레이터가 직접 내려 마셔 보고 정리한 노트예요. 같은 원두도 로스팅 날짜와 추출법에 따라 맛이 조금씩 달라질 수 있어요.",
   },
 
   shipping: {

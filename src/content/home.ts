@@ -53,7 +53,7 @@ export const home = {
 
   brand: {
     title: "Good Coffee Collector",
-    desc: "코케는 좋은 커피를 수집하는 Good Coffee Collector입니다. 당신의 기록이 차곡차곡 쌓여 취향이 되는 즐거움을 함께하며, 커피로 당신의 일상에 특별함이 더해지는 순간을 기대합니다.",
+    desc: "콕커피는 좋은 커피를 수집하는 Good Coffee Collector입니다. 당신의 기록이 차곡차곡 쌓여 취향이 되는 즐거움을 함께하며, 커피로 당신의 일상에 특별함이 더해지는 순간을 기대합니다.",
     /** TODO: 배너 원본 이미지가 오면 바꾼다 (CONTENT_TODO 「메인 · 브랜드 배너 이미지 원본」) — 지금은 프로토타입 이미지 */
     image: "/images/banners/home-brand.webp",
   },

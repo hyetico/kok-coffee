@@ -5,7 +5,7 @@ export const roasteryContent = {
   list: {
     title: "로스터리",
     count: (n: number) => `${n}곳`,
-    desc: "코케에서 원두를 만날 수 있는 로스터리예요.",
+    desc: "콕커피에서 원두를 만날 수 있는 로스터리예요.",
     searchLabel: "로스터리 이름으로 찾기",
     emptyTitle: "찾는 로스터리가 없어요",
     emptyDesc: "이름을 다시 확인하거나 검색어를 지워 보세요.",
@@ -28,15 +28,15 @@ export const roasteryContent = {
     emptyDesc: "그동안 비슷한 맛의 다른 로스터리 원두를 둘러보세요.",
     emptyButton: "모든커피 보기",
     intro: (name: string, count: number, top: string[]) =>
-      `${name}은(는) 코케에서 원두 ${count}종을 소개하는 로스터리예요. ${top.join(", ")} 맛이 두드러지는 원두가 많아요.`,
+      `${name}은(는) 콕커피에서 원두 ${count}종을 소개하는 로스터리예요. ${top.join(", ")} 맛이 두드러지는 원두가 많아요.`,
     introEmpty: (name: string) =>
-      `${name}은(는) 코케 큐레이터와 다음 시즌 원두를 함께 고르고 있는 로스터리예요. 첫 원두가 입고되면 맛 지도에 바로 올라와요.`,
+      `${name}은(는) 콕커피 큐레이터와 다음 시즌 원두를 함께 고르고 있는 로스터리예요. 첫 원두가 입고되면 맛 지도에 바로 올라와요.`,
     facts: (count: number, top: string[], roast: string) => [
-      `코케 판매 원두 ${count}종`,
+      `콕커피 판매 원두 ${count}종`,
       `대표 맛: ${top.join(", ")}`,
       roast,
     ],
-    factsEmpty: ["다음 시즌 원두 큐레이션 중", "입고 소식은 코케 뉴스레터로"],
+    factsEmpty: ["다음 시즌 원두 큐레이션 중", "입고 소식은 콕커피 뉴스레터로"],
     roast: {
       light: "라이트 로스팅 중심",
       dark: "미디엄~다크 로스팅 중심",

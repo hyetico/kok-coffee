@@ -65,14 +65,15 @@ export function MobileMenu({ open, onClose, cartCount }: MobileMenuProps) {
         <Link
           href="/"
           aria-label={ui.header.homeLabel}
-          className="block w-18 shrink-0"
+          className="block shrink-0"
         >
           <Image
-            src="/images/logo.webp"
+            src="/brand/logo.svg"
             alt=""
-            width={240}
-            height={85}
-            className="block h-auto w-full"
+            aria-hidden="true"
+            width={54}
+            height={28}
+            className="block"
           />
         </Link>
         {/* 열리면 초점이 닫기 버튼에 온다 (03 「메뉴 드로어」) */}
