@@ -13,8 +13,11 @@ export type Grind =
   | "hand-drip"
   | "moka-pot";
 
-/** 맛 지도 좌표 (0–100). x: 고소한 → 화사한, y: 묵직한 → 가벼운 */
+/** 맛 지도 좌표 (0–100). x: 고소한 → 화사한, y: 묵직한 → 가벼운. 저장하지 않고 맛 점수에서 계산한다 (lib/taste.ts) */
 export type MapPosition = { x: number; y: number };
+
+/** 맛 점수 1–5 · 0.1 단위. 지도 좌표 · 구간 글 · 필터가 모두 이 값에서 나온다 (06 기술서 3장) */
+export type Taste = { acidity: number; body: number };
 
 /** src/data/products.json 한 줄 */
 export type Product = {
@@ -33,8 +36,8 @@ export type Product = {
   roasteryLogo: string;
   /** 원본 자료 위치 (기록용, 화면에 쓰지 않음) */
   source: string;
-  /** null이면 맛 지도에 그리지 않는다 */
-  mapPosition: MapPosition | null;
+  /** null이면 맛 지도 · 맛 필터에서 빠진다 (brandOnly 상품) */
+  taste: Taste | null;
   /** true면 목록 · 지도 · 검색에 나오지 않고 브랜드 페이지에만 보인다 (c2–c4) */
   brandOnly?: boolean;
   _mapNote?: string;
@@ -58,8 +61,13 @@ export type CartItem = {
   checked: boolean;
 };
 
-/** 목록 정렬. rec는 데이터 순서 그대로 */
-export type SortKey = "rec" | "low" | "high";
+/** 목록 정렬. rec는 데이터 순서 그대로, near는 「내 취향」 핀과 가까운 순(테스트 후에만) */
+export type SortKey = "rec" | "near" | "low" | "high";
+
+/** 산미 구간 — 낮음 · 중간 · 높음 */
+export type AcidityBand = "lo" | "mid" | "hi";
+/** 바디 구간 — 슬라이더 왼쪽부터 가벼움 · 중간 · 묵직 */
+export type BodyBand = "lt" | "mid" | "hv";
 
 /** 목록 가격대 필터 id — URL 쿼리 ?price=u10,10,15,o20 와 같은 값 */
 export type PriceBandId = "u10" | "10" | "15" | "o20";
@@ -71,6 +79,11 @@ export type ListFilter = {
   decaf: boolean;
   prices: PriceBandId[];
   tastes: string[];
+  /** 산미 슬라이더 범위. 비어 있으면 전체 */
+  ac: AcidityBand[];
+  /** 바디 슬라이더 범위. 비어 있으면 전체 */
+  bd: BodyBand[];
   q: string;
-  sort: SortKey;
+  /** 주소에 없으면 null — 테스트 전은 추천순, 테스트 후는 내 취향과 가까운 순 */
+  sort: SortKey | null;
 };

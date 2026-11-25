@@ -7,11 +7,16 @@ type Option<K extends string> = { key: K; label: string };
 
 type SortSelectProps<K extends string> = {
   options: readonly Option<K>[];
-  value: K;
+  /** null이면 메뉴에서 아무것도 고르지 않은 상태 (맛 지도에서 점을 고른 동안) */
+  value: K | null;
   onChange: (key: K) => void;
   /** 버튼 읽는 이름 앞부분 (「정렬 기준: 추천순」) */
   label: (current: string) => string;
   menuLabel: string;
+  /** 버튼에 보일 글을 바꿀 때 — 맛 지도에서 점을 고르면 「고른 원두와 가까운 순」 */
+  currentLabel?: string;
+  /** 테두리 · 바탕 없는 글자형 버튼 (목록 「원두」 제목 줄) */
+  plain?: boolean;
 };
 
 /**
@@ -25,12 +30,15 @@ export function SortSelect<K extends string>({
   onChange,
   label,
   menuLabel,
+  currentLabel,
+  plain,
 }: SortSelectProps<K>) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuId = useId();
-  const current = options.find((o) => o.key === value) ?? options[0];
+  const shown =
+    currentLabel ?? (options.find((o) => o.key === value) ?? options[0]).label;
 
   useEffect(() => {
     if (!open) return;
@@ -75,19 +83,23 @@ export function SortSelect<K extends string>({
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={open ? menuId : undefined}
-        aria-label={label(current.label)}
+        aria-label={label(shown)}
         onClick={() => setOpen((o) => !o)}
-        className="group inline-flex h-10 cursor-pointer items-center gap-2 rounded-lg border border-line-control bg-bg pr-2.5 pl-3 text-sm leading-none font-medium text-ink hover:border-ink aria-expanded:border-ink"
+        className={`group inline-flex cursor-pointer items-center gap-2 rounded-lg border text-sm leading-none font-medium text-ink ${
+          plain
+            ? "h-10 border-transparent bg-transparent pr-0 pl-3"
+            : "h-10 border-line-control bg-bg pr-2.5 pl-3 hover:border-ink aria-expanded:border-ink"
+        }`}
       >
-        {current.label}
+        {shown}
         <svg
           aria-hidden="true"
-          width="14"
-          height="14"
+          width={plain ? 16 : 14}
+          height={plain ? 16 : 14}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2.2"
+          strokeWidth={plain ? 1.75 : 2.2}
           className="transition-transform duration-200 group-aria-expanded:rotate-180 motion-reduce:transition-none"
         >
           <path d="M6 9l6 6 6-6" />

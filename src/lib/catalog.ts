@@ -6,10 +6,8 @@ import type { Product, Roastery } from "@/types";
 const products = productsJson as Product[];
 const roasteries = roasteriesJson as Roastery[];
 
-/** 맛 지도에 그릴 수 있는 상품 (위치가 있음) */
-export type MappedProduct = Product & {
-  mapPosition: NonNullable<Product["mapPosition"]>;
-};
+/** 맛 지도에 그릴 수 있는 상품 (맛 점수가 있음) */
+export type MappedProduct = Product & { taste: NonNullable<Product["taste"]> };
 
 /**
  * 모든 상품 (브랜드 페이지 전용 상품 포함). 목록 · 검색에는 listedProducts, 지도에는 mappedProducts를 쓴다.
@@ -28,14 +26,14 @@ export function listedProducts(): Product[] {
 }
 
 /**
- * 맛 지도에 그릴 상품. 목록 상품 중 위치가 있는 것만. 필터를 건 목록을 넘기면 그 안에서만 고른다.
+ * 맛 지도에 그릴 상품. 목록 상품 중 맛 점수가 있는 것만. 필터를 건 목록을 넘기면 그 안에서만 고른다.
  * @example mappedProducts(applyListFilter(listedProducts(), filter))
  */
 export function mappedProducts(
   list: Product[] = listedProducts(),
 ): MappedProduct[] {
   return list.filter(
-    (p): p is MappedProduct => !p.brandOnly && p.mapPosition !== null,
+    (p): p is MappedProduct => !p.brandOnly && p.taste !== null,
   );
 }
 

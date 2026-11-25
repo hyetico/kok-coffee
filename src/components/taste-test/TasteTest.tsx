@@ -10,6 +10,8 @@ import {
   tasteQuestions,
 } from "@/data/taste-questions";
 import { recommend } from "@/lib/recommend";
+import { pinFromAnswers } from "@/lib/taste";
+import { useTasteStore } from "@/store/taste";
 
 const TOTAL = tasteQuestions.length;
 /** 0: 시작 · 1–5: 질문 · 6: 결과 */
@@ -158,7 +160,12 @@ export function TasteTest() {
             kind="primary"
             size="lg"
             disabled={current === null}
-            onClick={() => go(step + 1)}
+            onClick={() => {
+              // 「결과 보기」를 누르는 순간 「내 취향」 핀을 저장한다 — 목록 맛 지도에 핀 · 가까운 순이 생긴다 (06 기술서 7장)
+              if (step === TOTAL)
+                useTasteStore.getState().setPin(pinFromAnswers(answers));
+              go(step + 1);
+            }}
           >
             {step === TOTAL ? t.question.finish : t.question.next}
           </Button>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Tag } from "@/components/ui/Tag";
 import { ui } from "@/content/ui";
 import { formatWon } from "@/lib/format";
+import { describePos, toPos } from "@/lib/taste";
 import type { Product } from "@/types";
 import { AddToCartButton } from "./AddToCartButton";
 
@@ -22,6 +23,7 @@ type ProductCardProps = {
 export function ProductCard({ product, badge, hideAdd }: ProductCardProps) {
   const href = `/coffee/${product.id}`;
   const tag = badge ?? (product.decaf ? ui.product.decaf : undefined);
+  const pos = product.taste ? toPos(product.taste) : null;
   return (
     <div className="group flex h-full flex-col">
       <Link href={href} tabIndex={-1} aria-hidden="true" className="block">
@@ -59,7 +61,25 @@ export function ProductCard({ product, badge, hideAdd }: ProductCardProps) {
         <p className="mt-1 mb-0 text-sm text-muted">
           {product.notes} · {ui.product.typeLabels[product.type]}
         </p>
-        <p className="mt-1.5 mb-0 text-base font-bold">
+        {pos && (
+          // 맛 지도 위치를 작은 지도와 글로 (06 기술서 3장 — 「산미 높음 · 바디 중간」)
+          <p className="mt-2 mb-0 flex items-center gap-2 text-xs font-semibold text-ink">
+            <span
+              aria-hidden="true"
+              className="relative size-6 flex-none rounded-sm bg-map-bg shadow-[inset_0_0_0_1px_var(--color-line)] before:absolute before:top-1 before:bottom-1 before:left-1/2 before:w-px before:bg-line before:content-[''] after:absolute after:top-1/2 after:right-1 after:left-1 after:h-px after:bg-line after:content-['']"
+            >
+              <i
+                className="absolute z-1 -m-0.75 size-1.5 rounded-full bg-ink"
+                style={{
+                  left: `calc(3px + 18px * ${pos.x / 100})`,
+                  top: `calc(3px + 18px * ${pos.y / 100})`,
+                }}
+              />
+            </span>
+            {describePos(pos)}
+          </p>
+        )}
+        <p className="mt-2 mb-0 text-base font-bold">
           {formatWon(product.price)}
         </p>
       </Link>

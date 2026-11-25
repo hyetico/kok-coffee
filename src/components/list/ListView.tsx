@@ -2,11 +2,10 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { FilterIcon } from "@/components/icons";
+import { FilterIcon, SlidersIcon } from "@/components/icons";
 import { ProductCard } from "@/components/product/ProductCard";
 import { BottomSheet } from "@/components/ui/BottomSheet";
 import { Button } from "@/components/ui/Button";
-import { ScrollTabs } from "@/components/ui/ScrollTabs";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { Segmented } from "@/components/ui/Segmented";
 import { ProductCardSkeleton } from "@/components/ui/Skeleton";
@@ -17,142 +16,156 @@ import { listedProducts, mappedProducts } from "@/lib/catalog";
 import {
   applyListFilter,
   DEFAULT_FILTER,
+  effectiveSort,
   parseListQuery,
+  PRICE_BAND_IDS,
   SORT_KEYS,
   toListQuery,
 } from "@/lib/filter";
+import { ACIDITY_BANDS, BODY_BANDS, dist, tasteKey, toPos } from "@/lib/taste";
 import { useSearchStore } from "@/store/search";
-import type { ListFilter, PriceBandId, ProductType } from "@/types";
+import { useTaste, useTasteStore } from "@/store/taste";
+import type { ListFilter, Product, ProductType } from "@/types";
+import { FilterPanel } from "./FilterPanel";
 import { ListMap } from "./ListMap";
-import { FilterGroups } from "./FilterGroups";
 
 /** 들어올 때 스켈레톤을 보이는 시간 (02 PRD 「들어올 때 약 1초 스켈레톤」 · 프로토타입 값) */
 const ENTER_LOADING_MS = 900;
-/** 필터 영역이 푸터에 밀려도 이 높이 밑으로는 줄이지 않는다 (03 「목록」) */
-const SIDE_MIN_HEIGHT = 320;
 
-type View = "grid" | "map";
-type Tab = ProductType | "all";
+type View = "map" | "list";
+type TypeKey = ProductType | "all";
 
 const label = (key: string) => navItems.find((n) => n.key === key)?.label ?? "";
 
-const toggle = <T,>(list: T[], v: T) =>
-  list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
+/** 받침이 있으면 「과」, 없으면 「와」 */
+function josa(word: string): string {
+  const c = word.charCodeAt(word.length - 1);
+  return c >= 0xac00 && c <= 0xd7a3 && (c - 0xac00) % 28 !== 0 ? "과" : "와";
+}
 
-/** 같은 상품 줄 — 웹 4열 · 1024–1279 3열 · 태블릿 3열 · 모바일 2열 */
+/** 웹 4열 · 1024–1279 3열 · 태블릿 3열 · 모바일 2열 */
 const gridClass =
-  "m-0 mt-4 grid list-none grid-cols-2 gap-x-3 gap-y-7 p-0 sm:grid-cols-3 lg:gap-x-4 lg:gap-y-8 xl:grid-cols-4";
+  "m-0 mt-6 grid list-none grid-cols-2 gap-x-3 gap-y-7 p-0 sm:grid-cols-3 lg:gap-x-4 lg:gap-y-8 xl:grid-cols-4";
 
 /**
- * 모든커피 · 싱글오리진 · 블렌드 목록. 같은 화면이고 URL의 type으로 갈린다.
- * 조건은 모두 URL 쿼리에 있어 주소를 공유하면 같은 목록이 열린다 (04 문서 4장).
- * 모든커피의 종류 탭은 페이지 자체(type)와 섞이지 않게 tab 쿼리로 둔다.
+ * 모든커피 · 싱글오리진 · 블렌드 목록 — 지도 우선 구조: [필터 | 도구 줄 → 맛 지도 → 「원두」 목록] (06 기술서 4장).
+ * 조건 · 보기 · 고른 점은 모두 URL 쿼리에 있어 주소를 공유하면 같은 화면이 열린다 (06 기술서 8장).
+ * 싱글오리진 · 블렌드는 type 쿼리가 페이지 자체라, 모든커피의 종류 라디오는 tab 쿼리로 둔다.
  * @example <ListView />
  */
 export function ListView() {
   const params = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const { pin, hintClosed } = useTaste();
 
   const pageType = params.get("type");
   const isAll = pageType !== "single" && pageType !== "blend";
   const tabParam = params.get("tab");
-  const tab: Tab = isAll
+  const type: TypeKey = isAll
     ? tabParam === "single" || tabParam === "blend"
       ? tabParam
       : "all"
     : (pageType as ProductType);
-  const filter: ListFilter = { ...parseListQuery(params), type: tab };
-  const view: View = params.get("view") === "map" ? "map" : "grid";
+  const filter: ListFilter = { ...parseListQuery(params), type };
+  const view: View = params.get("view") === "list" ? "list" : "map";
+  const pickParam = params.get("pick");
 
-  const pageTitle = isAll ? label(tab === "all" ? "coffee" : tab) : label(tab);
+  const pageTitle = label(isAll ? "coffee" : type);
 
-  const update = (next: Partial<ListFilter> & { view?: View; tab?: Tab }) => {
+  type Next = Partial<ListFilter> & {
+    view?: View;
+    tab?: TypeKey;
+    pick?: string | null;
+  };
+  // 조건을 바꾸면 고른 점은 풀린다 — 검색어 · 보기 전환만 고른 점을 그대로 둔다 (프로토타입 규칙)
+  const update = (next: Next) => {
     const f = { ...filter, ...next };
     const q = new URLSearchParams(toListQuery({ ...f, type: "all" }).slice(1));
-    if (!isAll) q.set("type", tab);
-    const nextTab = next.tab ?? tab;
+    if (!isAll) q.set("type", type);
+    const nextTab = next.tab ?? type;
     if (isAll && nextTab !== "all") q.set("tab", nextTab);
-    const nextView = next.view ?? view;
-    if (nextView === "map") q.set("view", "map");
+    if ((next.view ?? view) === "list") q.set("view", "list");
+    const keepPick = Object.keys(next).every((k) => k === "q" || k === "view");
+    const pick = "pick" in next ? next.pick : keepPick ? pickParam : null;
+    if (pick) q.set("pick", pick);
     const s = q.toString().replace(/%2C/g, ",");
     router.replace(`${pathname}${s ? `?${s}` : ""}`, { scroll: false });
   };
 
-  const items = applyListFilter(listedProducts(), filter);
+  const typed = mappedProducts(
+    listedProducts().filter((p) => type === "all" || p.type === type),
+  );
+  const filtered = applyListFilter(listedProducts(), filter, pin);
+  const passing = new Set(filtered.map((p) => p.id));
+
+  // 고른 원두(묶음이면 같은 자리 전부) → 나머지를 맛이 가까운 순 (06 기술서 6장)
+  const anchor = typed.find((p) => p.id === pickParam) ?? null;
+  let items: { product: Product; badge?: string }[] = filtered.map((p) => ({
+    product: p,
+  }));
+  let pickChip = "";
+  if (anchor) {
+    const k = tasteKey(anchor.taste);
+    const at = toPos(anchor.taste);
+    const d = (p: Product) =>
+      p.taste ? dist(toPos(p.taste), at) : Number.POSITIVE_INFINITY;
+    const front = typed.filter((p) => tasteKey(p.taste) === k);
+    const rest = filtered
+      .filter((p) => !p.taste || tasteKey(p.taste) !== k)
+      .map((p, i) => ({ p, i }))
+      .sort((a, b) => d(a.p) - d(b.p) || a.i - b.i)
+      .map((x) => x.p);
+    const nearIds = new Set(
+      typed
+        .filter((p) => tasteKey(p.taste) !== k)
+        .sort((a, b) => d(a) - d(b))
+        .slice(0, 3)
+        .map((p) => p.id),
+    );
+    items = [
+      ...front.map((p) => ({ product: p, badge: ui.list.pick.picked })),
+      ...rest.map((p) => ({
+        product: p,
+        badge: nearIds.has(p.id) ? ui.list.pick.similar : undefined,
+      })),
+    ];
+    const name =
+      front.length > 1 ? ui.list.pick.group(front.length) : anchor.title;
+    pickChip = ui.list.pick.chip(name, josa(name));
+  }
+
   const filterCount =
-    filter.prices.length + filter.tastes.length + (filter.decaf ? 1 : 0);
-  const clearFilters = () => update({ decaf: false, prices: [], tastes: [] });
+    (filter.decaf ? 1 : 0) +
+    filter.ac.length +
+    filter.bd.length +
+    filter.tastes.length +
+    filter.prices.length;
+  const clearFilters = () =>
+    update({ decaf: false, prices: [], tastes: [], ac: [], bd: [] });
   const resetAll = () =>
     update({ ...DEFAULT_FILTER, tab: "all", sort: filter.sort });
 
   const [loading, setLoading] = useState(true);
   const [sheetOpen, setSheetOpen] = useState(false);
-  const barRef = useRef<HTMLDivElement>(null);
-  const resultsRef = useRef<HTMLDivElement>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const sideRef = useRef<HTMLElement>(null);
+  const listHeadRef = useRef<HTMLDivElement>(null);
 
-  useHideOnScroll({ firstRowRef: resultsRef, toolbarRef: barRef });
+  useHideOnScroll();
 
   useEffect(() => {
     const id = window.setTimeout(() => setLoading(false), ENTER_LOADING_MS);
     return () => window.clearTimeout(id);
   }, []);
 
-  // 조건을 바꿨을 때 목록 맨 위가 화면 위로 지나가 있으면 도구 줄 바로 아래로 올린다 (02 PRD 3장)
-  const conditionKey = params.toString();
-  const firstRun = useRef(true);
-  useEffect(() => {
-    if (firstRun.current) {
-      firstRun.current = false;
-      return;
-    }
-    const sec = sectionRef.current;
-    if (sec && sec.getBoundingClientRect().top < 0)
-      sec.scrollIntoView({ block: "start" });
-  }, [conditionKey]);
-
-  // 목록 끝(푸터)이 화면에 들어오면 필터 영역이 위에 붙은 채 높이만 줄어든다 (03 「목록」)
-  useEffect(() => {
-    const fit = () => {
-      const side = sideRef.current;
-      const wrap = wrapRef.current;
-      if (!side || !wrap) return;
-      if (getComputedStyle(side).position !== "sticky") {
-        side.style.height = "";
-        return;
-      }
-      const top = parseFloat(getComputedStyle(side).top) || 0;
-      const h =
-        Math.min(window.innerHeight, wrap.getBoundingClientRect().bottom) - top;
-      side.style.height = `${Math.max(SIDE_MIN_HEIGHT, Math.round(h))}px`;
-    };
-    fit();
-    window.addEventListener("scroll", fit, { passive: true });
-    window.addEventListener("resize", fit);
-    // 헤더가 숨거나 나타나며 top이 바뀌는 0.25초 뒤에도 다시 잰다
-    const mo = new MutationObserver(() => window.setTimeout(fit, 260));
-    mo.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-header-hidden"],
+  const goList = () =>
+    listHeadRef.current?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+      block: "start",
     });
-    return () => {
-      window.removeEventListener("scroll", fit);
-      window.removeEventListener("resize", fit);
-      mo.disconnect();
-    };
-  }, []);
 
-  const filterProps = {
-    filter,
-    onToggleDecaf: () => update({ decaf: !filter.decaf }),
-    onTogglePrice: (id: PriceBandId) =>
-      update({ prices: toggle(filter.prices, id) }),
-    onToggleTaste: (w: string) => update({ tastes: toggle(filter.tastes, w) }),
-  };
-
+  const t = ui.list;
   const active: {
     key: string;
     label: string;
@@ -162,7 +175,7 @@ export function ListView() {
   if (filter.q.trim())
     active.push({
       key: "q",
-      label: ui.list.searchCondition(filter.q.trim()),
+      label: t.searchCondition(filter.q.trim()),
       aria: ui.search.clear,
       remove: () => update({ q: "" }),
     });
@@ -170,29 +183,72 @@ export function ListView() {
     active.push({
       key: "decaf",
       label: ui.product.decaf,
-      aria: ui.list.removeCondition(ui.product.decaf),
+      aria: t.removeCondition(ui.product.decaf),
       remove: () => update({ decaf: false }),
     });
+  for (const b of ACIDITY_BANDS)
+    if (filter.ac.includes(b)) {
+      const l = t.rangeText(t.acidity.name, t.acidity.bands[b]);
+      active.push({
+        key: `ac-${b}`,
+        label: l,
+        aria: t.removeCondition(l),
+        // 이웃한 칸만 고를 수 있어 끝 칸을 빼면 범위가 그대로 이어진다
+        remove: () => update({ ac: filter.ac.filter((x) => x !== b) }),
+      });
+    }
+  for (const b of BODY_BANDS)
+    if (filter.bd.includes(b)) {
+      const l = t.rangeText(t.body.name, t.body.bands[b]);
+      active.push({
+        key: `bd-${b}`,
+        label: l,
+        aria: t.removeCondition(l),
+        remove: () => update({ bd: filter.bd.filter((x) => x !== b) }),
+      });
+    }
   for (const w of filter.tastes)
     active.push({
       key: `t-${w}`,
       label: w,
-      aria: ui.list.removeCondition(w),
+      aria: t.removeCondition(w),
       remove: () => update({ tastes: filter.tastes.filter((x) => x !== w) }),
     });
-  for (const id of filter.prices)
-    active.push({
-      key: `p-${id}`,
-      label: ui.list.priceBands[id],
-      aria: ui.list.removeCondition(ui.list.priceBands[id]),
-      remove: () => update({ prices: filter.prices.filter((x) => x !== id) }),
-    });
+  for (const id of PRICE_BAND_IDS)
+    if (filter.prices.includes(id))
+      active.push({
+        key: `p-${id}`,
+        label: t.priceBands[id],
+        aria: t.removeCondition(t.priceBands[id]),
+        remove: () => update({ prices: filter.prices.filter((x) => x !== id) }),
+      });
 
-  const tabs: Tab[] = ["all", "blend", "single"];
+  const sortKey = effectiveSort(filter.sort, pin);
+  const panelProps = {
+    filter,
+    type: isAll ? type : null,
+    onType: (tab: TypeKey) => update({ tab }),
+    onChange: (next: Partial<ListFilter>) => update(next),
+    pin,
+  };
+  const chipClass =
+    "inline-flex h-8 cursor-pointer items-center gap-2 rounded-2xl px-3 text-sm leading-none";
+  const xIcon = (
+    <svg
+      aria-hidden="true"
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.4"
+    >
+      <path d="M6 6l12 12M18 6L6 18" />
+    </svg>
+  );
 
   return (
-    // main은 body(세로 flex)의 자식이라 폭을 꽉 채우게 두고, 본문 폭은 안쪽 div가 맡는다.
-    // main에 바로 page-wrap(margin auto)을 주면 내용만큼만 폭을 잡아 결과가 적을 때 좁아진다
+    // main은 body(세로 flex)의 자식이라 폭을 꽉 채우게 두고, 본문 폭은 안쪽 div가 맡는다
     <main id="main" className="flex-1">
       <div className="page-wrap">
         <div className="pt-10">
@@ -200,71 +256,53 @@ export function ListView() {
             {pageTitle}
           </h1>
         </div>
-        {isAll && (
-          <ScrollTabs
-            size="page"
-            label={ui.list.typeTabsLabel}
-            items={tabs.map((t) =>
-              t === "all" ? ui.list.all : ui.product.typeLabels[t],
-            )}
-            value={tabs.indexOf(tab)}
-            onChange={(i) => update({ tab: tabs[i] })}
-            className="mt-5"
-          />
-        )}
 
-        <div
-          ref={wrapRef}
-          className="mt-8 grid grid-cols-1 items-start gap-5 lg:grid-cols-[232px_minmax(0,1fr)] lg:gap-6"
-        >
+        <div className="mt-8 grid grid-cols-1 items-start lg:grid-cols-[232px_minmax(0,1fr)] lg:gap-8">
           <aside
-            ref={sideRef}
-            aria-label={ui.list.filter}
-            className="list-side box-border hidden flex-col gap-4 py-6 lg:flex"
+            aria-label={t.filter}
+            className="list-side box-border hidden flex-col pb-4 lg:flex"
           >
-            <div className="min-h-0 flex-auto overflow-y-auto overscroll-contain rounded-xl bg-surface p-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              <FilterGroups
-                variant="side"
-                {...filterProps}
-                resetSlot={
-                  filterCount > 0 && (
-                    <Button
-                      kind="text"
-                      onClick={clearFilters}
-                      aria-label={ui.list.resetLabel}
-                      className="-mr-2"
+            <div className="min-h-0 flex-auto overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <div className="mb-4 flex h-10 items-center justify-between">
+                <h2 className="m-0 flex items-center gap-2 text-lg font-bold tracking-[-0.02em] text-ink">
+                  <SlidersIcon />
+                  {t.filter}
+                  {filterCount > 0 && (
+                    <span
+                      aria-label={t.filterCount(filterCount)}
+                      className="box-border inline-grid h-5 min-w-5 place-items-center rounded-[10px] bg-ink px-2 text-xs font-bold text-white"
                     >
-                      {ui.list.reset}
-                    </Button>
-                  )
-                }
-              />
-            </div>
-            <div className="flex-none rounded-xl border border-line bg-bg p-5 [word-break:keep-all]">
-              <p className="m-0 text-sm font-bold">{ui.list.helpTitle}</p>
-              <p className="mt-1.5 mb-0 text-sm leading-[1.6] text-ink-2">
-                {ui.list.helpDesc}
-              </p>
-              <Button
-                href="/taste-test"
-                kind="secondary"
-                size="sm"
-                className="mt-3.5"
-              >
-                {ui.list.helpButton}
-              </Button>
+                      {filterCount}
+                    </span>
+                  )}
+                </h2>
+                {filterCount > 0 && (
+                  <button
+                    type="button"
+                    aria-label={t.resetLabel}
+                    onClick={clearFilters}
+                    className="-mr-2 inline-flex h-8 cursor-pointer items-center gap-1 rounded-md px-2 text-sm text-muted hover:bg-map-bg hover:text-ink"
+                  >
+                    {t.reset}
+                  </button>
+                )}
+              </div>
+              <FilterPanel {...panelProps} />
             </div>
           </aside>
 
-          <section
-            ref={sectionRef}
-            aria-label={ui.list.gridLabel}
-            className="min-h-[calc(100dvh-60px)] min-w-0 scroll-mt-14 self-stretch lg:scroll-mt-15"
-          >
-            <div
-              ref={barRef}
-              className="list-bar flex flex-nowrap items-center gap-x-2 gap-y-3 border-b border-line bg-bg py-4 sm:gap-x-4 lg:pt-6"
-            >
+          <section aria-label={t.gridLabel} className="min-w-0">
+            <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:gap-2">
+              <SearchInput
+                id="list-q"
+                label={t.searchLabel}
+                placeholder={t.searchPlaceholder}
+                value={filter.q}
+                onChange={(q) => update({ q })}
+                onEnter={(q) => useSearchStore.getState().addRecent(q)}
+                size="sm"
+                className="flex-auto max-sm:basis-full sm:max-lg:flex-[0_1_320px]"
+              />
               <button
                 type="button"
                 aria-haspopup="dialog"
@@ -273,102 +311,107 @@ export function ListView() {
                   e.currentTarget.focus();
                   setSheetOpen(true);
                 }}
-                className="kind-secondary inline-flex h-10 shrink-0 cursor-pointer items-center gap-1.5 rounded-lg border border-line-control bg-bg px-3 text-sm leading-none font-semibold whitespace-nowrap text-ink hover:border-ink sm:px-3.5 lg:hidden"
+                className="kind-secondary inline-flex h-10 shrink-0 cursor-pointer items-center gap-2 rounded-lg border border-line-control bg-bg px-3 text-sm leading-none font-semibold whitespace-nowrap text-ink hover:border-ink lg:hidden"
               >
                 <FilterIcon />
-                {ui.list.filter}
+                {t.filter}
                 {filterCount > 0 && (
-                  <span className="inline-grid h-5 min-w-5 place-items-center rounded-sm bg-primary px-1.5 text-xs leading-none font-bold text-white">
+                  <span className="inline-grid h-5 min-w-5 place-items-center rounded-[10px] bg-ink px-2 text-xs leading-none font-bold text-white">
                     {filterCount}
                   </span>
                 )}
               </button>
-              <SearchInput
-                id="list-q"
-                label={ui.list.searchPlaceholder}
-                placeholder={ui.list.searchPlaceholder}
-                value={filter.q}
-                onChange={(q) => update({ q })}
-                onEnter={(q) => useSearchStore.getState().addRecent(q)}
-                size="sm"
-                className="min-w-40 flex-auto"
-              />
-            </div>
-
-            <div
-              aria-label={ui.list.resultsLabel}
-              className="mt-4 flex min-h-9 flex-wrap items-center gap-x-1.5 gap-y-2.5"
-            >
-              <p
-                aria-live="polite"
-                className="order-0 m-0 text-sm whitespace-nowrap text-muted"
-              >
-                {ui.list.totalPrefix}{" "}
-                <strong className="text-ink">{items.length}</strong>
-                {ui.list.totalSuffix}
-              </p>
-              <div className="order-1 ml-auto flex items-center gap-2">
+              <div className="max-lg:ml-auto">
                 <Segmented
                   tall
-                  label={ui.list.viewLabel}
+                  label={t.viewLabel}
                   items={[
-                    { key: "grid", label: ui.list.views.grid },
-                    { key: "map", label: ui.list.views.map },
+                    { key: "map", label: t.views.map },
+                    { key: "list", label: t.views.list },
                   ]}
                   value={view}
                   onChange={(v) => update({ view: v })}
                 />
+              </div>
+            </div>
+
+            {view === "map" && (
+              <ListMap
+                products={typed}
+                passing={passing}
+                pickId={anchor?.id ?? null}
+                onPick={(id) => update({ pick: id })}
+                ac={filter.ac}
+                bd={filter.bd}
+                pin={pin}
+                showHint={!pin && !hintClosed}
+                onCloseHint={() => useTasteStore.getState().closeHint()}
+                onGoList={goList}
+              />
+            )}
+
+            <div ref={listHeadRef} className="mt-10 scroll-mt-20">
+              <h2 className="m-0 text-xl font-bold">{t.listTitle}</h2>
+              <div className="mt-2 flex min-h-10 items-center justify-between gap-3">
+                <p className="m-0 text-sm text-muted">
+                  {t.totalPrefix}{" "}
+                  <strong className="text-ink">{items.length}</strong>
+                  {t.totalSuffix}
+                </p>
                 <SortSelect
-                  options={SORT_KEYS.map((k) => ({
-                    key: k,
-                    label: ui.list.sorts[k],
-                  }))}
-                  value={filter.sort}
+                  plain
+                  options={SORT_KEYS.filter((k) => k !== "near" || pin).map(
+                    (k) => ({ key: k, label: t.sorts[k] }),
+                  )}
+                  value={anchor ? null : sortKey}
+                  currentLabel={anchor ? t.sortPick : undefined}
                   onChange={(sort) => update({ sort })}
-                  label={ui.list.sortCurrent}
-                  menuLabel={ui.list.sortLabel}
+                  label={t.sortCurrent}
+                  menuLabel={t.sortLabel}
                 />
               </div>
-              {active.length > 0 && (
-                <>
-                  <span
-                    aria-hidden="true"
-                    className="order-2 block h-0 basis-full"
-                  />
+              {(anchor || active.length > 0) && (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {anchor && (
+                    <button
+                      type="button"
+                      aria-label={t.pick.clear}
+                      onClick={() => update({ pick: null })}
+                      className={`${chipClass} bg-primary text-white hover:bg-primary-hover`}
+                    >
+                      {pickChip}
+                      {xIcon}
+                    </button>
+                  )}
                   {active.map((a) => (
                     <button
                       key={a.key}
                       type="button"
                       aria-label={a.aria}
                       onClick={a.remove}
-                      className="order-3 inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-2xl bg-surface pr-2.5 pl-3 text-sm leading-none text-ink hover:bg-ghost-hover"
+                      className={`${chipClass} bg-surface text-ink hover:bg-ghost-hover`}
                     >
                       {a.label}
-                      <svg
-                        aria-hidden="true"
-                        width="12"
-                        height="12"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.4"
-                      >
-                        <path d="M6 6l12 12M18 6L6 18" />
-                      </svg>
+                      {xIcon}
                     </button>
                   ))}
-                  <Button kind="text" onClick={resetAll} className="order-3">
-                    {ui.list.clearAll}
-                  </Button>
-                </>
+                  {active.length > 0 && (
+                    <Button kind="text" onClick={resetAll}>
+                      {t.clearAll}
+                    </Button>
+                  )}
+                </div>
               )}
+              {/* 지도에서 점을 고르면 목록 순서가 바뀐 것을 화면 낭독기에 알린다 */}
+              <p aria-live="polite" className="sr-only">
+                {anchor ? t.pick.live(pickChip) : ""}
+              </p>
             </div>
 
-            {/* 아래 여백은 왼쪽 필터 영역의 아래 여백(24)과 같게 */}
-            <div ref={resultsRef} className="pb-6">
+            <div className="pb-6">
               {loading ? (
-                <ul aria-label={ui.list.loadingLabel} className={gridClass}>
-                  {Array.from({ length: 6 }, (_, i) => (
+                <ul aria-label={t.loadingLabel} className={gridClass}>
+                  {Array.from({ length: 4 }, (_, i) => (
                     <li key={i}>
                       <ProductCardSkeleton />
                     </li>
@@ -376,21 +419,17 @@ export function ListView() {
                 </ul>
               ) : items.length === 0 ? (
                 <div className="mt-4 rounded-xl bg-surface px-6 py-16 text-center">
-                  <p className="m-0 text-lg font-bold">{ui.list.emptyTitle}</p>
-                  <p className="mt-2 mb-0 text-sm text-muted">
-                    {ui.list.emptyDesc}
-                  </p>
+                  <p className="m-0 text-lg font-bold">{t.emptyTitle}</p>
+                  <p className="mt-2 mb-0 text-sm text-muted">{t.emptyDesc}</p>
                   <Button kind="primary" onClick={resetAll} className="mt-5">
-                    {ui.list.emptyReset}
+                    {t.emptyReset}
                   </Button>
                 </div>
-              ) : view === "map" ? (
-                <ListMap products={mappedProducts(items)} />
               ) : (
                 <ul className={gridClass}>
-                  {items.map((p) => (
-                    <li key={p.id}>
-                      <ProductCard product={p} />
+                  {items.map(({ product, badge }) => (
+                    <li key={product.id}>
+                      <ProductCard product={product} badge={badge} />
                     </li>
                   ))}
                 </ul>
@@ -403,20 +442,20 @@ export function ListView() {
       <BottomSheet
         open={sheetOpen}
         onClose={() => setSheetOpen(false)}
-        title={ui.list.filter}
-        closeLabel={ui.list.closeFilter}
+        title={t.filter}
+        closeLabel={t.closeFilter}
         footer={
           <>
             <Button kind="secondary" onClick={clearFilters}>
-              {ui.list.reset}
+              {t.reset}
             </Button>
             <Button kind="primary" onClick={() => setSheetOpen(false)}>
-              {ui.list.sheetDone(items.length)}
+              {t.sheetDone(items.length)}
             </Button>
           </>
         }
       >
-        <FilterGroups variant="sheet" {...filterProps} />
+        <FilterPanel {...panelProps} sheet />
       </BottomSheet>
     </main>
   );

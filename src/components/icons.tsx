@@ -80,3 +80,30 @@ export function CheckIcon(props: IconProps) {
     </Svg>
   );
 }
+
+/** 목록 필터 머리 — 슬라이더 모양 (05 「필터」) */
+export function SlidersIcon(props: IconProps) {
+  return (
+    <Svg size={18} strokeWidth={1.75} {...props}>
+      <path d="M4 7h9M17 7h3M4 17h3M11 17h9" />
+      <circle cx="15" cy="7" r="2" />
+      <circle cx="9" cy="17" r="2" />
+    </Svg>
+  );
+}
+
+export function ArrowDownIcon(props: IconProps) {
+  return (
+    <Svg size={16} strokeWidth={1.75} {...props}>
+      <path d="M12 5v14M6 13l6 6 6-6" />
+    </Svg>
+  );
+}
+
+export function ArrowRightIcon(props: IconProps) {
+  return (
+    <Svg size={14} strokeWidth={2} {...props}>
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </Svg>
+  );
+}

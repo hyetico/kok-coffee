@@ -22,6 +22,12 @@
   --color-primary-press: #0e261c;
   --color-option-on: #f3f8f5;
   --color-map-dot: #9db5a6;
+  /* 목록 맛 지도 · 필터 (05 「맛 지도」 · 「필터」 — 보드 측정값) */
+  --color-map-bg: #f5f6f5;
+  --color-map-axis: #d2dbd5;
+  --color-map-corner: #a3afa7;
+  --color-check-line: #b9c5bd;
+  --color-range-label: #7a867f;
   --color-ghost-hover: #dce7e0;
   --color-ghost-press: #cfded4;
   --color-secondary-hover: #e6efe9;
@@ -123,56 +129,90 @@ html[data-header-hidden] .site-header {
   }
 }
 
-/* 목록 도구 줄 · 왼쪽 필터는 헤더 바로 아래 고정, 헤더가 숨으면 맨 위로 따라 올라간다 (03 「목록 도구 줄」 · 「스크롤 시 헤더」) */
-.list-bar {
-  position: sticky;
-  top: 56px;
-  z-index: 6;
-  transition: top 0.25s ease;
-}
+/* 목록 왼쪽 필터는 헤더를 따라 고정된다 — 헤더가 보이면 위 80, 숨으면 16 (05 「필터」, 06 기술서 4장).
+   넘치면 필터 칸 안에서만 스크롤하고, 화면 높이가 낮으면 고정을 푼다 */
 .list-side {
   position: sticky;
-  top: 60px;
-  height: calc(100dvh - 60px);
-  transition: top 0.25s ease;
-}
-html[data-header-hidden] .list-bar,
-html[data-header-hidden] .list-side {
-  top: 0;
+  top: 80px;
+  max-height: calc(100vh - 96px);
+  transition:
+    top 0.25s ease,
+    max-height 0.25s ease;
 }
 html[data-header-hidden] .list-side {
-  height: 100dvh;
+  top: 16px;
+  max-height: calc(100vh - 32px);
 }
-/* 초점이 고정된 헤더 + 도구 줄 아래로 가려지지 않게 (헤더 + 도구 줄 + 여유 24) */
-html:has(.list-bar) {
-  scroll-padding-top: 154px;
-}
-@media (width >= 1024px) {
-  .list-bar {
-    top: 60px;
-  }
-  html:has(.list-bar) {
-    scroll-padding-top: 165px;
-  }
-  html[data-header-hidden]:has(.list-bar) {
-    scroll-padding-top: 105px;
-  }
+/* 초점이 고정 헤더 아래로 가려지지 않게 (헤더 + 여유) */
+html:has(.list-side) {
+  scroll-padding-top: 80px;
 }
 @media (prefers-reduced-motion: reduce) {
-  .list-bar,
   .list-side {
     transition: none;
   }
 }
-@media (max-height: 560px) {
-  .list-bar,
+@media (max-height: 600px) {
   .list-side {
     position: static;
-    height: auto;
+    max-height: none;
   }
-  html:has(.list-bar) {
-    scroll-padding-top: 0;
-  }
+}
+
+/* 맛 슬라이더 손잡이 — 두 range 입력을 겹치고 손잡이만 누를 수 있게 한다 (05 「필터」 RangeSlider) */
+.range-pair input {
+  position: absolute;
+  top: 0;
+  left: -8px;
+  width: calc(100% + 16px);
+  height: 28px;
+  margin: 0;
+  background: none;
+  pointer-events: none;
+  appearance: none;
+}
+.range-pair input::-webkit-slider-runnable-track {
+  background: none;
+  border: 0;
+}
+.range-pair input::-moz-range-track {
+  background: none;
+}
+.range-pair input::-webkit-slider-thumb {
+  appearance: none;
+  pointer-events: auto;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 50%;
+  background: var(--color-bg);
+  box-shadow: 0 1px 3px rgb(23 32 27 / 0.18);
+  cursor: pointer;
+}
+.range-pair input::-moz-range-thumb {
+  pointer-events: auto;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 50%;
+  background: var(--color-bg);
+  box-shadow: 0 1px 3px rgb(23 32 27 / 0.18);
+  cursor: pointer;
+}
+.range-pair input:focus {
+  outline: none;
+}
+.range-pair input:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    0 0 0 3px var(--color-bg),
+    0 0 0 5px var(--color-ink);
+}
+.range-pair input:focus-visible::-moz-range-thumb {
+  box-shadow:
+    0 0 0 3px var(--color-bg),
+    0 0 0 5px var(--color-ink);
 }
 
 @layer base {

@@ -8,7 +8,7 @@ type SegmentedProps<K extends string> = {
   onChange: (key: K) => void;
   /** 묶음의 읽는 이름 */
   label: string;
-  /** 목록 결과 줄처럼 높이 40 줄에 놓일 때 (버튼 34, 모바일은 좌우 여백 10으로 좁힘) */
+  /** 목록 도구 줄 (버튼 34 + 안쪽 4) */
   tall?: boolean;
 };
 
@@ -30,7 +30,7 @@ export function Segmented<K extends string>({
     <div
       role="group"
       aria-label={label}
-      className="inline-flex rounded-lg bg-surface p-0.75"
+      className={`inline-flex rounded-lg bg-surface ${tall ? "p-1" : "p-0.75"}`}
     >
       {items.map((item) => (
         <button
@@ -38,7 +38,7 @@ export function Segmented<K extends string>({
           type="button"
           aria-pressed={item.key === value}
           onClick={() => onChange(item.key)}
-          className={`inline-flex ${tall ? "h-8.5 px-2.5 sm:px-3" : "h-7.5 px-3"} cursor-pointer items-center rounded-md text-sm leading-none font-medium text-muted hover:text-ink ${on}`}
+          className={`inline-flex ${tall ? "h-8.5" : "h-7.5"} px-3 cursor-pointer items-center rounded-md text-sm leading-none font-medium text-muted hover:text-ink ${on}`}
         >
           {item.label}
         </button>

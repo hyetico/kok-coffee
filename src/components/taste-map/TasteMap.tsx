@@ -9,6 +9,8 @@ import { home } from "@/content/home";
 import { ui } from "@/content/ui";
 import type { MappedProduct } from "@/lib/catalog";
 import { formatWon } from "@/lib/format";
+import { toPos } from "@/lib/taste";
+import type { MapPosition } from "@/types";
 
 type FilterKey = (typeof home.tasteMap.filters)[number]["key"];
 
@@ -16,7 +18,7 @@ const matches = (p: MappedProduct, f: FilterKey) =>
   f === "all" || (f === "decaf" ? p.decaf : p.type === f);
 
 /** 점이 지도 끝 가까이 있으면 이름 말풍선을 안쪽 · 아래로 돌린다 (프로토타입 기준값) */
-function tipPlacement({ x, y }: MappedProduct["mapPosition"]) {
+function tipPlacement({ x, y }: MapPosition) {
   const below = y < 24 ? "top-[calc(100%+10px)]" : "bottom-[calc(100%+10px)]";
   const side =
     x < 16 ? "-left-1.5" : x > 84 ? "-right-1.5" : "left-1/2 -translate-x-1/2";
@@ -95,6 +97,7 @@ export function TasteMap({ products }: { products: MappedProduct[] }) {
         {products.map((p) => {
           const on = p.id === selected?.id;
           const visible = matches(p, filter);
+          const pos = toPos(p.taste);
           return (
             <button
               key={p.id}
@@ -103,8 +106,8 @@ export function TasteMap({ products }: { products: MappedProduct[] }) {
               aria-label={`${p.roastery} ${p.title}, ${p.notes}`}
               onClick={() => setSelectedId(p.id)}
               style={{
-                left: `${p.mapPosition.x}%`,
-                top: `${p.mapPosition.y}%`,
+                left: `${pos.x}%`,
+                top: `${pos.y}%`,
               }}
               // 보이는 점은 14(고른 점 22), 누르는 칸은 바깥으로 5씩 넓혀 24 이상
               className={`group/dot absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full p-0 text-primary transition-[box-shadow,filter,background-color] duration-150 before:absolute before:-inset-1.25 before:rounded-full before:content-[''] hover:z-2 focus-visible:z-2 motion-reduce:transition-none ${
@@ -115,7 +118,7 @@ export function TasteMap({ products }: { products: MappedProduct[] }) {
             >
               <span
                 aria-hidden="true"
-                className={`pointer-events-none absolute rounded-md bg-ink px-2 py-1.25 text-xs leading-[1.2] font-semibold whitespace-nowrap text-white opacity-0 transition-opacity duration-150 group-hover/dot:opacity-100 group-focus-visible/dot:opacity-100 ${tipPlacement(p.mapPosition)}`}
+                className={`pointer-events-none absolute rounded-md bg-ink px-2 py-1.25 text-xs leading-[1.2] font-semibold whitespace-nowrap text-white opacity-0 transition-opacity duration-150 group-hover/dot:opacity-100 group-focus-visible/dot:opacity-100 ${tipPlacement(pos)}`}
               >
                 {p.title}
               </span>

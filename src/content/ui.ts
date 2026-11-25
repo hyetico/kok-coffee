@@ -109,55 +109,89 @@ export const ui = {
   },
 
   list: {
-    typeTabsLabel: "원두 종류",
+    type: "종류",
     all: "전체",
     caffeine: "카페인",
+    decafOnly: "디카페인만",
     reset: "초기화",
     resetLabel: "필터 모두 초기화",
     price: "가격",
-    priceGroupLabel: "가격대 고르기, 여러 개 선택 가능",
     priceBands: {
       u10: "1만 원 미만",
       "10": "1만 ~ 1만 5천 원",
       "15": "1만 5천 ~ 2만 원",
       o20: "2만 원 이상",
     } satisfies Record<PriceBandId, string>,
-    taste: "맛과 향",
-    tasteGroupLabel: "맛과 향 고르기, 여러 개 선택 가능",
-    multiSelectHint: "여러 개 고를 수 있어요.",
-    helpTitle: "고르기 어렵다면",
-    helpDesc: "질문 5개로 취향에 맞는 원두를 골라 드려요.",
-    helpButton: "취향 테스트 하기",
+    /** 맛 슬라이더 — 지도 축과 같은 산미 · 바디 세 칸 */
+    tasteRange: "맛 (지도와 같아요)",
+    acidity: {
+      name: "산미",
+      bands: { lo: "낮음", mid: "중간", hi: "높음" },
+      ends: ["고소한", "화사한"],
+    },
+    body: {
+      name: "바디",
+      bands: { lt: "가벼움", mid: "중간", hv: "묵직" },
+      /** 맛 위치 글에서는 「묵직함」 */
+      describe: { lt: "가벼움", mid: "중간", hv: "묵직함" },
+      ends: ["가벼운", "묵직한"],
+    },
+    rangeAll: "전체",
+    rangeText: (name: string, text: string) => `${name} ${text}`,
+    rangeSpan: (lo: string, hi: string) => `${lo} – ${hi}`,
+    rangeLo: (name: string) => `${name} 낮은 쪽`,
+    rangeHi: (name: string) => `${name} 높은 쪽`,
+    /** 「산미 높음 · 바디 가벼움」 */
+    describe: (ac: string, bd: string) => `산미 ${ac} · 바디 ${bd}`,
+    aroma: "향",
+    more: (n: number) => `더 보기 (${n})`,
+    less: "접기",
+    myTaste: {
+      title: "내 취향",
+      retry: "다시 하기",
+      filterOn: "내 취향으로 거르기",
+      filterOff: "전체 보기",
+    },
     filter: "필터",
+    filterCount: (n: number) => `적용한 필터 ${n}개`,
     closeFilter: "필터 닫기",
-    searchLabel: "원두 검색",
-    searchPlaceholder: "이 목록에서 원두 검색",
-    total: (count: number) => `총 ${count}개`,
+    searchLabel: "이 목록에서 원두 검색",
+    searchPlaceholder: "원두, 로스터리, 맛 노트 검색",
     /** 「총 n개」에서 숫자만 진하게 보이도록 앞뒤 글을 나눠 둔다 */
     totalPrefix: "총",
     totalSuffix: "개",
-    /** 타이틀을 지나 스크롤하면 도구 줄에 페이지 이름과 함께 보인다 (02 PRD 3장) */
-    pastTitle: (page: string, count: number) => `${page} · ${count}개`,
     countOnly: (count: number) => `${count}개`,
     clearAll: "전체 해제",
     removeCondition: (label: string) => `${label} 조건 지우기`,
     searchCondition: (q: string) => `검색: ${q}`,
     viewLabel: "보기 방식",
-    views: { grid: "목록", map: "지도" },
+    views: { map: "지도 + 목록", list: "목록만" },
+    listTitle: "원두",
     sortLabel: "정렬 기준",
     sortCurrent: (label: string) => `정렬 기준: ${label}`,
     sorts: {
       rec: "추천순",
+      near: "내 취향과 가까운 순",
       low: "낮은 가격순",
       high: "높은 가격순",
     } satisfies Record<SortKey, string>,
-    resultsLabel: "결과",
-    gridLabel: "상품 목록",
+    /** 지도에서 점을 고르면 정렬 이름이 이것으로 바뀐다 */
+    sortPick: "고른 원두와 가까운 순",
+    pick: {
+      group: (n: number) => `같은 자리 원두 ${n}개`,
+      /** 받침에 따라 「와 / 과」 */
+      chip: (name: string, josa: string) => `${name}${josa} 맛이 가까운 순`,
+      clear: "지도에서 고른 원두 해제",
+      live: (label: string) => `${label}으로 바꿨어요`,
+      picked: "고른 원두",
+      similar: "맛이 비슷해요",
+    },
+    gridLabel: "맛 지도와 상품 목록",
     loadingLabel: "상품을 불러오는 중",
     emptyTitle: "조건에 맞는 원두가 없어요",
     emptyDesc: "검색어나 맛과 향 조건을 하나씩 빼 보세요.",
     emptyReset: "조건 모두 지우기",
-    sheetDone: (count: number) => `상품 ${count}개 보기`,
+    sheetDone: (count: number) => `원두 ${count}개 보기`,
   },
 
   notFound: {
@@ -169,9 +203,6 @@ export const ui = {
   },
 
   mapGroup: {
-    title: (n: number) => `같은 자리 원두 ${n}개`,
-    desc: "맛 위치가 같은 원두예요. 이름을 누르면 자세히 볼 수 있어요.",
-    back: (n: number) => `← 같은 자리 원두 ${n}개`,
     aria: (n: number, titles: string[]) =>
       `같은 자리 원두 ${n}개: ${titles.join(", ")}`,
   },
@@ -183,6 +214,29 @@ export const ui = {
       nutty: "고소한",
       bright: "화사한",
     },
-    hint: "점을 누르면 원두 정보가 보여요. 맛과 향 필터와 검색이 지도에도 그대로 적용돼요.",
+    label:
+      "맛 지도: 왼쪽은 고소한, 오른쪽은 화사한(산미 높음), 위는 묵직한, 아래는 가벼운 맛. 방향키로 점 사이를 옮겨요",
+    roledescription: "맛 지도",
+    /** 왼쪽 위 · 오른쪽 위 · 왼쪽 아래 · 오른쪽 아래 */
+    corners: [
+      "초콜릿 · 견과 쪽",
+      "와인 · 베리 쪽",
+      "곡물 · 캐러멜 쪽",
+      "꽃 · 시트러스 쪽",
+    ],
+    tip: "점을 누르면 맛이 가까운 원두부터 보여 드려요",
+    goList: "목록에서 보기",
+    pin: "내 취향",
+    legend: {
+      pin: "내 취향",
+      dot: "원두",
+      dim: "필터 밖 원두",
+      group: "같은 자리 원두 묶음",
+    },
+    testHint: {
+      question: "내 취향은 어디쯤일까?",
+      link: "30초 테스트",
+      close: "테스트 안내 닫기",
+    },
   },
 } as const;
