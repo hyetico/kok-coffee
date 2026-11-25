@@ -66,7 +66,7 @@ export type SortKey = "rec" | "near" | "low" | "high";
 
 /** 산미 구간 — 낮음 · 중간 · 높음 */
 export type AcidityBand = "lo" | "mid" | "hi";
-/** 바디 구간 — 슬라이더 왼쪽부터 가벼움 · 중간 · 묵직 */
+/** 바디 구간 — 버튼 왼쪽부터 가벼움 · 중간 · 묵직 */
 export type BodyBand = "lt" | "mid" | "hv";
 
 /** 목록 가격대 필터 id — URL 쿼리 ?price=u10,10,15,o20 와 같은 값 */
@@ -79,10 +79,10 @@ export type ListFilter = {
   decaf: boolean;
   prices: PriceBandId[];
   tastes: string[];
-  /** 산미 슬라이더 범위. 비어 있으면 전체 */
-  ac: AcidityBand[];
-  /** 바디 슬라이더 범위. 비어 있으면 전체 */
-  bd: BodyBand[];
+  /** 산미 칸 하나. null이면 조건 없음 */
+  ac: AcidityBand | null;
+  /** 바디 칸 하나. null이면 조건 없음 */
+  bd: BodyBand | null;
   q: string;
   /** 주소에 없으면 null — 테스트 전은 추천순, 테스트 후는 내 취향과 가까운 순 */
   sort: SortKey | null;

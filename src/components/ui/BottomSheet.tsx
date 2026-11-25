@@ -53,7 +53,7 @@ export function BottomSheet({
       onClick={(e) => {
         if (e.target === e.currentTarget) ref.current?.close();
       }}
-      className="fixed inset-x-0 top-auto bottom-0 m-0 max-h-[80%] w-full max-w-none flex-col rounded-t-2xl bg-bg p-0 text-ink shadow-[0_-12px_40px_rgba(23,32,27,.2)] backdrop:bg-[rgba(23,32,27,.5)] open:flex"
+      className="fixed inset-x-0 top-auto bottom-0 m-0 max-h-[85%] w-full max-w-none flex-col rounded-t-2xl bg-bg p-0 text-ink shadow-[0_-12px_40px_rgba(23,32,27,.2)] backdrop:bg-[rgba(23,32,27,.5)] open:flex"
     >
       <div className="flex h-14 shrink-0 items-center justify-between border-b border-line-soft pr-2 pl-5">
         <h2 id={titleId} className="m-0 text-lg font-bold">
@@ -68,7 +68,7 @@ export function BottomSheet({
           <CloseIcon />
         </button>
       </div>
-      <div className="overflow-y-auto p-5 [scrollbar-color:var(--color-footer-line)_transparent] [scrollbar-width:thin]">
+      <div className="overflow-y-auto px-5 pb-2 [scrollbar-color:var(--color-footer-line)_transparent] [scrollbar-width:thin]">
         {children}
       </div>
       <div className="grid shrink-0 grid-cols-[1fr_2fr] gap-2 border-t border-line-soft px-5 pt-3 pb-5">

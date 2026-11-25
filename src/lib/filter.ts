@@ -56,8 +56,8 @@ export const DEFAULT_FILTER: ListFilter = {
   decaf: false,
   prices: [],
   tastes: [],
-  ac: [],
-  bd: [],
+  ac: null,
+  bd: null,
   q: "",
   sort: null,
 };
@@ -78,12 +78,16 @@ export function effectiveSort(
  * 지도 필터(산미 · 바디)를 뺀 조건에 맞는지 — 지도에서 흐리게 할 점을 고를 때도 쓴다.
  * 맛 점수가 없는 원두는 산미 · 바디를 고르면 빠진다.
  */
-function passesBands(p: Product, ac: AcidityBand[], bd: BodyBand[]): boolean {
-  if (!ac.length && !bd.length) return true;
+function passesBands(
+  p: Product,
+  ac: AcidityBand | null,
+  bd: BodyBand | null,
+): boolean {
+  if (!ac && !bd) return true;
   if (!p.taste) return false;
   const pos = toPos(p.taste);
-  if (ac.length && !ac.includes(acidityBand(pos))) return false;
-  if (bd.length && !bd.includes(bodyBand(pos))) return false;
+  if (ac && acidityBand(pos) !== ac) return false;
+  if (bd && bodyBand(pos) !== bd) return false;
   return true;
 }
 
@@ -160,28 +164,6 @@ export function applyListFilter<T extends Product>(
   );
 }
 
-/**
- * 슬라이더 범위 쿼리(「mid-hi」 · 「lt」)를 구간 목록으로. 세 칸 전부면 「전체」라 빈 목록.
- * @example readRange("mid-hi", ACIDITY_BANDS) // ["mid", "hi"]
- */
-function readRange<B extends string>(v: string | undefined, order: B[]): B[] {
-  if (!v) return [];
-  const [a, b = a] = v.split("-");
-  const i = order.indexOf(a as B);
-  const j = order.indexOf(b as B);
-  if (i < 0 || j < 0) return [];
-  const r = order.slice(Math.min(i, j), Math.max(i, j) + 1);
-  return r.length === order.length ? [] : r;
-}
-
-/**
- * 구간 목록을 슬라이더 범위 쿼리로. 이웃한 칸만 고를 수 있어 처음과 끝만 적는다.
- * @example rangeQuery(["mid", "hi"]) // "mid-hi"
- */
-function rangeQuery(r: string[]): string {
-  return r.length > 1 ? `${r[0]}-${r[r.length - 1]}` : (r[0] ?? "");
-}
-
 type QueryValue = string | string[] | undefined;
 type QueryInput = Record<string, QueryValue> | URLSearchParams;
 
@@ -199,7 +181,18 @@ function readList(query: QueryInput, key: string): string[] {
 }
 
 /**
- * URL 쿼리(?type=single&ac=mid-hi&bd=lt&decaf=1&price=u10,10&taste=고소,묵직한&q=케냐&sort=low)를 조건으로.
+ * 맛 칸 쿼리(「hi」 · 「lt」) — 모르는 값이면 조건 없음.
+ * @example readBand("hi", ACIDITY_BANDS) // "hi"
+ */
+function readBand<B extends string>(
+  v: string | undefined,
+  order: B[],
+): B | null {
+  return order.includes(v as B) ? (v as B) : null;
+}
+
+/**
+ * URL 쿼리(?type=single&ac=hi&bd=lt&decaf=1&price=u10,10&taste=고소,묵직한&q=케냐&sort=low)를 조건으로.
  * 모르는 값은 버려서, 손으로 고친 주소도 오류 없이 연다.
  * @example parseListQuery(await props.searchParams)
  */
@@ -214,8 +207,8 @@ export function parseListQuery(query: QueryInput): ListFilter {
       PRICE_BAND_IDS.includes(id as PriceBandId),
     ),
     tastes: readList(query, "taste").filter((w) => taste.has(w)),
-    ac: readRange(readParam(query, "ac"), ACIDITY_BANDS),
-    bd: readRange(readParam(query, "bd"), BODY_BANDS),
+    ac: readBand(readParam(query, "ac"), ACIDITY_BANDS),
+    bd: readBand(readParam(query, "bd"), BODY_BANDS),
     q: readParam(query, "q") ?? "",
     sort: SORT_KEYS.includes(sort as SortKey) ? (sort as SortKey) : null,
   };
@@ -230,8 +223,8 @@ export function toListQuery(filter: ListFilter): string {
   if (filter.type !== "all") params.set("type", filter.type);
   if (filter.decaf) params.set("decaf", "1");
   if (filter.prices.length) params.set("price", filter.prices.join(","));
-  if (filter.ac.length) params.set("ac", rangeQuery(filter.ac));
-  if (filter.bd.length) params.set("bd", rangeQuery(filter.bd));
+  if (filter.ac) params.set("ac", filter.ac);
+  if (filter.bd) params.set("bd", filter.bd);
   if (filter.tastes.length) params.set("taste", filter.tastes.join(","));
   if (filter.q.trim()) params.set("q", filter.q.trim());
   if (filter.sort) params.set("sort", filter.sort);

@@ -5,16 +5,10 @@ import { useState } from "react";
 import { ChevronDownIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
 import { CheckList } from "@/components/ui/CheckList";
-import { RangeSlider } from "@/components/ui/RangeSlider";
+import { TasteOptions } from "@/components/ui/TasteOptions";
 import { ui } from "@/content/ui";
 import { PRICE_BAND_IDS, TASTE_WORDS, TASTE_WORDS_SHOWN } from "@/lib/filter";
-import {
-  ACIDITY_BANDS,
-  acidityBand,
-  BODY_BANDS,
-  bodyBand,
-  describePos,
-} from "@/lib/taste";
+import { acidityBand, bodyBand, describePos } from "@/lib/taste";
 import type {
   AcidityBand,
   BodyBand,
@@ -40,35 +34,12 @@ type FilterPanelProps = {
 const toggle = <T,>(list: readonly T[], v: T): T[] =>
   list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
 
-/** 고른 구간 목록 ↔ 슬라이더 [낮은 칸, 높은 칸] */
-function toRange<B extends string>(sel: B[], order: B[]): [number, number] {
-  if (!sel.length) return [0, 2];
-  const ix = sel.map((b) => order.indexOf(b));
-  return [Math.min(...ix), Math.max(...ix)];
-}
-function fromRange<B extends string>([lo, hi]: [number, number], order: B[]) {
-  const r = order.slice(lo, hi + 1);
-  return r.length === order.length ? [] : r;
-}
-
-/** 「전체」 · 「중간」 · 「낮음 – 중간」 */
-function rangeSummary(
-  [lo, hi]: [number, number],
-  names: readonly string[],
-): string {
-  if (lo === 0 && hi === 2) return ui.list.rangeAll;
-  return lo === hi ? names[lo] : ui.list.rangeSpan(names[lo], names[hi]);
-}
-
 /**
- * 「내 취향」 핀이 들어 있는 산미 · 바디 칸 — 「내 취향으로 거르기」가 슬라이더를 여기에 맞춘다.
- * @example pinBands({ x: 74, y: 70 }) // { ac: ["hi"], bd: ["lt"] }
+ * 「내 취향」 핀이 들어 있는 산미 · 바디 칸 — 「내 취향으로 거르기」가 맛 버튼을 여기에 맞춘다.
+ * @example pinBands({ x: 74, y: 70 }) // { ac: "hi", bd: "lt" }
  */
-export function pinBands(pin: MapPosition): {
-  ac: AcidityBand[];
-  bd: BodyBand[];
-} {
-  return { ac: [acidityBand(pin)], bd: [bodyBand(pin)] };
+export function pinBands(pin: MapPosition): { ac: AcidityBand; bd: BodyBand } {
+  return { ac: acidityBand(pin), bd: bodyBand(pin) };
 }
 
 /**
@@ -95,13 +66,9 @@ export function FilterPanel({
   const showAll = open || hiddenOn;
   const words = showAll ? TASTE_WORDS : TASTE_WORDS.slice(0, TASTE_WORDS_SHOWN);
 
-  const acRange = toRange(filter.ac, ACIDITY_BANDS);
-  const bdRange = toRange(filter.bd, BODY_BANDS);
   const mine = pin ? pinBands(pin) : null;
   const filteredByMine =
-    !!mine &&
-    filter.ac.join() === mine.ac.join() &&
-    filter.bd.join() === mine.bd.join();
+    !!mine && filter.ac === mine.ac && filter.bd === mine.bd;
 
   const h3 = "m-0 mb-1 text-sm font-bold text-ink";
 
@@ -124,7 +91,7 @@ export function FilterPanel({
             onClick={() =>
               onChange(
                 filteredByMine
-                  ? { ac: [], bd: [] }
+                  ? { ac: null, bd: null }
                   : { ac: mine.ac, bd: mine.bd },
               )
             }
@@ -180,31 +147,29 @@ export function FilterPanel({
 
       <div>
         <h3 className={h3}>{t.tasteRange}</h3>
-        <RangeSlider
+        <TasteOptions
           name={t.acidity.name}
-          steps={[t.acidity.bands.lo, t.acidity.bands.mid, t.acidity.bands.hi]}
           ends={t.acidity.ends}
-          value={acRange}
-          onChange={(r) => onChange({ ac: fromRange(r, ACIDITY_BANDS) })}
-          summary={t.rangeText(
-            t.acidity.name,
-            rangeSummary(acRange, Object.values(t.acidity.bands)),
-          )}
-          loLabel={t.rangeLo(t.acidity.name)}
-          hiLabel={t.rangeHi(t.acidity.name)}
+          options={[
+            { key: "lo", label: t.acidity.bands.lo },
+            { key: "mid", label: t.acidity.bands.mid },
+            { key: "hi", label: t.acidity.bands.hi },
+          ]}
+          value={filter.ac}
+          onChange={(ac) => onChange({ ac })}
+          label={t.tasteGroupLabel(t.acidity.name, ...t.acidity.ends)}
         />
-        <RangeSlider
+        <TasteOptions
           name={t.body.name}
-          steps={[t.body.bands.lt, t.body.bands.mid, t.body.bands.hv]}
           ends={t.body.ends}
-          value={bdRange}
-          onChange={(r) => onChange({ bd: fromRange(r, BODY_BANDS) })}
-          summary={t.rangeText(
-            t.body.name,
-            rangeSummary(bdRange, Object.values(t.body.bands)),
-          )}
-          loLabel={t.rangeLo(t.body.name)}
-          hiLabel={t.rangeHi(t.body.name)}
+          options={[
+            { key: "lt", label: t.body.bands.lt },
+            { key: "mid", label: t.body.bands.mid },
+            { key: "hv", label: t.body.bands.hv },
+          ]}
+          value={filter.bd}
+          onChange={(bd) => onChange({ bd })}
+          label={t.tasteGroupLabel(t.body.name, ...t.body.ends)}
         />
       </div>
 

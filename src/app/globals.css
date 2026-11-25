@@ -28,9 +28,7 @@
   --color-map-bg: #f5f6f5;
   --color-map-dot-dim: #cbd3ce;
   --color-map-axis: #d2dbd5;
-  --color-map-corner: #a3afa7;
   --color-check-line: #b9c5bd;
-  --color-range-label: #7a867f;
   --color-ghost-hover: #dce7e0;
   --color-ghost-press: #cfded4;
   --color-secondary-hover: #f1f3f2;
@@ -171,60 +169,6 @@ html:has(.list-side) {
     position: static;
     max-height: none;
   }
-}
-
-/* 맛 슬라이더 손잡이 — 두 range 입력을 겹쳐 키보드 · 읽기용으로 둔다. 마우스 · 터치는 줄 전체가 받는다 (05 「맛 슬라이더」) */
-.range-pair input {
-  position: absolute;
-  top: 0;
-  left: -8px;
-  width: calc(100% + 16px);
-  height: 28px;
-  margin: 0;
-  background: none;
-  pointer-events: none;
-  appearance: none;
-}
-.range-pair input::-webkit-slider-runnable-track {
-  background: none;
-  border: 0;
-}
-.range-pair input::-moz-range-track {
-  background: none;
-}
-.range-pair input::-webkit-slider-thumb {
-  appearance: none;
-  box-sizing: border-box;
-  width: 16px;
-  height: 16px;
-  border: 1.5px solid var(--color-ink);
-  border-radius: 50%;
-  background: var(--color-bg);
-  box-shadow: 0 1px 3px rgb(23 32 27 / 0.18);
-  cursor: pointer;
-}
-.range-pair input::-moz-range-thumb {
-  box-sizing: border-box;
-  width: 16px;
-  height: 16px;
-  border: 1.5px solid var(--color-ink);
-  border-radius: 50%;
-  background: var(--color-bg);
-  box-shadow: 0 1px 3px rgb(23 32 27 / 0.18);
-  cursor: pointer;
-}
-.range-pair input:focus {
-  outline: none;
-}
-.range-pair input:focus-visible::-webkit-slider-thumb {
-  box-shadow:
-    0 0 0 3px var(--color-bg),
-    0 0 0 5px var(--color-ink);
-}
-.range-pair input:focus-visible::-moz-range-thumb {
-  box-shadow:
-    0 0 0 3px var(--color-bg),
-    0 0 0 5px var(--color-ink);
 }
 
 @layer base {

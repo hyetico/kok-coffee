@@ -69,8 +69,8 @@ type ListMapProps = {
   /** 고른 원두 id (묶음이면 그중 하나) */
   pickId: string | null;
   onPick: (id: string | null) => void;
-  ac: AcidityBand[];
-  bd: BodyBand[];
+  ac: AcidityBand | null;
+  bd: BodyBand | null;
   pin: MapPosition | null;
   /** 테스트 전 「30초 테스트」 안내를 보일지 */
   showHint: boolean;
@@ -82,7 +82,7 @@ type ListMapProps = {
 /**
  * 목록 맨 위 맛 지도 — 점을 고르면 정보 창 없이 아래 목록이 「고른 원두 → 맛이 가까운 순」으로 바뀐다 (06 기술서 4 · 5장).
  * 산미 · 바디를 고르면 구간 상자, 필터 밖 점은 흐리게. 키보드는 Tab 한 번으로 들어와 방향키로 점 사이를 옮긴다.
- * @example <ListMap products={typed} passing={ids} pickId={pick} onPick={setPick} ac={[]} bd={[]} pin={null} showHint onCloseHint={close} onGoList={go} />
+ * @example <ListMap products={typed} passing={ids} pickId={pick} onPick={setPick} ac={null} bd={null} pin={null} showHint onCloseHint={close} onGoList={go} />
  */
 export function ListMap({
   products,
@@ -139,25 +139,25 @@ export function ListMap({
     }
   };
 
-  // 산미 · 바디 구간 상자 — 고른 칸마다 하나, 둘레를 12씩 넓혀 점이 상자 안에 들어오게
-  const zones: CSSProperties[] = [];
-  if (ac.length || bd.length) {
-    const xs = ac.length ? ac.map(acidityRange) : [[0, 100] as const];
-    const ys = bd.length ? bd.map(bodyRange) : [[0, 100] as const];
-    for (const [x1, x2] of xs)
-      for (const [y1, y2] of ys)
-        zones.push({
-          left: `calc(var(--m) + (100% - 2 * var(--m)) * ${x1 / 100} - 12px)`,
-          top: `calc(var(--m) + (100% - 2 * var(--m)) * ${y1 / 100} - 12px)`,
-          width: `calc((100% - 2 * var(--m)) * ${(x2 - x1) / 100} + 24px)`,
-          height: `calc((100% - 2 * var(--m)) * ${(y2 - y1) / 100} + 24px)`,
-        });
-  }
+  // 산미 · 바디 구간 상자는 늘 하나(산미 칸 × 바디 칸). 둘레를 12씩 넓혀 가장자리 점이 상자 안에 들어오게
+  const zone: CSSProperties | null = (() => {
+    if (!ac && !bd) return null;
+    const [x1, x2] = ac ? acidityRange(ac) : [0, 100];
+    const [y1, y2] = bd ? bodyRange(bd) : [0, 100];
+    return {
+      left: `calc(var(--m) + (100% - 2 * var(--m)) * ${x1 / 100} - 12px)`,
+      top: `calc(var(--m) + (100% - 2 * var(--m)) * ${y1 / 100} - 12px)`,
+      width: `calc((100% - 2 * var(--m)) * ${(x2 - x1) / 100} + 24px)`,
+      height: `calc((100% - 2 * var(--m)) * ${(y2 - y1) / 100} + 24px)`,
+    };
+  })();
+  // 상자가 있으면 지도 안 안내 문구를 숨기고, 「30초 테스트」 안내는 지도 아래 줄로 내린다 (06 기술서 5장)
+  const hintBelow = Boolean(zone);
 
   const m = ui.tasteMap;
   const label = "pointer-events-none absolute text-xs font-semibold text-muted";
   const corner =
-    "pointer-events-none absolute hidden text-xs font-semibold text-map-corner sm:block";
+    "pointer-events-none absolute hidden text-xs font-medium text-muted sm:block";
   const hint = (
     <>
       <span className="flex-1">{m.testHint.question}</span>
@@ -240,14 +240,13 @@ export function ListMap({
           {m.corners[3]}
         </span>
 
-        {zones.map((z, i) => (
+        {zone && (
           <span
-            key={i}
             aria-hidden="true"
-            style={z}
+            style={zone}
             className="pointer-events-none absolute rounded-lg bg-[rgb(31_77_58/.08)] shadow-[inset_0_0_0_1.5px_rgb(31_77_58/.35)]"
           />
-        ))}
+        )}
 
         {nears.map((p) => (
           <span
@@ -325,7 +324,7 @@ export function ListMap({
           </span>
         )}
 
-        {!pin && !anchor && (
+        {!pin && !anchor && !zone && (
           <span
             aria-hidden="true"
             className="pointer-events-none absolute top-10 left-1/2 z-4 hidden -translate-x-1/2 rounded-[14px] bg-white/90 px-3 py-2 text-xs whitespace-nowrap text-ink-2 sm:block"
@@ -347,7 +346,8 @@ export function ListMap({
             <ArrowDownIcon />
           </button>
         ) : (
-          showHint && (
+          showHint &&
+          !hintBelow && (
             <div className="absolute right-4 bottom-4 z-6 hidden items-center gap-3 rounded-full bg-white py-2 pr-2 pl-4 text-sm text-ink-2 shadow-[0_2px_8px_rgba(23,32,27,.12)] sm:flex">
               {hint}
             </div>
@@ -382,7 +382,9 @@ export function ListMap({
       </div>
 
       {!anchor && showHint && (
-        <div className="mt-2 flex items-center gap-3 rounded-lg bg-map-bg py-2 pr-2 pl-3 text-sm text-ink-2 sm:hidden">
+        <div
+          className={`mt-2 flex items-center gap-3 rounded-lg bg-map-bg py-2 pr-2 pl-3 text-sm text-ink-2 ${hintBelow ? "" : "sm:hidden"}`}
+        >
           {hint}
         </div>
       )}

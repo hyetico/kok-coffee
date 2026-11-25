@@ -124,7 +124,7 @@ export const ui = {
       "15": "1만 5천 ~ 2만 원",
       o20: "2만 원 이상",
     } satisfies Record<PriceBandId, string>,
-    /** 맛 슬라이더 — 지도 축과 같은 산미 · 바디 세 칸 */
+    /** 맛 버튼 — 지도 축과 같은 산미 · 바디 세 칸 */
     tasteRange: "맛 (지도와 같아요)",
     acidity: {
       name: "산미",
@@ -138,11 +138,10 @@ export const ui = {
       describe: { lt: "가벼움", mid: "중간", hv: "묵직함" },
       ends: ["가벼운", "묵직한"],
     },
-    rangeAll: "전체",
     rangeText: (name: string, text: string) => `${name} ${text}`,
-    rangeSpan: (lo: string, hi: string) => `${lo} – ${hi}`,
-    rangeLo: (name: string) => `${name} 낮은 쪽`,
-    rangeHi: (name: string) => `${name} 높은 쪽`,
+    /** 맛 버튼 묶음 읽는 이름 — 「산미 (고소한에서 화사한 쪽), 하나만 고를 수 있어요」 */
+    tasteGroupLabel: (name: string, from: string, to: string) =>
+      `${name} (${from}에서 ${to} 쪽), 하나만 고를 수 있어요`,
     /** 「산미 높음 · 바디 가벼움」 */
     describe: (ac: string, bd: string) => `산미 ${ac} · 바디 ${bd}`,
     aroma: "향",

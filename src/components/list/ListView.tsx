@@ -22,7 +22,7 @@ import {
   SORT_KEYS,
   toListQuery,
 } from "@/lib/filter";
-import { ACIDITY_BANDS, BODY_BANDS, dist, tasteKey, toPos } from "@/lib/taste";
+import { dist, tasteKey, toPos } from "@/lib/taste";
 import { useSearchStore } from "@/store/search";
 import { useTaste, useTasteStore } from "@/store/taste";
 import type { ListFilter, Product, ProductType } from "@/types";
@@ -137,12 +137,12 @@ export function ListView() {
 
   const filterCount =
     (filter.decaf ? 1 : 0) +
-    filter.ac.length +
-    filter.bd.length +
+    (filter.ac ? 1 : 0) +
+    (filter.bd ? 1 : 0) +
     filter.tastes.length +
     filter.prices.length;
   const clearFilters = () =>
-    update({ decaf: false, prices: [], tastes: [], ac: [], bd: [] });
+    update({ decaf: false, prices: [], tastes: [], ac: null, bd: null });
   const resetAll = () =>
     update({ ...DEFAULT_FILTER, tab: "all", sort: filter.sort });
 
@@ -186,27 +186,24 @@ export function ListView() {
       aria: t.removeCondition(ui.product.decaf),
       remove: () => update({ decaf: false }),
     });
-  for (const b of ACIDITY_BANDS)
-    if (filter.ac.includes(b)) {
-      const l = t.rangeText(t.acidity.name, t.acidity.bands[b]);
-      active.push({
-        key: `ac-${b}`,
-        label: l,
-        aria: t.removeCondition(l),
-        // 이웃한 칸만 고를 수 있어 끝 칸을 빼면 범위가 그대로 이어진다
-        remove: () => update({ ac: filter.ac.filter((x) => x !== b) }),
-      });
-    }
-  for (const b of BODY_BANDS)
-    if (filter.bd.includes(b)) {
-      const l = t.rangeText(t.body.name, t.body.bands[b]);
-      active.push({
-        key: `bd-${b}`,
-        label: l,
-        aria: t.removeCondition(l),
-        remove: () => update({ bd: filter.bd.filter((x) => x !== b) }),
-      });
-    }
+  if (filter.ac) {
+    const l = t.rangeText(t.acidity.name, t.acidity.bands[filter.ac]);
+    active.push({
+      key: "ac",
+      label: l,
+      aria: t.removeCondition(l),
+      remove: () => update({ ac: null }),
+    });
+  }
+  if (filter.bd) {
+    const l = t.rangeText(t.body.name, t.body.bands[filter.bd]);
+    active.push({
+      key: "bd",
+      label: l,
+      aria: t.removeCondition(l),
+      remove: () => update({ bd: null }),
+    });
+  }
   for (const w of filter.tastes)
     active.push({
       key: `t-${w}`,
@@ -311,7 +308,7 @@ export function ListView() {
                   e.currentTarget.focus();
                   setSheetOpen(true);
                 }}
-                className="kind-secondary inline-flex h-10 shrink-0 cursor-pointer items-center gap-2 rounded-lg border border-line-control bg-bg px-3 text-sm leading-none font-semibold whitespace-nowrap text-ink hover:border-ink lg:hidden"
+                className="kind-secondary inline-flex h-10 shrink-0 cursor-pointer items-center gap-2 rounded-lg border border-line-control bg-bg px-4 text-sm leading-none font-semibold whitespace-nowrap text-ink hover:border-ink lg:hidden"
               >
                 <FilterIcon />
                 {t.filter}
