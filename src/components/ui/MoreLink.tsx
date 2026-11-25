@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 /**
- * 섹션 오른쪽 「전체 보기 >」. 밑줄 없이 올림 시 primary + 화살표 2px 이동.
+ * 섹션 오른쪽 「전체 보기 >」. 밑줄 없이 올림 시 화살표 2px 이동.
  * 화살표 오른쪽 여백만큼 바깥으로 당겨 글자 끝을 섹션 끝선에 맞춘다.
  * @example <MoreLink href="/coffee">전체 보기</MoreLink>
  */
@@ -16,7 +16,7 @@ export function MoreLink({
   return (
     <Link
       href={href}
-      className="group inline-flex min-h-11 items-center gap-0.5 text-sm font-semibold text-ink no-underline transition-colors duration-150 hover:text-primary motion-reduce:transition-none"
+      className="group inline-flex min-h-11 items-center gap-0.5 text-sm font-semibold text-ink no-underline transition-colors duration-150 hover:text-ink motion-reduce:transition-none"
     >
       {children}
       <svg

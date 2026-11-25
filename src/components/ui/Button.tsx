@@ -32,7 +32,7 @@ const kinds: Record<Kind, string> = {
   primary:
     "border-transparent bg-primary font-semibold text-white hover:bg-primary-hover active:bg-primary-press",
   secondary:
-    "border-line-control bg-bg font-semibold text-ink hover:border-primary hover:bg-secondary-hover hover:text-primary active:bg-secondary-press",
+    "border-line-control bg-bg font-semibold text-ink hover:border-ink hover:bg-secondary-hover hover:text-ink active:bg-secondary-press",
   ghost:
     "border-transparent bg-surface font-semibold text-ink hover:bg-ghost-hover active:bg-ghost-press",
   text: "min-h-8 border-0 px-2 text-sm font-medium text-muted hover:bg-surface hover:text-ink disabled:bg-transparent",

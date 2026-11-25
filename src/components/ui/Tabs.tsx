@@ -66,7 +66,7 @@ export function Tabs({
             // 고른 탭만 Tab 순서에 넣고 나머지는 방향키로 옮긴다 (WAI-ARIA 탭 패턴)
             tabIndex={i === index ? 0 : -1}
             onClick={() => setIndex(i)}
-            className="h-13 min-w-40 shrink-0 cursor-pointer border-b-2 border-transparent text-base font-medium text-muted hover:text-ink aria-selected:border-primary aria-selected:font-bold aria-selected:text-ink"
+            className="h-13 min-w-40 shrink-0 cursor-pointer border-b-2 border-transparent text-base font-medium text-muted hover:text-ink aria-selected:border-ink aria-selected:font-bold aria-selected:text-ink"
           >
             {t}
           </button>

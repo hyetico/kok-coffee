@@ -28,8 +28,8 @@ function Logo() {
         src="/brand/logo.svg"
         alt=""
         aria-hidden="true"
-        width={54}
-        height={28}
+        width={50}
+        height={26}
         priority
         className="block"
       />
@@ -37,7 +37,7 @@ function Logo() {
   );
 }
 
-/** 현재 메뉴는 ink 굵게 + primary 밑줄이 헤더 아래 선 위에 겹친다 (margin-bottom -1) */
+/** 현재 메뉴는 ink 굵게 + ink 밑줄이 헤더 아래 선 위에 겹친다 (margin-bottom -1) */
 type NavProps = {
   className: string;
   itemHeight: string;
@@ -61,7 +61,7 @@ function NavLinks({
             key={item.key}
             href={item.href}
             aria-current={item.key === active ? "page" : undefined}
-            className={`relative flex ${itemHeight} items-center border-b-2 border-transparent text-base font-medium text-muted no-underline before:absolute before:inset-y-0 before:-inset-x-2 hover:text-ink aria-[current=page]:border-primary aria-[current=page]:font-bold aria-[current=page]:text-ink`}
+            className={`relative flex ${itemHeight} items-center border-b-2 border-transparent text-base font-medium text-muted no-underline before:absolute before:inset-y-0 before:-inset-x-2 hover:text-ink aria-[current=page]:border-ink aria-[current=page]:font-bold aria-[current=page]:text-ink`}
           >
             {item.label}
           </Link>
@@ -166,7 +166,7 @@ export function Header() {
             <CartIcon />
             <span
               aria-hidden="true"
-              className="absolute top-0.75 right-px grid h-4.5 min-w-4.5 place-items-center rounded-full bg-primary px-1.25 text-xs leading-none font-bold text-white"
+              className="absolute top-0.5 left-7 grid h-4.5 min-w-4.5 place-items-center rounded-full bg-ink px-1 text-xs leading-none font-bold text-white shadow-[0_0_0_2px_#fff]"
             >
               {cartCount}
             </span>

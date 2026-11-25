@@ -71,8 +71,8 @@ export function MobileMenu({ open, onClose, cartCount }: MobileMenuProps) {
             src="/brand/logo.svg"
             alt=""
             aria-hidden="true"
-            width={54}
-            height={28}
+            width={50}
+            height={26}
             className="block"
           />
         </Link>
@@ -94,7 +94,7 @@ export function MobileMenu({ open, onClose, cartCount }: MobileMenuProps) {
             key={item.key}
             href={item.href}
             aria-current={item.key === active ? "page" : undefined}
-            className="flex min-h-13 items-center px-4 text-lg font-semibold text-ink no-underline hover:bg-surface aria-[current=page]:bg-surface aria-[current=page]:text-primary aria-[current=page]:shadow-[inset_3px_0_0_var(--color-primary)] sm:px-5"
+            className="flex min-h-13 items-center px-4 text-lg font-semibold text-ink no-underline hover:bg-surface aria-[current=page]:bg-surface aria-[current=page]:text-ink aria-[current=page]:shadow-[inset_3px_0_0_var(--color-ink)] sm:px-5"
           >
             {item.label}
           </Link>

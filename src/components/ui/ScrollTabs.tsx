@@ -60,7 +60,7 @@ export function ScrollTabs({
           type="button"
           aria-pressed={i === value}
           onClick={() => onChange(i)}
-          className={`${size === "page" ? "h-12" : "min-h-11"} shrink-0 cursor-pointer border-b-2 border-transparent text-base font-medium text-muted hover:text-ink aria-pressed:border-primary aria-pressed:font-bold aria-pressed:text-ink`}
+          className={`${size === "page" ? "h-12" : "min-h-11"} shrink-0 cursor-pointer border-b-2 border-transparent text-base font-medium text-muted hover:text-ink aria-pressed:border-ink aria-pressed:font-bold aria-pressed:text-ink`}
         >
           {item}
         </button>

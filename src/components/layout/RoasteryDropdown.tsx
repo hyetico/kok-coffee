@@ -46,7 +46,7 @@ export function RoasteryDropdown({ itemHeight }: { itemHeight: string }) {
     // 펼침 패널은 헤더(sticky = 기준 상자) 기준으로 전체 폭에 놓이도록 details는 static
     <details ref={ref} className="group static">
       <summary
-        className={`relative flex ${itemHeight} cursor-pointer list-none items-center border-b-2 border-transparent text-base font-medium text-muted before:absolute before:inset-y-0 before:-inset-x-2 hover:text-ink group-open:border-primary group-open:font-bold group-open:text-ink`}
+        className={`relative flex ${itemHeight} cursor-pointer list-none items-center border-b-2 border-transparent text-base font-medium text-muted before:absolute before:inset-y-0 before:-inset-x-2 hover:text-ink group-open:border-ink group-open:font-bold group-open:text-ink`}
       >
         {ui.roasteryMenu.label}
         <ChevronDownIcon className="ml-1 transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none" />

@@ -10,7 +10,7 @@ type TagProps = {
 const tones = {
   default: "bg-surface font-medium text-ink-2",
   solid: "bg-ink font-bold text-white",
-  brand: "bg-primary font-bold text-white",
+  brand: "bg-ink font-bold text-white",
 };
 
 /**

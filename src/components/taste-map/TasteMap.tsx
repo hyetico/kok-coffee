@@ -113,7 +113,7 @@ export function TasteMap({ products }: { products: MappedProduct[] }) {
               className={`group/dot absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full p-0 text-primary transition-[box-shadow,filter,background-color] duration-150 before:absolute before:-inset-1.25 before:rounded-full before:content-[''] hover:z-2 focus-visible:z-2 motion-reduce:transition-none ${
                 on
                   ? "size-5.5 border-3 border-white bg-primary shadow-[0_0_0_2px_var(--color-primary)] hover:shadow-[0_0_0_2px_currentColor,0_0_0_7px_color-mix(in_srgb,currentColor_22%,transparent)] focus-visible:shadow-[0_0_0_2px_currentColor,0_0_0_7px_color-mix(in_srgb,currentColor_22%,transparent)]"
-                  : "size-3.5 border-0 bg-map-dot hover:bg-[color-mix(in_srgb,currentColor_55%,var(--color-map-dot))] hover:shadow-[0_0_0_4px_color-mix(in_srgb,currentColor_28%,transparent)] focus-visible:bg-[color-mix(in_srgb,currentColor_55%,var(--color-map-dot))] focus-visible:shadow-[0_0_0_4px_color-mix(in_srgb,currentColor_28%,transparent)]"
+                  : "size-3.5 border-0 bg-map-dot-home hover:bg-[color-mix(in_srgb,currentColor_55%,var(--color-map-dot-home))] hover:shadow-[0_0_0_4px_color-mix(in_srgb,currentColor_28%,transparent)] focus-visible:bg-[color-mix(in_srgb,currentColor_55%,var(--color-map-dot-home))] focus-visible:shadow-[0_0_0_4px_color-mix(in_srgb,currentColor_28%,transparent)]"
               } ${visible ? "opacity-100" : "opacity-15"} group-has-[button:hover]/map:not-hover:[filter:opacity(.45)]`}
             >
               <span

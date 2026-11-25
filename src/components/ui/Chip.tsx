@@ -19,7 +19,7 @@ export function Chip({
     <button
       type="button"
       aria-pressed={pressed}
-      className={`inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-[18px] border border-line-control bg-bg px-3.5 text-sm leading-none font-medium whitespace-nowrap text-ink-2 hover:border-ink hover:text-ink disabled:cursor-not-allowed disabled:border-line-soft disabled:text-disabled-ink aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:font-semibold aria-pressed:text-white aria-pressed:before:-mt-0.75 aria-pressed:before:h-1.25 aria-pressed:before:w-2.25 aria-pressed:before:-rotate-45 aria-pressed:before:border-b-2 aria-pressed:before:border-l-2 aria-pressed:before:border-current aria-pressed:before:content-[''] ${className}`}
+      className={`inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-[18px] border border-line-control bg-bg px-3.5 text-sm leading-none font-medium whitespace-nowrap text-ink-2 hover:border-ink hover:text-ink disabled:cursor-not-allowed disabled:border-line-soft disabled:text-disabled-ink aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:font-semibold aria-pressed:text-white aria-pressed:before:-mt-0.75 aria-pressed:before:h-1.25 aria-pressed:before:w-2.25 aria-pressed:before:-rotate-45 aria-pressed:before:border-b-2 aria-pressed:before:border-l-2 aria-pressed:before:border-current aria-pressed:before:content-[''] ${className}`}
       {...rest}
     >
       {children}

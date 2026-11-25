@@ -6,7 +6,7 @@
   --color-surface: #eff3f0;
   /* 검색창 올림 (05 「입력 › 검색창」) */
   --color-search-hover: #e6ece8;
-  --color-hero: #e6ede8;
+  --color-hero: #f5f6f5;
   --color-footer-bg: #f7f9f8;
   --color-ink: #17201b;
   --color-ink-2: #3e4842;
@@ -20,8 +20,10 @@
   --color-primary: #1f4d3a;
   --color-primary-hover: #143326;
   --color-primary-press: #0e261c;
-  --color-option-on: #f3f8f5;
+  --color-option-on: #f5f6f5;
   --color-map-dot: #9db5a6;
+  /* 메인 맛 지도 기본 점 (05 「색 — 맛 지도」 map-dot #7E9488) */
+  --color-map-dot-home: #7e9488;
   /* 목록 맛 지도 · 필터 (05 「맛 지도」 · 「필터」 — 보드 측정값) */
   --color-map-bg: #f5f6f5;
   --color-map-axis: #d2dbd5;
@@ -30,8 +32,8 @@
   --color-range-label: #7a867f;
   --color-ghost-hover: #dce7e0;
   --color-ghost-press: #cfded4;
-  --color-secondary-hover: #e6efe9;
-  --color-secondary-press: #d9e6dd;
+  --color-secondary-hover: #f1f3f2;
+  --color-secondary-press: #e6e9e7;
   /* 취향 테스트에서 고른 답 바탕 — 보드 측정값. 05 표에는 「오류 바탕」으로만 있어 디자인 쪽 확인이 필요하다 */
   --color-answer-on: #fff3ef;
   --color-disabled-ink: #9aa59e;
@@ -257,7 +259,7 @@ html:has(.list-side) {
   select:focus-visible,
   summary:focus-visible,
   [tabindex]:focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--color-ink);
     outline-offset: 2px;
   }
 
