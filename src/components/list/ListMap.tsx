@@ -164,7 +164,7 @@ export function ListMap({
       <Link
         href="/taste-test"
         onClick={(e) => e.stopPropagation()}
-        className="inline-flex items-center gap-1 font-bold text-primary no-underline hover:underline"
+        className="inline-flex min-h-6 items-center gap-1 font-bold text-primary no-underline hover:underline"
       >
         {m.testHint.link}
         <ArrowRightIcon />
