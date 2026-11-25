@@ -25,7 +25,7 @@ type ButtonProps = CommonProps & { href?: undefined } & Omit<
   >;
 
 const base =
-  "inline-flex items-center justify-center gap-1.5 box-border whitespace-nowrap rounded-lg border leading-none no-underline transition-colors duration-150 cursor-pointer disabled:cursor-not-allowed disabled:border-transparent disabled:bg-line-soft disabled:text-disabled-ink aria-disabled:cursor-not-allowed aria-disabled:border-transparent aria-disabled:bg-line-soft aria-disabled:text-disabled-ink";
+  "inline-flex items-center justify-center gap-2 box-border whitespace-nowrap rounded-lg border leading-none no-underline transition-colors duration-150 cursor-pointer disabled:cursor-not-allowed disabled:border-transparent disabled:bg-line-soft disabled:text-disabled-ink aria-disabled:cursor-not-allowed aria-disabled:border-transparent aria-disabled:bg-line-soft aria-disabled:text-disabled-ink";
 
 const kinds: Record<Kind, string> = {
   // 테두리 색 · 굵기는 종류마다 하나만 둔다 (두 클래스가 겹치면 어느 쪽이 이길지 순서에 달려 버린다)

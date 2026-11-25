@@ -145,7 +145,7 @@ export function Header() {
             onClick={openSearch}
             className={`hidden h-11 w-full min-w-0 cursor-text items-center gap-2 px-4 text-left text-base text-muted! lg:flex ${searchFieldLook}`}
           >
-            <SearchIcon size={18} strokeWidth={2} className="shrink-0" />
+            <SearchIcon size={20} strokeWidth={1.75} className="shrink-0" />
             <span className="truncate">{ui.search.placeholder}</span>
           </button>
         ) : (

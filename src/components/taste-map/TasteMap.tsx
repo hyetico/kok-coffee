@@ -118,7 +118,7 @@ export function TasteMap({ products }: { products: MappedProduct[] }) {
             >
               <span
                 aria-hidden="true"
-                className={`pointer-events-none absolute rounded-md bg-ink px-2 py-1.25 text-xs leading-[1.2] font-semibold whitespace-nowrap text-white opacity-0 transition-opacity duration-150 group-hover/dot:opacity-100 group-focus-visible/dot:opacity-100 ${tipPlacement(pos)}`}
+                className={`pointer-events-none absolute rounded-md bg-ink px-2 py-1 text-xs leading-[1.2] font-semibold whitespace-nowrap text-white opacity-0 transition-opacity duration-150 group-hover/dot:opacity-100 group-focus-visible/dot:opacity-100 ${tipPlacement(pos)}`}
               >
                 {p.title}
               </span>
@@ -130,12 +130,12 @@ export function TasteMap({ products }: { products: MappedProduct[] }) {
       {selected && (
         <div
           aria-live="polite"
-          className="mt-3 flex items-center gap-4 rounded-xl bg-bg p-3.5"
+          className="mt-3 flex items-center gap-4 rounded-xl bg-bg p-4 max-sm:flex-wrap"
         >
           <ProductThumb src={selected.image} size={72} />
           <div className="min-w-0 flex-1">
             <p className="m-0 text-sm text-muted">{selected.roastery}</p>
-            <p className="mt-0.5 mb-0 text-base font-bold">
+            <p className="mt-1 mb-0 text-base font-bold">
               <Link
                 href={`/coffee/${selected.id}`}
                 className="text-ink no-underline transition-colors duration-150 hover:text-primary"
@@ -143,15 +143,18 @@ export function TasteMap({ products }: { products: MappedProduct[] }) {
                 {selected.title}
               </Link>
             </p>
-            <p className="mt-0.5 mb-0 text-sm text-muted">
+            <p className="mt-1 mb-0 text-sm text-muted">
               {selected.notes} · {formatWon(selected.price)}
             </p>
           </div>
-          <AddToCartButton
-            productId={selected.id}
-            title={selected.title}
-            variant="panel"
-          />
+          {/* 모바일은 담기를 아래 줄 전체 폭(44)으로 (보드 값) */}
+          <div className="max-sm:flex max-sm:basis-full max-sm:*:h-11 max-sm:*:flex-1">
+            <AddToCartButton
+              productId={selected.id}
+              title={selected.title}
+              variant="panel"
+            />
+          </div>
         </div>
       )}
     </div>

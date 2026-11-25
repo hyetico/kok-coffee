@@ -16,7 +16,7 @@ export function MoreLink({
   return (
     <Link
       href={href}
-      className="group inline-flex min-h-11 items-center gap-0.5 text-sm font-semibold text-ink no-underline transition-colors duration-150 hover:text-ink motion-reduce:transition-none"
+      className="group inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-ink no-underline transition-colors duration-150 hover:text-ink motion-reduce:transition-none"
     >
       {children}
       <svg

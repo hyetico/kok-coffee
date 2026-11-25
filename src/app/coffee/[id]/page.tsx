@@ -32,17 +32,17 @@ export default async function CoffeeDetailPage({
   const roastery = roasteryOf(product);
   const listLabel = navItems.find((n) => n.key === "coffee")?.label;
   const crumb =
-    "-mx-1.5 -my-0.75 inline-block px-1.5 py-0.75 text-muted no-underline hover:text-ink";
+    "-mx-1.5 -my-0.75 inline-block px-2 py-1 text-muted no-underline hover:text-ink";
 
   const infoPanel = (
     <div className="mx-auto max-w-205">
       <div className="rounded-xl bg-surface px-8 py-10 text-center">
         <Tag tone="brand">{detail.note.badge}</Tag>
         <p className="mt-4 mb-0 text-sm text-muted">{product.roastery}</p>
-        <h2 className="mt-1.5 mb-0 text-[30px] font-bold tracking-[-0.03em]">
+        <h2 className="mt-2 mb-0 text-[30px] font-bold tracking-[-0.03em]">
           {product.title}
         </h2>
-        <p className="mx-auto mt-3.5 mb-0 max-w-[34em] text-base leading-[1.8] text-ink-2">
+        <p className="mx-auto mt-4 mb-0 max-w-[34em] text-base leading-[1.8] text-ink-2">
           {note.intro}
         </p>
         <Image
@@ -57,7 +57,7 @@ export default async function CoffeeDetailPage({
         {note.cards.map((c) => (
           <li key={c.k} className="rounded-xl border border-line p-6">
             <p className="m-0 text-sm text-muted">{c.k}</p>
-            <p className="mt-1.5 mb-0 text-xl font-bold">{c.v}</p>
+            <p className="mt-2 mb-0 text-xl font-bold">{c.v}</p>
             {/* 설명이 없는 낱말도 빈 줄(위 여백 8)을 남긴다 — 보드와 같은 카드 높이 */}
             <p className="mt-2 mb-0 text-sm leading-[1.7] text-ink-2">{c.d}</p>
           </li>
@@ -68,14 +68,14 @@ export default async function CoffeeDetailPage({
         <div
           role="table"
           aria-label={detail.note.brewTitle}
-          className="mt-3.5 overflow-x-auto text-sm [scrollbar-color:var(--color-footer-line)_transparent] [scrollbar-width:thin]"
+          className="mt-4 overflow-x-auto text-sm [scrollbar-color:var(--color-footer-line)_transparent] [scrollbar-width:thin]"
         >
           <div
             role="row"
             className="grid min-w-130 grid-cols-[1.2fr_1fr_.7fr_1.3fr_1.2fr] gap-3 border-b border-ink font-bold"
           >
             {detail.note.brewHead.map((h) => (
-              <span key={h} role="columnheader" className="py-2.5">
+              <span key={h} role="columnheader" className="py-3">
                 {h}
               </span>
             ))}
@@ -171,7 +171,7 @@ export default async function CoffeeDetailPage({
               {roastery ? (
                 <Link
                   href={`/roasteries/${roastery.id}`}
-                  className="-my-0.5 inline-block py-0.5 text-muted"
+                  className="-my-0.5 inline-block py-1 text-muted"
                 >
                   {product.roastery}
                 </Link>
@@ -179,21 +179,21 @@ export default async function CoffeeDetailPage({
                 product.roastery
               )}
             </p>
-            <h1 className="mt-2.5 mb-0 text-[28px] leading-[1.35] font-bold tracking-[-0.03em]">
+            <h1 className="mt-3 mb-0 text-[28px] leading-[1.35] font-bold tracking-[-0.03em]">
               {product.title}
             </h1>
-            <p className="mt-3 mb-0 flex gap-1.5">
+            <p className="mt-3 mb-0 flex gap-2">
               {note.notes.map((n) => (
                 <Tag key={n}>{n}</Tag>
               ))}
             </p>
-            <p className="mt-4.5 mb-0 text-[26px] font-bold">
+            <p className="mt-5 mb-0 text-[26px] font-bold">
               {formatWon(product.price)}
-              <span className="ml-1.5 text-sm font-medium text-muted">
+              <span className="ml-2 text-sm font-medium text-muted">
                 {detail.basePriceNote}
               </span>
             </p>
-            <dl className="m-0 mt-6 grid grid-cols-[88px_1fr] gap-x-3 gap-y-2.5 text-sm">
+            <dl className="m-0 mt-6 grid grid-cols-[88px_1fr] gap-x-3 gap-y-3 text-sm">
               {note.facts.map((f) => (
                 <div key={f.k} className="contents">
                   <dt className="text-muted">{f.k}</dt>
@@ -212,9 +212,9 @@ export default async function CoffeeDetailPage({
                   {note.profileNote}
                 </span>
               </h2>
-              <dl className="m-0 mt-3.5 grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
+              <dl className="m-0 mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
                 {note.profile.map((f) => (
-                  <div key={f.label} className="flex items-center gap-2.5">
+                  <div key={f.label} className="flex items-center gap-3">
                     <dt className="basis-12 shrink-0 text-ink-2">{f.label}</dt>
                     <dd className="m-0 flex flex-1 items-center gap-2">
                       <span
@@ -231,9 +231,9 @@ export default async function CoffeeDetailPage({
                   </div>
                 ))}
               </dl>
-              <p className="mt-3.5 mb-0 text-sm">
+              <p className="mt-4 mb-0 text-sm">
                 <span className="text-ink-2">{detail.profile.roast}</span>
-                <strong className="ml-2">{note.roast.label}</strong>
+                <strong className="ml-3">{note.roast.label}</strong>
               </p>
             </section>
 

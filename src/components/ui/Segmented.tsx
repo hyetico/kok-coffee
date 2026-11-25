@@ -13,7 +13,7 @@ type SegmentedProps<K extends string> = {
 };
 
 /**
- * 하나만 고르는 짧은 전환 버튼 묶음 (높이 36 = 버튼 30 + 안쪽 3). 목록/지도 보기 · 맛 지도 종류.
+ * 하나만 고르는 짧은 전환 버튼 묶음 (높이 38 = 버튼 30 + 안쪽 4). 목록/지도 보기 · 맛 지도 종류.
  * @example <Segmented label="보기 방식" items={views} value={view} onChange={setView} />
  */
 export function Segmented<K extends string>({
@@ -30,7 +30,7 @@ export function Segmented<K extends string>({
     <div
       role="group"
       aria-label={label}
-      className={`inline-flex rounded-lg bg-surface ${tall ? "p-1" : "p-0.75"}`}
+      className="inline-flex rounded-lg bg-surface p-1"
     >
       {items.map((item) => (
         <button

@@ -77,7 +77,7 @@ export function PurchasePanel({ productId, title, price }: PurchasePanelProps) {
       </p>
       <OptionGroup
         labelledBy="detail-size"
-        className="mt-2.5"
+        className="mt-3"
         value={size}
         onChange={setSize}
         options={SIZES.map((s) => ({
@@ -91,7 +91,7 @@ export function PurchasePanel({ productId, title, price }: PurchasePanelProps) {
       </p>
       <OptionGroup
         labelledBy="detail-grind"
-        className="mt-2.5"
+        className="mt-3"
         value={grind}
         onChange={setGrind}
         options={GRINDS.map((g) => ({
@@ -100,7 +100,7 @@ export function PurchasePanel({ productId, title, price }: PurchasePanelProps) {
         }))}
       />
 
-      <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-md bg-surface p-4.5">
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-md bg-surface p-5">
         <QtyStepper
           value={qty}
           onChange={setQty}
@@ -136,7 +136,7 @@ export function PurchasePanel({ productId, title, price }: PurchasePanelProps) {
           <div className="sticky bottom-0 z-6 flex items-center gap-2 border-t border-line-soft bg-bg px-4 py-3 sm:hidden">
             <div className="min-w-0 flex-1">
               <p className="m-0 truncate text-xs text-muted">{summary}</p>
-              <p className="mt-0.5 mb-0 text-lg font-bold">{total}</p>
+              <p className="mt-1 mb-0 text-lg font-bold">{total}</p>
             </div>
             <Button
               kind="secondary"

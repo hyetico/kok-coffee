@@ -46,14 +46,15 @@ export default function Home() {
   return (
     <main id="main" className="flex-1">
       <section aria-labelledby="home-hero" className="bg-hero">
-        <div className="page-wrap grid grid-cols-1 items-center gap-8 pt-16 pb-18 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
-          <div>
-            <p className="m-0 text-sm font-semibold text-primary">
+        {/* 웹: [소개 | 지도] 위, [버튼 | 지도] 아래 — 소개는 아래로, 버튼은 위로 붙어 지도 가운데쯤에 모인다. 1023 이하는 소개 → 지도 → 버튼 */}
+        <div className="page-wrap grid grid-cols-1 items-center gap-y-8 pt-16 pb-18 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:grid-rows-[auto_1fr] lg:gap-x-14 lg:gap-y-0">
+          <div className="lg:self-end">
+            <p className="m-0 text-sm font-semibold text-muted">
               {home.hero.eyebrow(roasteries.length, listedProducts().length)}
             </p>
             <h1
               id="home-hero"
-              className="mt-3.5 mb-0 text-[clamp(34px,4.2vw,54px)] leading-[1.22] font-bold tracking-[-0.04em]"
+              className="mt-4 mb-0 text-[clamp(34px,4.2vw,54px)] leading-[1.22] font-bold tracking-[-0.04em]"
             >
               {home.hero.titleLines[0]}
               <br />
@@ -62,20 +63,19 @@ export default function Home() {
             <p className="mt-5 mb-0 max-w-[26em] text-lg leading-[1.7] text-muted">
               {home.hero.desc}
             </p>
-            <ButtonPair className="mt-8">
-              <Button href={home.hero.primary.href} kind="primary" size="lg">
-                {home.hero.primary.label}
-              </Button>
-              <Button
-                href={home.hero.secondary.href}
-                kind="secondary"
-                size="lg"
-              >
-                {home.hero.secondary.label}
-              </Button>
-            </ButtonPair>
           </div>
-          <TasteMap products={mappedProducts()} />
+          {/* 그리드 칸이 버튼 묶음을 칸 폭만큼 늘린다(보드와 같음) */}
+          <ButtonPair className="max-lg:order-3 lg:col-start-1 lg:row-start-2 lg:mt-8 lg:self-start">
+            <Button href={home.hero.primary.href} kind="primary" size="lg">
+              {home.hero.primary.label}
+            </Button>
+            <Button href={home.hero.secondary.href} kind="secondary" size="lg">
+              {home.hero.secondary.label}
+            </Button>
+          </ButtonPair>
+          <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
+            <TasteMap products={mappedProducts()} />
+          </div>
         </div>
       </section>
 
@@ -117,7 +117,7 @@ export default function Home() {
             <li key={r.id}>
               <Link
                 href={`/roasteries/${r.id}`}
-                className="flex flex-col items-center gap-2.5 text-center text-sm text-ink no-underline"
+                className="flex flex-col items-center gap-3 text-center text-sm text-ink no-underline"
               >
                 <Image
                   src={r.logo}
