@@ -26,6 +26,7 @@
   --color-map-dot-home: #7e9488;
   /* 목록 맛 지도 · 필터 (05 「맛 지도」 · 「필터」 — 보드 측정값) */
   --color-map-bg: #f5f6f5;
+  --color-map-dot-dim: #cbd3ce;
   --color-map-axis: #d2dbd5;
   --color-map-corner: #a3afa7;
   --color-check-line: #b9c5bd;
@@ -34,8 +35,6 @@
   --color-ghost-press: #cfded4;
   --color-secondary-hover: #f1f3f2;
   --color-secondary-press: #e6e9e7;
-  /* 취향 테스트에서 고른 답 바탕 — 보드 측정값. 05 표에는 「오류 바탕」으로만 있어 디자인 쪽 확인이 필요하다 */
-  --color-answer-on: #fff3ef;
   --color-disabled-ink: #9aa59e;
   --color-footer-line: #c9d2cc;
   /* 05 「색 — 상태」 토스트 링크 */
@@ -118,6 +117,19 @@ html[data-header-hidden] .site-header {
   }
   html[data-header-hidden] .site-header {
     transform: none;
+  }
+}
+
+/* 취향 테스트 시작 화면 「내 취향은 어디?」 점선 원 — 2.4초 주기로 숨쉬듯 (06 기술서 9장). 움직임 줄이기면 멈춘다(motion-safe) */
+@keyframes test-breathe {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
   }
 }
 
