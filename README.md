@@ -4,8 +4,8 @@
 
 **Live** — https://kok-coffee.vercel.app
 
-![메인 — 맛 지도와 첫 화면](docs/images/readme-home.webp)
-![목록 — 왼쪽 필터와 맛 지도, 점을 고르면 아래 목록이 맛이 가까운 순으로](docs/images/readme-list.webp)
+![메인 — 맛 지도와 첫 화면](.github/readme/readme-home.webp)
+![목록 — 왼쪽 필터와 맛 지도, 점을 고르면 아래 목록이 맛이 가까운 순으로](.github/readme/readme-list.webp)
 
 ## 주요 기능
 
@@ -53,6 +53,8 @@ npm run dev                  # http://localhost:3000
 
 ## 폴더
 
+기획 · 디자인 과정은 포트폴리오(https://hyetico-portfolio-sigma.vercel.app)에서 볼 수 있어요.
+
 ```
 src/
 ├─ app/          페이지 (메인 · 목록 · 상세 · 로스터리 · 취향 테스트 · 장바구니 · 주문서 · 주문 완료)
@@ -61,7 +63,6 @@ src/
 ├─ data/         상품 · 로스터리 데이터 (JSON)
 ├─ lib/          가격 · 필터 · 맛 지도 계산
 └─ store/        장바구니 · 취향 핀 · 주문 (Zustand)
-docs/            기획 · 디자인 · 구조 · 컴포넌트 · 맛 지도 문서
 ```
 
 ## 알려진 점
